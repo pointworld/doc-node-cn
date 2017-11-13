@@ -1,0 +1,253 @@
+<!DOCTYPE html><html id=maincontent><head><meta charset=UTF-8><link rel=stylesheet href=css/api.css></head><body class="alt apidoc" id=api-section-assert><div id=content class=clearfix><div id=column2 class=interior><div id=intro class=interior><a href=http://nodejs.cn/ >Node.js 中文网</a><div><input placeholder="API 快速搜索" id=search_input></div></div><ul><li><a class=nav-assert href=assert.html>assert - 断言</a></li><li><a class=nav-buffer href=buffer.html>Buffer - 缓冲器</a></li><li><a class=nav-child_process href=child_process.html>child_process - 子进程</a></li><li><a class=nav-cluster href=cluster.html>cluster - 集群</a></li><li><a class=nav-console href=console.html>console - 控制台</a></li><li><a class=nav-crypto href=crypto.html>crypto - 加密</a></li><li><a class=nav-dgram href=dgram.html>dgram - 数据报</a></li><li><a class=nav-dns href=dns.html>dns - 域名服务器</a></li><li><a class=nav-errors href=errors.html>Error - 异常</a></li><li><a class=nav-events href=events.html>events - 事件</a></li><li><a class=nav-fs href=fs.html>fs - 文件系统</a></li><li><a class=nav-globals href=globals.html>global - 全局变量</a></li><li><a class=nav-http href=http.html>http - HTTP</a></li><li><a class=nav-https href=https.html>https - HTTPS</a></li><li><a class=nav-modules href=modules.html>module - 模块</a></li><li><a class=nav-net href=net.html>net - 网络</a></li><li><a class=nav-os href=os.html>os - 操作系统</a></li><li><a class=nav-path href=path.html>path - 路径</a></li><li><a class=nav-process href=process.html>process - 进程</a></li><li><a class=nav-querystring href=querystring.html>querystring - 查询字符串</a></li><li><a class=nav-readline href=readline.html>readline - 逐行读取</a></li><li><a class=nav-repl href=repl.html>repl - 交互式解释器</a></li><li><a class=nav-stream href=stream.html>stream - 流</a></li><li><a class=nav-string_decoder href=string_decoder.html>string_decoder - 字符串解码器</a></li><li><a class=nav-timers href=timers.html>timer - 定时器</a></li><li><a class=nav-tls href=tls.html>tls - 安全传输层</a></li><li><a class=nav-tty href=tty.html>tty - 终端</a></li><li><a class=nav-url href=url.html>url - 网址</a></li><li><a class=nav-util href=util.html>util - 实用工具</a></li><li><a class=nav-v8 href=v8.html>v8 - V8引擎</a></li><li><a class=nav-vm href=vm.html>vm - 虚拟机</a></li><li><a class=nav-zlib href=zlib.html>zlib - 压缩</a></li></ul><div class=line></div><ul><li><a class=nav--api-documentation-documentation_stability_index href=documentation.html>试验的API</a></li><li><a class=nav-async_hooks href=async_hooks.html>async_hooks</a></li><li><a class=nav-http2 href=http2.html>http2</a></li><li><a class=nav-inspector href=inspector.html>inspector</a></li><li><a class=nav-n-api href=n-api.html>napi</a></li></ul><div class=line></div><ul><li><a class=nav-documentation href=documentation.html>关于本文档</a></li><li><a class=nav-synopsis href=synopsis.html>用法与例子</a></li><li><a class=nav-addons href=addons.html>C++插件</a></li><li><a class=nav-cli href=cli.html>命令行选项</a></li><li><a class=nav-debugger href=debugger.html>debugger调试器</a></li><li><a class=nav-intl href=intl.html>国际化</a></li><li><a class=nav-tracing href=tracing.html>事件跟踪</a></li></ul></div><div id=column1 class="vs interior" data-id=assert><div id=apicontent><h1 id=assert>Assert</h1><blockquote><p>稳定性: 2</p></blockquote><p><code>assert</code> 模块提供了断言测试的函数，用于测试不变式。</p><h2 id=assert-value-message->assert(value[, message])</h2><ul><li><code>value</code> {any}</li><li><code>message</code> {any}</li></ul><p>An alias of <a href=#assert_assert_ok_value_message><code>assert.ok()</code></a>.</p><h2 id=assert-deepequal-actual-expected-message->assert.deepEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>测试 <code>actual</code> 参数与 <code>expected</code> 参数是否深度相等。 原始值使用<a href=https://tc39.github.io/ecma262/#sec-abstract-equality-comparison>相等运算符</a>（<code>==</code>）比较。</p><p>只测试<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties>可枚举的自身属性</a>，不测试对象的<a href=https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots>原型</a>、连接符、或不可枚举的属性（这些情况使用 <a href=#assert_assert_deepstrictequal_actual_expected_message><code>assert.deepStrictEqual()</code></a>）。 例如，下面的例子不会抛出 <code>AssertionError</code>，因为 <a href=errors.html#errors_class_error><code>Error</code></a> 对象的属性不是可枚举的：</p><pre><code class=lang-js>// 不会抛出 AssertionError。
+assert.deepEqual(Error(&#39;a&#39;), Error(&#39;b&#39;));
+</code></pre><p><a href=https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map><code>Map</code></a> 和 <a href=https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set><code>Set</code></a> 包含的子项也会被测试。</p><p>子对象中可枚举的自身属性也会被测试：</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+const obj1 = {
+  a: {
+    b: 1
+  }
+};
+const obj2 = {
+  a: {
+    b: 2
+  }
+};
+const obj3 = {
+  a: {
+    b: 1
+  }
+};
+const obj4 = Object.create(obj1);
+
+assert.deepEqual(obj1, obj1);
+// 测试通过，对象与自身相等。
+
+assert.deepEqual(obj1, obj2);
+// 抛出 AssertionError: { a: { b: 1 } } deepEqual { a: { b: 2 } }
+// 因为 b 属性的值不同。
+
+assert.deepEqual(obj1, obj3);
+// 测试通过，两个对象相等。
+
+assert.deepEqual(obj1, obj4);
+// 抛出 AssertionError: { a: { b: 1 } } deepEqual {}
+// 因为不测试原型。
+</code></pre><p>如果两个值不相等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-deepstrictequal-actual-expected-message->assert.deepStrictEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>与 <code>assert.deepEqual()</code> 大致相同，但有三个区别：</p><ol><li>原始值使用<a href=https://tc39.github.io/ecma262/#sec-strict-equality-comparison>全等运算符</a>（<code>===</code>）比较。<code>Set</code> 的值与 <code>Map</code> 的键使用 <a href=https://tc39.github.io/ecma262/#sec-samevaluezero>SameValueZero</a> 比较。</li><li>对象的<a href=https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots>原型</a>也使用全等运算符比较。</li><li>对象的<a href=https://tc39.github.io/ecma262/#sec-object.prototype.tostring>类型标签</a>要求相同。</li></ol><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.deepEqual({ a: 1 }, { a: &#39;1&#39; });
+// 测试通过，因为 1 == &#39;1&#39;。
+
+assert.deepStrictEqual({ a: 1 }, { a: &#39;1&#39; });
+// 抛出 AssertionError: { a: 1 } deepStrictEqual { a: &#39;1&#39; }
+// 因为使用全等运算符 1 !== &#39;1&#39;。
+
+// 以下对象都没有自身属性。
+const date = new Date();
+const object = {};
+const fakeDate = {};
+
+Object.setPrototypeOf(fakeDate, Date.prototype);
+
+assert.deepEqual(object, fakeDate);
+// 测试通过，不测试原型。
+assert.deepStrictEqual(object, fakeDate);
+// 抛出 AssertionError: {} deepStrictEqual Date {}
+// 因为原型不同。
+
+assert.deepEqual(date, fakeDate);
+// 测试通过，不测试类型标签。
+assert.deepStrictEqual(date, fakeDate);
+// 抛出 AssertionError: 2017-03-11T14:25:31.849Z deepStrictEqual Date {}
+// 因为类型标签不同。
+</code></pre><p>如果两个值不相等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-doesnotthrow-block-error-message->assert.doesNotThrow(block[, error][, message])</h2><ul><li><code>block</code> {Function}</li><li><code>error</code> {RegExp|Function}</li><li><code>message</code> {any}</li></ul><p>断言 <code>block</code> 函数不会抛出错误。</p><p>当 <code>assert.doesNotThrow()</code> 被调用时，它会立即调用 <code>block</code> 函数。</p><p>如果抛出错误且错误类型与 <code>error</code> 参数指定的相同，则抛出 <code>AssertionError</code>。 如果错误类型不相同，或 <code>error</code> 参数为 <code>undefined</code>，则抛出错误。</p><p>以下例子会抛出 <a href=errors.html#errors_class_typeerror><code>TypeError</code></a>，因为在断言中没有匹配的错误类型：</p><pre><code class=lang-js>assert.doesNotThrow(
+  () =&gt; {
+    throw new TypeError(&#39;错误信息&#39;);
+  },
+  SyntaxError
+);
+</code></pre><p>以下例子会抛出一个带有 <code>Got unwanted exception (TypeError)..</code> 信息的 <code>AssertionError</code>：</p><pre><code class=lang-js>assert.doesNotThrow(
+  () =&gt; {
+    throw new TypeError(&#39;错误信息&#39;);
+  },
+  TypeError
+);
+</code></pre><p>如果抛出了 <code>AssertionError</code> 且有给 <code>message</code> 参数传值，则 <code>message</code> 参数的值会被附加到 <code>AssertionError</code> 的信息中：</p><pre><code class=lang-js>assert.doesNotThrow(
+  () =&gt; {
+    throw new TypeError(&#39;错误信息&#39;);
+  },
+  TypeError,
+  &#39;抛出错误&#39;
+);
+// 抛出 AssertionError: Got unwanted exception (TypeError). 抛出错误
+</code></pre><h2 id=assert-equal-actual-expected-message->assert.equal(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>使用<a href=https://tc39.github.io/ecma262/#sec-abstract-equality-comparison>相等运算符</a>（<code>==</code>）测试 <code>actual</code> 参数与 <code>expected</code> 参数是否相等。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.equal(1, 1);
+// 测试通过，1 == 1。
+assert.equal(1, &#39;1&#39;);
+// 测试通过，1 == &#39;1&#39;。
+
+assert.equal(1, 2);
+// 抛出 AssertionError: 1 == 2
+assert.equal({ a: { b: 1 } }, { a: { b: 1 } });
+// 抛出 AssertionError: { a: { b: 1 } } == { a: { b: 1 } }
+</code></pre><p>如果两个值不相等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-fail-message->assert.fail([message])</h2><h2 id=assert-fail-actual-expected-message-operator-stackstartfunction->assert.fail(actual, expected[, message[, operator[, stackStartFunction]]])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li><li><code>operator</code> {string} 默认为 <code>&#39;!=&#39;</code>。</li><li><code>stackStartFunction</code> {function} 默认为 <code>assert.fail</code>。</li></ul><p>抛出 <code>AssertionError</code>。 如果 <code>message</code> 参数为空，则错误信息为 <code>actual</code> 参数 + <code>operator</code> 参数 + <code>expected</code> 参数。 如果只提供了 <code>actual</code> 参数与 <code>expected</code> 参数，则 <code>operator</code> 参数默认为 <code>&#39;!=&#39;</code>。 如果提供了 <code>message</code> 参数，则它会作为错误信息，其他参数会保存在错误对象的属性中。 如果提供了 <code>stackStartFunction</code> 参数，则该函数上的栈帧都会从栈信息中移除（详见 <a href=errors.html#errors_error_capturestacktrace_targetobject_constructoropt><code>Error.captureStackTrace</code></a>）。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.fail(1, 2, undefined, &#39;&gt;&#39;);
+// 抛出 AssertionError [ERR_ASSERTION]: 1 &gt; 2
+
+assert.fail(1, 2, &#39;错误信息&#39;);
+// 抛出 AssertionError [ERR_ASSERTION]: 错误信息
+
+assert.fail(1, 2, &#39;错误信息&#39;, &#39;&gt;&#39;);
+// 抛出 AssertionError [ERR_ASSERTION]: 错误信息
+// 上面两个例子的 `actual` 参数、`expected` 参数与 `operator` 参数不影响错误消息。
+
+assert.fail();
+// 抛出 AssertionError [ERR_ASSERTION]: Failed
+
+assert.fail(&#39;错误信息&#39;);
+// 抛出 AssertionError [ERR_ASSERTION]: 错误信息
+
+assert.fail(&#39;a&#39;, &#39;b&#39;);
+// 抛出 AssertionError [ERR_ASSERTION]: &#39;a&#39; != &#39;b&#39;
+</code></pre><p>例子，使用 <code>stackStartFunction</code> 参数拦截异常的栈信息：</p><pre><code class=lang-js>function suppressFrame() {
+  assert.fail(&#39;a&#39;, &#39;b&#39;, undefined, &#39;!==&#39;, suppressFrame);
+}
+suppressFrame();
+// AssertionError [ERR_ASSERTION]: &#39;a&#39; !== &#39;b&#39;
+//     at repl:1:1
+//     at ContextifyScript.Script.runInThisContext (vm.js:44:33)
+//     ...
+</code></pre><h2 id=assert-iferror-value->assert.ifError(value)</h2><ul><li><code>value</code> {any}</li></ul><p>如果 <code>value</code> 为真，则抛出 <code>value</code>。 可用于测试回调函数的 <code>error</code> 参数。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.ifError(0);
+// 测试通过。
+assert.ifError(1);
+// 抛出 1。
+assert.ifError(&#39;error&#39;);
+// 抛出 &#39;error&#39;。
+assert.ifError(new Error());
+// 抛出 Error。
+</code></pre><h2 id=assert-notdeepequal-actual-expected-message->assert.notDeepEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>测试 <code>actual</code> 参数与 <code>expected</code> 参数是否不深度相等。 与 <a href=#assert_assert_deepequal_actual_expected_message><code>assert.deepEqual()</code></a> 相反。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+const obj1 = {
+  a: {
+    b: 1
+  }
+};
+const obj2 = {
+  a: {
+    b: 2
+  }
+};
+const obj3 = {
+  a: {
+    b: 1
+  }
+};
+const obj4 = Object.create(obj1);
+
+assert.notDeepEqual(obj1, obj1);
+// 抛出 AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }
+
+assert.notDeepEqual(obj1, obj2);
+// 测试通过，obj1 与 obj2 不深度相等。
+
+assert.notDeepEqual(obj1, obj3);
+// 抛出 AssertionError: { a: { b: 1 } } notDeepEqual { a: { b: 1 } }
+
+assert.notDeepEqual(obj1, obj4);
+// 测试通过，obj1 与 obj4 不深度相等。
+</code></pre><p>如果两个值深度相等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-notdeepstrictequal-actual-expected-message->assert.notDeepStrictEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>测试 <code>actual</code> 参数与 <code>expected</code> 参数是否不深度全等。 与 <a href=#assert_assert_deepstrictequal_actual_expected_message><code>assert.deepStrictEqual()</code></a> 相反。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.notDeepEqual({ a: 1 }, { a: &#39;1&#39; });
+// 抛出 AssertionError: { a: 1 } notDeepEqual { a: &#39;1&#39; }
+
+assert.notDeepStrictEqual({ a: 1 }, { a: &#39;1&#39; });
+// 测试通过。
+</code></pre><p>如果两个值深度全等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-notequal-actual-expected-message->assert.notEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>使用<a href=https://tc39.github.io/ecma262/#sec-abstract-equality-comparison>不等运算符</a>（<code>!=</code>）测试 <code>actual</code> 参数与 <code>expected</code> 参数是否不相等。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.notEqual(1, 2);
+// 测试通过。
+
+assert.notEqual(1, 1);
+// 抛出 AssertionError: 1 != 1
+
+assert.notEqual(1, &#39;1&#39;);
+// 抛出 AssertionError: 1 != &#39;1&#39;
+</code></pre><p>如果两个值相等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-notstrictequal-actual-expected-message->assert.notStrictEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>使用<a href=https://tc39.github.io/ecma262/#sec-strict-equality-comparison>不全等运算符</a>（<code>!==</code>）测试 <code>actual</code> 参数与 <code>expected</code> 参数是否不全等。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.notStrictEqual(1, 2);
+// 测试通过。
+
+assert.notStrictEqual(1, 1);
+// 抛出 AssertionError: 1 !== 1
+
+assert.notStrictEqual(1, &#39;1&#39;);
+// 测试通过。
+</code></pre><p>如果两个值全等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-ok-value-message->assert.ok(value[, message])</h2><ul><li><code>value</code> {any}</li><li><code>message</code> {any}</li></ul><p>测试 <code>value</code> 是否为真值。 相当于 <code>assert.equal(!!value, true, message)</code>。</p><p>如果 <code>value</code> 不为真值，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.ok(true);
+// 测试通过。
+assert.ok(1);
+// 测试通过。
+assert.ok(false);
+// 抛出 &quot;AssertionError: false == true&quot;
+assert.ok(0);
+// 抛出 &quot;AssertionError: 0 == true&quot;
+assert.ok(false, &#39;不是真值&#39;);
+// 抛出 &quot;AssertionError: 不是真值&quot;
+</code></pre><h2 id=assert-strictequal-actual-expected-message->assert.strictEqual(actual, expected[, message])</h2><ul><li><code>actual</code> {any}</li><li><code>expected</code> {any}</li><li><code>message</code> {any}</li></ul><p>使用<a href=https://tc39.github.io/ecma262/#sec-strict-equality-comparison>全等运算符</a>（<code>===</code>）测试 <code>actual</code> 参数与 <code>expected</code> 参数是否全等。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+
+assert.strictEqual(1, 2);
+// 抛出 AssertionError: 1 === 2
+
+assert.strictEqual(1, 1);
+// 测试通过。
+
+assert.strictEqual(1, &#39;1&#39;);
+// 抛出 AssertionError: 1 === &#39;1&#39;
+</code></pre><p>如果两个值不全等，则抛出一个带有 <code>message</code> 属性的 <code>AssertionError</code>，其中 <code>message</code> 属性的值等于传入的 <code>message</code> 参数的值。 如果 <code>message</code> 参数为 <code>undefined</code>，则赋予默认的错误信息。</p><h2 id=assert-throws-block-error-message->assert.throws(block[, error][, message])</h2><ul><li><code>block</code> {Function}</li><li><code>error</code> {RegExp|Function}</li><li><code>message</code> {any}</li></ul><p>断言 <code>block</code> 函数会抛出错误。</p><p><code>error</code> 参数可以是构造函数、<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions>正则表达式</a>、或自定义函数。</p><p>如果指定了 <code>message</code> 参数，则当 <code>block</code> 函数不抛出错误时，<code>message</code> 参数会作为 <code>AssertionError</code> 的错误信息。</p><p>例子，<code>error</code> 参数为构造函数：</p><pre><code class=lang-js>assert.throws(
+  () =&gt; {
+    throw new Error(&#39;错误信息&#39;);
+  },
+  Error
+);
+</code></pre><p>例子，<code>error</code> 参数为正则表达式：</p><pre><code class=lang-js>assert.throws(
+  () =&gt; {
+    throw new Error(&#39;错误信息&#39;);
+  },
+  /错误/
+);
+</code></pre><p>例子，<code>error</code> 参数为自定义函数：</p><pre><code class=lang-js>assert.throws(
+  () =&gt; {
+    throw new Error(&#39;错误信息&#39;);
+  },
+  function(err) {
+    if ((err instanceof Error) &amp;&amp; /错误/.test(err)) {
+      return true;
+    }
+  },
+  &#39;不是期望的错误&#39;
+);
+</code></pre><p><code>error</code> 参数不能是字符串。 如果第二个参数是字符串，则视为省略 <code>error</code> 参数，传入的字符串会被用于 <code>message</code> 参数。 例如：</p><pre><code class=lang-js>// 这是错误的！不要这么做！
+assert.throws(myFunction, &#39;错误信息&#39;, &#39;没有抛出期望的信息&#39;);
+
+// 应该这么做。
+assert.throws(myFunction, /错误信息/, &#39;没有抛出期望的信息&#39;);
+</code></pre><h2 id=caveats>Caveats</h2><p>对于 <a href=https://tc39.github.io/ecma262/#sec-samevaluezero>SameValueZero</a> 比较，建议使用 ES2015 的 <a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is><code>Object.is()</code></a>。</p><pre><code class=lang-js>const a = 0;
+const b = -a;
+assert.notStrictEqual(a, b);
+// 抛出 AssertionError: 0 !== -0
+// 因为全等运算符不区分 -0 与 +0。
+assert(!Object.is(a, b));
+// 但 Object.is() 可以区分。
+
+const str1 = &#39;foo&#39;;
+const str2 = &#39;foo&#39;;
+assert.strictEqual(str1 / 1, str2 / 1);
+// 抛出 AssertionError: NaN === NaN
+// 因为全等运算符不能用于测试 NaN。
+assert(Object.is(str1 / 1, str2 / 1));
+// 但 Object.is() 可以测试。
+</code></pre><p>详见<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness>MDN的等式比较指南</a>。</p></div></div></div></body><script src=js/all.js></script></html>

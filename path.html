@@ -1,0 +1,139 @@
+<!DOCTYPE html><html id=maincontent><head><meta charset=UTF-8><link rel=stylesheet href=css/api.css></head><body class="alt apidoc" id=api-section-path><div id=content class=clearfix><div id=column2 class=interior><div id=intro class=interior><a href=http://nodejs.cn/ >Node.js 中文网</a><div><input placeholder="API 快速搜索" id=search_input></div></div><ul><li><a class=nav-assert href=assert.html>assert - 断言</a></li><li><a class=nav-buffer href=buffer.html>Buffer - 缓冲器</a></li><li><a class=nav-child_process href=child_process.html>child_process - 子进程</a></li><li><a class=nav-cluster href=cluster.html>cluster - 集群</a></li><li><a class=nav-console href=console.html>console - 控制台</a></li><li><a class=nav-crypto href=crypto.html>crypto - 加密</a></li><li><a class=nav-dgram href=dgram.html>dgram - 数据报</a></li><li><a class=nav-dns href=dns.html>dns - 域名服务器</a></li><li><a class=nav-errors href=errors.html>Error - 异常</a></li><li><a class=nav-events href=events.html>events - 事件</a></li><li><a class=nav-fs href=fs.html>fs - 文件系统</a></li><li><a class=nav-globals href=globals.html>global - 全局变量</a></li><li><a class=nav-http href=http.html>http - HTTP</a></li><li><a class=nav-https href=https.html>https - HTTPS</a></li><li><a class=nav-modules href=modules.html>module - 模块</a></li><li><a class=nav-net href=net.html>net - 网络</a></li><li><a class=nav-os href=os.html>os - 操作系统</a></li><li><a class=nav-path href=path.html>path - 路径</a></li><li><a class=nav-process href=process.html>process - 进程</a></li><li><a class=nav-querystring href=querystring.html>querystring - 查询字符串</a></li><li><a class=nav-readline href=readline.html>readline - 逐行读取</a></li><li><a class=nav-repl href=repl.html>repl - 交互式解释器</a></li><li><a class=nav-stream href=stream.html>stream - 流</a></li><li><a class=nav-string_decoder href=string_decoder.html>string_decoder - 字符串解码器</a></li><li><a class=nav-timers href=timers.html>timer - 定时器</a></li><li><a class=nav-tls href=tls.html>tls - 安全传输层</a></li><li><a class=nav-tty href=tty.html>tty - 终端</a></li><li><a class=nav-url href=url.html>url - 网址</a></li><li><a class=nav-util href=util.html>util - 实用工具</a></li><li><a class=nav-v8 href=v8.html>v8 - V8引擎</a></li><li><a class=nav-vm href=vm.html>vm - 虚拟机</a></li><li><a class=nav-zlib href=zlib.html>zlib - 压缩</a></li></ul><div class=line></div><ul><li><a class=nav--api-documentation-documentation_stability_index href=documentation.html>试验的API</a></li><li><a class=nav-async_hooks href=async_hooks.html>async_hooks</a></li><li><a class=nav-http2 href=http2.html>http2</a></li><li><a class=nav-inspector href=inspector.html>inspector</a></li><li><a class=nav-n-api href=n-api.html>napi</a></li></ul><div class=line></div><ul><li><a class=nav-documentation href=documentation.html>关于本文档</a></li><li><a class=nav-synopsis href=synopsis.html>用法与例子</a></li><li><a class=nav-addons href=addons.html>C++插件</a></li><li><a class=nav-cli href=cli.html>命令行选项</a></li><li><a class=nav-debugger href=debugger.html>debugger调试器</a></li><li><a class=nav-intl href=intl.html>国际化</a></li><li><a class=nav-tracing href=tracing.html>事件跟踪</a></li></ul></div><div id=column1 class="vs interior" data-id=path><div id=apicontent><h1 id=path>Path</h1><blockquote><p>稳定性: 2 - 稳定的</p></blockquote><p><code>path</code> 模块提供了一些工具函数，用于处理文件与目录的路径。可以通过以下方式使用：</p><pre><code class=lang-js>const path = require(&#39;path&#39;);
+</code></pre><h2 id=windows-vs-posix>Windows vs. POSIX</h2><p><code>path</code> 模块的默认操作会根据 Node.js 应用程序运行的操作系统的不同而变化。 比如，当运行在 Windows 操作系统上时，<code>path</code> 模块会认为使用的是 Windows 风格的路径。</p><p>例如，对 Windows 文件路径 <code>C:\temp\myfile.html</code> 使用 <code>path.basename()</code> 函数，运行在 POSIX 上与运行在 Windows 上会产生不同的结果：</p><p>在 POSIX 上:</p><pre><code class=lang-js>path.basename(&#39;C:\\temp\\myfile.html&#39;);
+// 返回: &#39;C:\\temp\\myfile.html&#39;
+</code></pre><p>在 Windows 上:</p><pre><code class=lang-js>path.basename(&#39;C:\\temp\\myfile.html&#39;);
+// 返回: &#39;myfile.html&#39;
+</code></pre><p>要想在任何操作系统上处理 Windows 文件路径时获得一致的结果，可以使用 [<code>path.win32</code>]：</p><p>在 POSIX 和 Windows 上:</p><pre><code class=lang-js>path.win32.basename(&#39;C:\\temp\\myfile.html&#39;);
+// 返回: &#39;myfile.html&#39;
+</code></pre><p>要想在任何操作系统上处理 POSIX 文件路径时获得一致的结果，可以使用 [<code>path.posix</code>]：</p><p>在 POSIX 和 Windows 上:</p><pre><code class=lang-js>path.posix.basename(&#39;/tmp/myfile.html&#39;);
+// 返回: &#39;myfile.html&#39;
+</code></pre><p>注意：在 Windows 上 Node.js 遵循单驱动器工作目录的理念。 当使用驱动器路径且不带反斜杠时就能体验到该特征。 例如，<code>fs.readdirSync(&#39;c:\\&#39;)</code> 可能返回与 <code>fs.readdirSync(&#39;c:&#39;)</code> 不同的结果。 详见 [MSDN 路径文档]。</p><h2 id=path-basename-path-ext->path.basename(path[, ext])</h2><ul><li><code>path</code> {string}</li><li><code>ext</code> {string} 可选的文件扩展名</li><li>返回: {string}</li></ul><p><code>path.basename()</code> 方法返回一个 <code>path</code> 的最后一部分，类似于 Unix 中的 <code>basename</code> 命令。 Trailing directory separators are ignored, see [<code>path.sep</code>][].</p><p>例子：</p><pre><code class=lang-js>path.basename(&#39;/foo/bar/baz/asdf/quux.html&#39;);
+// 返回: &#39;quux.html&#39;
+
+path.basename(&#39;/foo/bar/baz/asdf/quux.html&#39;, &#39;.html&#39;);
+// 返回: &#39;quux&#39;
+</code></pre><p>如果 <code>path</code> 不是一个字符串或提供了 <code>ext</code> 但不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-delimiter>path.delimiter</h2><ul><li>{string}</li></ul><p>提供平台特定的路径分隔符：</p><ul><li>Windows 上是 <code>;</code></li><li>POSIX 上是 <code>:</code></li></ul><p>例如，在 POSIX 上：</p><pre><code class=lang-js>console.log(process.env.PATH);
+// 输出: &#39;/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin&#39;
+
+process.env.PATH.split(path.delimiter);
+// 返回: [&#39;/usr/bin&#39;, &#39;/bin&#39;, &#39;/usr/sbin&#39;, &#39;/sbin&#39;, &#39;/usr/local/bin&#39;]
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>console.log(process.env.PATH);
+// 输出: &#39;C:\Windows\system32;C:\Windows;C:\Program Files\node\&#39;
+
+process.env.PATH.split(path.delimiter);
+// 返回: [&#39;C:\\Windows\\system32&#39;, &#39;C:\\Windows&#39;, &#39;C:\\Program Files\\node\\&#39;]
+</code></pre><h2 id=path-dirname-path->path.dirname(path)</h2><ul><li><code>path</code> {string}</li><li>返回: {string}</li></ul><p><code>path.dirname()</code> 方法返回一个 <code>path</code> 的目录名，类似于 Unix 中的 <code>dirname</code> 命令。 Trailing directory separators are ignored, see [<code>path.sep</code>][].</p><p>例子：</p><pre><code class=lang-js>path.dirname(&#39;/foo/bar/baz/asdf/quux&#39;);
+// 返回: &#39;/foo/bar/baz/asdf&#39;
+</code></pre><p>如果 <code>path</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-extname-path->path.extname(path)</h2><ul><li><code>path</code> {string}</li><li>返回: {string}</li></ul><p><code>path.extname()</code> 方法返回 <code>path</code> 的扩展名，即从 <code>path</code> 的最后一部分中的最后一个 <code>.</code>（句号）字符到字符串结束。 如果 <code>path</code> 的最后一部分没有 <code>.</code> 或 <code>path</code> 的文件名（见 <code>path.basename()</code>）的第一个字符是 <code>.</code>，则返回一个空字符串。</p><p>例子：</p><pre><code class=lang-js>path.extname(&#39;index.html&#39;);
+// 返回: &#39;.html&#39;
+
+path.extname(&#39;index.coffee.md&#39;);
+// 返回: &#39;.md&#39;
+
+path.extname(&#39;index.&#39;);
+// 返回: &#39;.&#39;
+
+path.extname(&#39;index&#39;);
+// 返回: &#39;&#39;
+
+path.extname(&#39;.index&#39;);
+// 返回: &#39;&#39;
+</code></pre><p>如果 <code>path</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-format-pathobject->path.format(pathObject)</h2><ul><li><code>pathObject</code> {Object}<ul><li><code>dir</code> {string}</li><li><code>root</code> {string}</li><li><code>base</code> {string}</li><li><code>name</code> {string}</li><li><code>ext</code> {string}</li></ul></li><li>返回: {string}</li></ul><p><code>path.format()</code> 方法会从一个对象返回一个路径字符串。 与 [<code>path.parse()</code>] 相反。</p><p>当 <code>pathObject</code> 提供的属性有组合时，有些属性的优先级比其他的高：</p><ul><li>如果提供了 <code>pathObject.dir</code>，则 <code>pathObject.root</code> 会被忽略</li><li>如果提供了 <code>pathObject.base</code> 存在，则 <code>pathObject.ext</code> 和 <code>pathObject.name</code> 会被忽略</li></ul><p>例如，在 POSIX 上：</p><pre><code class=lang-js>// 如果提供了 `dir`、`root` 和 `base`，则返回 `${dir}${path.sep}${base}`。
+// `root` 会被忽略。
+path.format({
+  root: &#39;/ignored&#39;,
+  dir: &#39;/home/user/dir&#39;,
+  base: &#39;file.txt&#39;
+});
+// 返回: &#39;/home/user/dir/file.txt&#39;
+
+// 如果没有指定 `dir`，则 `root` 会被使用。
+// 如果只提供了 `root` 或 `dir` 等于 `root`，则平台的分隔符不会被包含。
+// `ext` 会被忽略。
+path.format({
+  root: &#39;/&#39;,
+  base: &#39;file.txt&#39;,
+  ext: &#39;ignored&#39;
+});
+// 返回: &#39;/file.txt&#39;
+
+// 如果没有指定 `base`，则 `name` + `ext` 会被使用。
+path.format({
+  root: &#39;/&#39;,
+  name: &#39;file&#39;,
+  ext: &#39;.txt&#39;
+});
+// 返回: &#39;/file.txt&#39;
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>path.format({
+  dir: &#39;C:\\path\\dir&#39;,
+  base: &#39;file.txt&#39;
+});
+// 返回: &#39;C:\\path\\dir\\file.txt&#39;
+</code></pre><h2 id=path-isabsolute-path->path.isAbsolute(path)</h2><ul><li><code>path</code> {string}</li><li>返回: {boolean}</li></ul><p><code>path.isAbsolute()</code> 方法会判定 <code>path</code> 是否为一个绝对路径。</p><p>如果给定的 <code>path</code> 是一个长度为零的字符串，则返回 <code>false</code>。</p><p>例如，在 POSIX 上：</p><pre><code class=lang-js>path.isAbsolute(&#39;/foo/bar&#39;); // true
+path.isAbsolute(&#39;/baz/..&#39;);  // true
+path.isAbsolute(&#39;qux/&#39;);     // false
+path.isAbsolute(&#39;.&#39;);        // false
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>path.isAbsolute(&#39;//server&#39;);    // true
+path.isAbsolute(&#39;\\\\server&#39;);  // true
+path.isAbsolute(&#39;C:/foo/..&#39;);   // true
+path.isAbsolute(&#39;C:\\foo\\..&#39;); // true
+path.isAbsolute(&#39;bar\\baz&#39;);    // false
+path.isAbsolute(&#39;bar/baz&#39;);     // false
+path.isAbsolute(&#39;.&#39;);           // false
+</code></pre><p>如果 <code>path</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-join-paths->path.join([...paths])</h2><ul><li><code>...paths</code> {string} 一个路径片段的序列</li><li>返回: {string}</li></ul><p><code>path.join()</code> 方法使用平台特定的分隔符把全部给定的 <code>path</code> 片段连接到一起，并规范化生成的路径。</p><p>长度为零的 <code>path</code> 片段会被忽略。 如果连接后的路径字符串是一个长度为零的字符串，则返回 <code>&#39;.&#39;</code>，表示当前工作目录。</p><p>例子：</p><pre><code class=lang-js>path.join(&#39;/foo&#39;, &#39;bar&#39;, &#39;baz/asdf&#39;, &#39;quux&#39;, &#39;..&#39;);
+// 返回: &#39;/foo/bar/baz/asdf&#39;
+
+path.join(&#39;foo&#39;, {}, &#39;bar&#39;);
+// 抛出 &#39;TypeError: Path must be a string. Received {}&#39;
+</code></pre><p>如果任一路径片段不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-normalize-path->path.normalize(path)</h2><ul><li><code>path</code> {string}</li><li>返回: {string}</li></ul><p><code>path.normalize()</code> 方法会规范化给定的 <code>path</code>，并解析 <code>&#39;..&#39;</code> 和 <code>&#39;.&#39;</code> 片段。</p><p>当发现多个连续的路径分隔符时（如 POSIX 上的 <code>/</code> 与 Windows 上的 <code>\</code> 或 <code>/</code>），它们会被单个的路径分隔符（POSIX 上是 <code>/</code>，Windows 上是 <code>\</code>）替换。 末尾的多个分隔符会被保留。</p><p>如果 <code>path</code> 是一个长度为零的字符串，则返回 <code>&#39;.&#39;</code>，表示当前工作目录。</p><p>例如，在 POSIX 上：</p><pre><code class=lang-js>path.normalize(&#39;/foo/bar//baz/asdf/quux/..&#39;);
+// 返回: &#39;/foo/bar/baz/asdf&#39;
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>path.normalize(&#39;C:\\temp\\\\foo\\bar\\..\\&#39;);
+// 返回: &#39;C:\\temp\\foo\\&#39;
+</code></pre><p>Since Windows recognizes multiple path separators, both separators will be replaced by instances of the Windows preferred separator (<code>\</code>):</p><pre><code class=lang-js>path.win32.normalize(&#39;C:////temp\\\\/\\/\\/foo/bar&#39;);
+// Returns: &#39;C:\\temp\\foo\\bar&#39;
+</code></pre><p>如果 <code>path</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-parse-path->path.parse(path)</h2><ul><li><code>path</code> {string}</li><li>返回: {Object}</li></ul><p><code>path.parse()</code> 方法返回一个对象，对象的属性表示 <code>path</code> 的元素。 Trailing directory separators are ignored, see [<code>path.sep</code>][].</p><p>返回的对象有以下属性：</p><ul><li><code>dir</code> {string}</li><li><code>root</code> {string}</li><li><code>base</code> {string}</li><li><code>name</code> {string}</li><li><code>ext</code> {string}</li></ul><p>例如，在 POSIX 上：</p><pre><code class=lang-js>path.parse(&#39;/home/user/dir/file.txt&#39;);
+// 返回:
+// { root: &#39;/&#39;,
+//   dir: &#39;/home/user/dir&#39;,
+//   base: &#39;file.txt&#39;,
+//   ext: &#39;.txt&#39;,
+//   name: &#39;file&#39; }
+</code></pre><pre><code class=lang-text>┌─────────────────────┬────────────┐
+│          dir        │    base    │
+├──────┬              ├──────┬─────┤
+│ root │              │ name │ ext │
+&quot;  /    home/user/dir / file  .txt &quot;
+└──────┴──────────────┴──────┴─────┘
+(请无视以上字符串中的空格，它们只是为了布局)
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>path.parse(&#39;C:\\path\\dir\\file.txt&#39;);
+// 返回:
+// { root: &#39;C:\\&#39;,
+//   dir: &#39;C:\\path\\dir&#39;,
+//   base: &#39;file.txt&#39;,
+//   ext: &#39;.txt&#39;,
+//   name: &#39;file&#39; }
+</code></pre><pre><code class=lang-text>┌─────────────────────┬────────────┐
+│          dir        │    base    │
+├──────┬              ├──────┬─────┤
+│ root │              │ name │ ext │
+&quot; C:\      path\dir   \ file  .txt &quot;
+└──────┴──────────────┴──────┴─────┘
+(请无视以上字符串中的空格，它们只是为了布局)
+</code></pre><p>如果 <code>path</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-posix>path.posix</h2><ul><li>{Object}</li></ul><p><code>path.posix</code> 属性提供了 <code>path</code> 方法针对 POSIX 的实现。</p><h2 id=path-relative-from-to->path.relative(from, to)</h2><ul><li><code>from</code> {string}</li><li><code>to</code> {string}</li><li>返回: {string}</li></ul><p><code>path.relative()</code> 方法返回从 <code>from</code> 到 <code>to</code> 的相对路径（基于当前工作目录）。 如果 <code>from</code> 和 <code>to</code> 各自解析到同一路径（调用 <code>path.resolve()</code>），则返回一个长度为零的字符串。</p><p>如果 <code>from</code> 或 <code>to</code> 传入了一个长度为零的字符串，则当前工作目录会被用于代替长度为零的字符串。</p><p>例如，在 POSIX 上：</p><pre><code class=lang-js>path.relative(&#39;/data/orandea/test/aaa&#39;, &#39;/data/orandea/impl/bbb&#39;);
+// 返回: &#39;../../impl/bbb&#39;
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>path.relative(&#39;C:\\orandea\\test\\aaa&#39;, &#39;C:\\orandea\\impl\\bbb&#39;);
+// 返回: &#39;..\\..\\impl\\bbb&#39;
+</code></pre><p>如果 <code>from</code> 或 <code>to</code> 不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-resolve-paths->path.resolve([...paths])</h2><ul><li><code>...paths</code> {string} 一个路径或路径片段的序列</li><li>返回: {string}</li></ul><p><code>path.resolve()</code> 方法会把一个路径或路径片段的序列解析为一个绝对路径。</p><p>给定的路径的序列是从右往左被处理的，后面每个 <code>path</code> 被依次解析，直到构造完成一个绝对路径。 例如，给定的路径片段的序列为：<code>/foo</code>、<code>/bar</code>、<code>baz</code>，则调用 <code>path.resolve(&#39;/foo&#39;, &#39;/bar&#39;, &#39;baz&#39;)</code> 会返回 <code>/bar/baz</code>。</p><p>如果处理完全部给定的 <code>path</code> 片段后还未生成一个绝对路径，则当前工作目录会被用上。</p><p>生成的路径是规范化后的，且末尾的斜杠会被删除，除非路径被解析为根目录。</p><p>长度为零的 <code>path</code> 片段会被忽略。</p><p>如果没有传入 <code>path</code> 片段，则 <code>path.resolve()</code> 会返回当前工作目录的绝对路径。</p><p>例子：</p><pre><code class=lang-js>path.resolve(&#39;/foo/bar&#39;, &#39;./baz&#39;);
+// 返回: &#39;/foo/bar/baz&#39;
+
+path.resolve(&#39;/foo/bar&#39;, &#39;/tmp/file/&#39;);
+// 返回: &#39;/tmp/file&#39;
+
+path.resolve(&#39;wwwroot&#39;, &#39;static_files/png/&#39;, &#39;../gif/image.gif&#39;);
+// 如果当前工作目录为 /home/myself/node，
+// 则返回 &#39;/home/myself/node/wwwroot/static_files/gif/image.gif&#39;
+</code></pre><p>如果任何参数不是一个字符串，则抛出 [<code>TypeError</code>]。</p><h2 id=path-sep>path.sep</h2><ul><li>{string}</li></ul><p>提供了平台特定的路径片段分隔符：</p><ul><li>Windows 上是 <code>\</code></li><li>POSIX 上是 <code>/</code></li></ul><p>例如，在 POSIX 上：</p><pre><code class=lang-js>&#39;foo/bar/baz&#39;.split(path.sep);
+// 返回: [&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;]
+</code></pre><p>在 Windows 上：</p><pre><code class=lang-js>&#39;foo\\bar\\baz&#39;.split(path.sep);
+// 返回: [&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;]
+</code></pre><p>注意：在 Windows 上，斜杠字符（<code>/</code>）和反斜杠字符（<code>\</code>）都可作为路径分隔符； 但 <code>path</code> 的方法只添加反斜杠（<code>\</code>）。</p><h2 id=path-win32>path.win32</h2><ul><li>{Object}</li></ul><p><code>path.win32</code> 属性提供了 <code>path</code> 方法针对 Windows 的实现。</p></div></div></div></body><script src=js/all.js></script></html>
