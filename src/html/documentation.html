@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-documentation">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="documentation">
+            <div id="apicontent">
+                <h1 id="about-this-documentation">About this Documentation</h1>
+<!--introduced_in=v0.10.0-->
+<!-- type=misc -->
+<!-- type=misc -->
+<p>本文档的目的是为了全面地讲解 Node.js 的 API，包括使用方法与相关概念。
+每个章节分别介绍一个内置模块或高级概念。</p>
+<p>每个主题的标题下会列出属性的类型、方法的参数、以及事件处理回调函数的参数等。</p>
+<p>Every <code>.html</code> document has a corresponding <code>.json</code> document presenting
+the same information in a structured manner. This feature is
+experimental, and added for the benefit of IDEs and other utilities that
+wish to do programmatic things with the documentation.</p>
+<p>Every <code>.html</code> and <code>.json</code> file is generated based on the corresponding
+<code>.md</code> file in the <code>doc/api/</code> folder in Node.js&#39;s source tree. The
+documentation is generated using the <code>tools/doc/generate.js</code> program.
+The HTML template is located at <code>doc/template.html</code>.</p>
+<p>If errors are found in this documentation, please <a href="https://github.com/nodejs/node/issues/new">submit an issue</a>
+or see <a href="https://github.com/nodejs/node/blob/master/CONTRIBUTING.md">the contributing guide</a> for directions on how to submit a patch.</p>
+<h2 id="stability-index">Stability Index</h2>
+<!--type=misc-->
+<p>文档中每个章节都有稳定性标志。
+Node.js 的 API 仍会有少量变化，但随着发展，API 会越来越稳定可靠。
+有些 API 久经验证、且被大量依赖，它们几乎不会再变化。
+也有些 API 是新增的、或试验的、或被认定为有风险且正在被重新设计中的。</p>
+<p>稳定性指数如下：</p>
+<pre><code class="lang-txt">稳定性: 0 - 废弃的
+该特性被认定为存在问题，且可能会计划修改。
+不要依赖该特性。
+使用该特性可能会产生警告信息。
+该特性不会做向后兼容。
+</code></pre>
+<pre><code class="lang-txt">稳定性: 1 - 试验的
+该特性仍处于开发中，且未来改变时不做向后兼容，甚至可能被移除。
+不建议在生产环境中使用该特性。
+</code></pre>
+<pre><code class="lang-txt">稳定性: 2 - 稳定的
+该特性已被证明是符合要求的。
+与 npm 生态系统的兼容性是最高优先级，除非有必要否则不会变化。
+</code></pre>
+<h2 id="json-output">JSON Output</h2>
+<blockquote>
+<p>稳定性: 1 - 试验的</p>
+</blockquote>
+<p>每个通过 markdown 生成的 HTML 文件都有一个对应的具有相同数据的 JSON 文件。</p>
+<p>这个特性是 Node.js v0.6.12 新增的。
+该特性是试验的。</p>
+<h2 id="syscalls-and-man-pages">Syscalls and man pages</h2>
+<p>系统调用定义了用户程序和底层操作系统之间的接口，例如 open(2)、 read(2)。
+Node 函数只是简单地封装了系统调用，例如 <code>fs.open()</code>。
+相应的帮助文档会描述系统调用是如何工作的。</p>
+<p>有些系统调用是 BSD 系统特有的，例如 lchown(2)。
+这意味着 <code>fs.lchown()</code> 只适用于 macOS 和其他 BSD 衍生系统，在 Linux 上不可用。</p>
+<p>大部分 Unix 系统调用都有对应的 Windows 版本，但 Windows 版本运行起来可能与 Linux 和 macOS 的有些差异。
+有些 Unix 系统调用无法在 Windows 中找到对应的操作语义，详见<a href="https://github.com/nodejs/node/issues/4760">议题4760</a>。</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

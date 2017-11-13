@@ -1,0 +1,171 @@
+<!DOCTYPE html><html id=maincontent><head><meta charset=UTF-8><link rel=stylesheet href=css/api.css></head><body class="alt apidoc" id=api-section-events><div id=content class=clearfix><div id=column2 class=interior><div id=intro class=interior><a href=http://nodejs.cn/ >Node.js 中文网</a><div><input placeholder="API 快速搜索" id=search_input></div></div><ul><li><a class=nav-assert href=assert.html>assert - 断言</a></li><li><a class=nav-buffer href=buffer.html>Buffer - 缓冲器</a></li><li><a class=nav-child_process href=child_process.html>child_process - 子进程</a></li><li><a class=nav-cluster href=cluster.html>cluster - 集群</a></li><li><a class=nav-console href=console.html>console - 控制台</a></li><li><a class=nav-crypto href=crypto.html>crypto - 加密</a></li><li><a class=nav-dgram href=dgram.html>dgram - 数据报</a></li><li><a class=nav-dns href=dns.html>dns - 域名服务器</a></li><li><a class=nav-errors href=errors.html>Error - 异常</a></li><li><a class=nav-events href=events.html>events - 事件</a></li><li><a class=nav-fs href=fs.html>fs - 文件系统</a></li><li><a class=nav-globals href=globals.html>global - 全局变量</a></li><li><a class=nav-http href=http.html>http - HTTP</a></li><li><a class=nav-https href=https.html>https - HTTPS</a></li><li><a class=nav-modules href=modules.html>module - 模块</a></li><li><a class=nav-net href=net.html>net - 网络</a></li><li><a class=nav-os href=os.html>os - 操作系统</a></li><li><a class=nav-path href=path.html>path - 路径</a></li><li><a class=nav-process href=process.html>process - 进程</a></li><li><a class=nav-querystring href=querystring.html>querystring - 查询字符串</a></li><li><a class=nav-readline href=readline.html>readline - 逐行读取</a></li><li><a class=nav-repl href=repl.html>repl - 交互式解释器</a></li><li><a class=nav-stream href=stream.html>stream - 流</a></li><li><a class=nav-string_decoder href=string_decoder.html>string_decoder - 字符串解码器</a></li><li><a class=nav-timers href=timers.html>timer - 定时器</a></li><li><a class=nav-tls href=tls.html>tls - 安全传输层</a></li><li><a class=nav-tty href=tty.html>tty - 终端</a></li><li><a class=nav-url href=url.html>url - 网址</a></li><li><a class=nav-util href=util.html>util - 实用工具</a></li><li><a class=nav-v8 href=v8.html>v8 - V8引擎</a></li><li><a class=nav-vm href=vm.html>vm - 虚拟机</a></li><li><a class=nav-zlib href=zlib.html>zlib - 压缩</a></li></ul><div class=line></div><ul><li><a class=nav--api-documentation-documentation_stability_index href=documentation.html>试验的API</a></li><li><a class=nav-async_hooks href=async_hooks.html>async_hooks</a></li><li><a class=nav-http2 href=http2.html>http2</a></li><li><a class=nav-inspector href=inspector.html>inspector</a></li><li><a class=nav-n-api href=n-api.html>napi</a></li></ul><div class=line></div><ul><li><a class=nav-documentation href=documentation.html>关于本文档</a></li><li><a class=nav-synopsis href=synopsis.html>用法与例子</a></li><li><a class=nav-addons href=addons.html>C++插件</a></li><li><a class=nav-cli href=cli.html>命令行选项</a></li><li><a class=nav-debugger href=debugger.html>debugger调试器</a></li><li><a class=nav-intl href=intl.html>国际化</a></li><li><a class=nav-tracing href=tracing.html>事件跟踪</a></li></ul></div><div id=column1 class="vs interior" data-id=events><div id=apicontent><h1 id=events>Events</h1><blockquote><p>稳定性: 2 - 稳定的</p></blockquote><p>大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。</p><p>例如，<a href=net.html#net_class_net_server><code>net.Server</code></a> 对象会在每次有新连接时触发事件；<a href=fs.html#fs_class_fs_readstream><code>fs.ReadStream</code></a> 会在文件被打开时触发事件；<a href=stream.html>流对象</a> 会在数据可读时触发事件。</p><p>所有能触发事件的对象都是 <code>EventEmitter</code> 类的实例。 这些对象开放了一个 <code>eventEmitter.on()</code> 函数，允许将一个或多个函数绑定到会被对象触发的命名事件上。 事件名称通常是驼峰式的字符串，但也可以使用任何有效的 JavaScript 属性名。</p><p>当 <code>EventEmitter</code> 对象触发一个事件时，所有绑定在该事件上的函数都被同步地调用。 监听器的返回值会被丢弃。</p><p>例子，一个绑定了一个监听器的 <code>EventEmitter</code> 实例。 <code>eventEmitter.on()</code> 方法用于注册监听器，<code>eventEmitter.emit()</code> 方法用于触发事件。</p><pre><code class=lang-js>const EventEmitter = require(&#39;events&#39;);
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+myEmitter.on(&#39;event&#39;, () =&gt; {
+  console.log(&#39;触发了一个事件！&#39;);
+});
+myEmitter.emit(&#39;event&#39;);
+</code></pre><h2 id=passing-arguments-and-this-to-listeners>Passing arguments and <code>this</code> to listeners</h2><p><code>eventEmitter.emit()</code> 方法允许将任意参数传给监听器函数。 当一个普通的监听器函数被 <code>EventEmitter</code> 调用时，标准的 <code>this</code> 关键词会被设置指向监听器所附加的 <code>EventEmitter</code>。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.on(&#39;event&#39;, function(a, b) {
+  console.log(a, b, this);
+  // 打印:
+  //   a b MyEmitter {
+  //     domain: null,
+  //     _events: { event: [Function] },
+  //     _eventsCount: 1,
+  //     _maxListeners: undefined }
+});
+myEmitter.emit(&#39;event&#39;, &#39;a&#39;, &#39;b&#39;);
+</code></pre><p>也可以使用 ES6 的箭头函数作为监听器。但是这样 <code>this</code> 关键词就不再指向 <code>EventEmitter</code> 实例：</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.on(&#39;event&#39;, (a, b) =&gt; {
+  console.log(a, b, this);
+  // 打印: a b {}
+});
+myEmitter.emit(&#39;event&#39;, &#39;a&#39;, &#39;b&#39;);
+</code></pre><h2 id=asynchronous-vs-synchronous>Asynchronous vs. Synchronous</h2><p><code>EventListener</code> 会按照监听器注册的顺序同步地调用所有监听器。 所以需要确保事件的正确排序且避免竞争条件或逻辑错误。 监听器函数可以使用 <code>setImmediate()</code> 或 <code>process.nextTick()</code> 方法切换到异步操作模式：</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.on(&#39;event&#39;, (a, b) =&gt; {
+  setImmediate(() =&gt; {
+    console.log(&#39;这个是异步发生的&#39;);
+  });
+});
+myEmitter.emit(&#39;event&#39;, &#39;a&#39;, &#39;b&#39;);
+</code></pre><h2 id=handling-events-only-once>Handling events only once</h2><p>当使用 <code>eventEmitter.on()</code> 方法注册监听器时，监听器会在每次触发命名事件时被调用。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+let m = 0;
+myEmitter.on(&#39;event&#39;, () =&gt; {
+  console.log(++m);
+});
+myEmitter.emit(&#39;event&#39;);
+// 打印: 1
+myEmitter.emit(&#39;event&#39;);
+// 打印: 2
+</code></pre><p>使用 <code>eventEmitter.once()</code> 方法时可以注册一个对于特定事件最多被调用一次的监听器。 当事件被触发时，监听器会被注销，然后再调用。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+let m = 0;
+myEmitter.once(&#39;event&#39;, () =&gt; {
+  console.log(++m);
+});
+myEmitter.emit(&#39;event&#39;);
+// 打印: 1
+myEmitter.emit(&#39;event&#39;);
+// 忽略
+</code></pre><h2 id=error-events>Error events</h2><p>当 <code>EventEmitter</code> 实例中发生错误时，会触发一个 <code>&#39;error&#39;</code> 事件。 这在 Node.js 中是特殊情况。</p><p>如果 <code>EventEmitter</code> 没有为 <code>&#39;error&#39;</code> 事件注册至少一个监听器，则当 <code>&#39;error&#39;</code> 事件触发时，会抛出错误、打印堆栈跟踪、且退出 Node.js 进程。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
+// 抛出错误，并使 Node.js 奔溃
+</code></pre><p>为了防止 Node.js 进程崩溃，可以在 <a href=process.html#process_event_uncaughtexception><code>process</code> 对象的 <code>uncaughtException</code> 事件</a>上注册监听器，或使用 <a href=domain.html><code>domain</code></a> 模块。 （注意，<code>domain</code> 模块已被废弃。）</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+
+process.on(&#39;uncaughtException&#39;, (err) =&gt; {
+  console.error(&#39;有错误&#39;);
+});
+
+myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
+// 打印: 有错误
+</code></pre><p>作为最佳实践，应该始终为 <code>&#39;error&#39;</code> 事件注册监听器。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.on(&#39;error&#39;, (err) =&gt; {
+  console.error(&#39;有错误&#39;);
+});
+myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
+// 打印: 有错误
+</code></pre><h2 id=class-eventemitter>Class: EventEmitter</h2><p><code>EventEmitter</code> 类由 <code>events</code> 模块定义和开放的：</p><pre><code class=lang-js>const EventEmitter = require(&#39;events&#39;);
+</code></pre><p>当新的监听器被添加时，所有的 EventEmitter 会触发 <code>&#39;newListener&#39;</code> 事件；当移除已存在的监听器时，则触发 <code>&#39;removeListener&#39;</code>。</p><h3 id=event-newlistener->Event: &#39;newListener&#39;</h3><ul><li><code>eventName</code> {any} 要监听的事件的名称</li><li><code>listener</code> {Function} 事件的句柄函数</li></ul><p><code>EventEmitter</code> 实例会在一个监听器被添加到其内部监听器数组之前触发自身的 <code>&#39;newListener&#39;</code> 事件。</p><p>注册了 <code>&#39;newListener&#39;</code> 事件的监听器会传入事件名与被添加的监听器的引用。</p><p>事实上，在添加监听器之前触发事件有一个微妙但重要的副作用： <code>&#39;newListener&#39;</code> 回调中任何额外的被注册到相同名称的监听器会在监听器被添加之前被插入 。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+// 只处理一次，所以不会无限循环
+myEmitter.once(&#39;newListener&#39;, (event, listener) =&gt; {
+  if (event === &#39;event&#39;) {
+    // 在开头插入一个新的监听器
+    myEmitter.on(&#39;event&#39;, () =&gt; {
+      console.log(&#39;B&#39;);
+    });
+  }
+});
+myEmitter.on(&#39;event&#39;, () =&gt; {
+  console.log(&#39;A&#39;);
+});
+myEmitter.emit(&#39;event&#39;);
+// 打印:
+//   B
+//   A
+</code></pre><h3 id=event-removelistener->Event: &#39;removeListener&#39;</h3><ul><li><code>eventName</code> {any} 事件名</li><li><code>listener</code> {Function} 事件句柄函数</li></ul><p><code>&#39;removeListener&#39;</code> 事件在 <code>listener</code> 被移除后触发。</p><h3 id=eventemitter-listenercount-emitter-eventname->EventEmitter.listenerCount(emitter, eventName)</h3><blockquote><p>稳定性: 0 - 废弃的: 使用 <a href=#events_emitter_listenercount_eventname><code>emitter.listenerCount()</code></a> 代替。</p></blockquote><p>A class method that returns the number of listeners for the given <code>eventName</code> registered on the given <code>emitter</code>.</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+myEmitter.on(&#39;event&#39;, () =&gt; {});
+myEmitter.on(&#39;event&#39;, () =&gt; {});
+console.log(EventEmitter.listenerCount(myEmitter, &#39;event&#39;));
+// Prints: 2
+</code></pre><h3 id=eventemitter-defaultmaxlisteners>EventEmitter.defaultMaxListeners</h3><p>每个事件默认可以注册最多 10 个监听器。 单个 <code>EventEmitter</code> 实例的限制可以使用 <a href=#events_emitter_setmaxlisteners_n><code>emitter.setMaxListeners(n)</code></a> 方法改变。 所有 <code>EventEmitter</code> 实例的默认值可以使用 <code>EventEmitter.defaultMaxListeners</code> 属性改变。 如果这个值不是正数, 那将抛出 <code>TypeError</code>错误.</p><p>设置 <code>EventEmitter.defaultMaxListeners</code> 要谨慎，因为会影响所有 <code>EventEmitter</code> 实例，包括之前创建的。 因而，调用 <a href=#events_emitter_setmaxlisteners_n><code>emitter.setMaxListeners(n)</code></a> 优先于 <code>EventEmitter.defaultMaxListeners</code>。</p><p>注意，这不是一个硬性限制。 <code>EventEmitter</code> 实例允许添加更多的监听器，但会向 <code>stderr</code> 输出跟踪警告，表明检测到一个可能的 EventEmitter 内存泄漏。 对于任何单个 <code>EventEmitter</code> 实例，<code>emitter.getMaxListeners()</code> 和 <code>emitter.setMaxListeners()</code> 方法可用于暂时地消除此警告：</p><pre><code class=lang-js>emitter.setMaxListeners(emitter.getMaxListeners() + 1);
+emitter.once(&#39;event&#39;, () =&gt; {
+  // 做些操作
+  emitter.setMaxListeners(Math.max(emitter.getMaxListeners() - 1, 0));
+});
+</code></pre><p><a href=cli.html#cli_trace_warnings><code>--trace-warnings</code></a> 命令行标志可用于显示此类警告的堆栈跟踪。</p><p>触发的警告可以使用 <a href=process.html#process_event_warning><code>process.on(&#39;warning&#39;)</code></a> 检查，还有额外的 <code>emitter</code>、<code>type</code> 和 <code>count</code> 属性，分别代表事件触发器实例的引用、事件的名称、和附加的监听器的数量。 Its <code>name</code> property is set to <code>&#39;MaxListenersExceededWarning&#39;</code>.</p><h3 id=emitter-addlistener-eventname-listener->emitter.addListener(eventName, listener)</h3><ul><li><code>eventName</code> {any}</li><li><code>listener</code> {Function}</li></ul><p>Alias for <code>emitter.on(eventName, listener)</code>.</p><h3 id=emitter-emit-eventname-args->emitter.emit(eventName[, ...args])</h3><ul><li><code>eventName</code> {any}</li><li><code>...args</code> {any}</li></ul><p>按监听器的注册顺序，同步地调用每个注册到名为 <code>eventName</code> 事件的监听器，并传入提供的参数。</p><p>如果事件有监听器，则返回 <code>true</code> ，否则返回 <code>false</code>。</p><h3 id=emitter-eventnames->emitter.eventNames()</h3><p>返回一个列出触发器已注册监听器的事件的数组。 数组中的值为字符串或符号。</p><pre><code class=lang-js>const EventEmitter = require(&#39;events&#39;);
+const myEE = new EventEmitter();
+myEE.on(&#39;foo&#39;, () =&gt; {});
+myEE.on(&#39;bar&#39;, () =&gt; {});
+
+const sym = Symbol(&#39;symbol&#39;);
+myEE.on(sym, () =&gt; {});
+
+console.log(myEE.eventNames());
+// 打印: [ &#39;foo&#39;, &#39;bar&#39;, Symbol(symbol) ]
+</code></pre><h3 id=emitter-getmaxlisteners->emitter.getMaxListeners()</h3><p>返回 <code>EventEmitter</code> 当前的最大监听器限制值，该值可以通过 <a href=#events_emitter_setmaxlisteners_n><code>emitter.setMaxListeners(n)</code></a> 设置或默认为 <a href=#events_eventemitter_defaultmaxlisteners><code>EventEmitter.defaultMaxListeners</code></a>。</p><h3 id=emitter-listenercount-eventname->emitter.listenerCount(eventName)</h3><ul><li><code>eventName</code> {any} 正在被监听的事件名</li></ul><p>返回正在监听名为 <code>eventName</code> 的事件的监听器的数量。</p><h3 id=emitter-listeners-eventname->emitter.listeners(eventName)</h3><ul><li><code>eventName</code> {any}</li></ul><p>返回名为 <code>eventName</code> 的事件的监听器数组的副本。</p><pre><code class=lang-js>server.on(&#39;connection&#39;, (stream) =&gt; {
+  console.log(&#39;someone connected!&#39;);
+});
+console.log(util.inspect(server.listeners(&#39;connection&#39;)));
+// 打印: [ [Function] ]
+</code></pre><h3 id=emitter-on-eventname-listener->emitter.on(eventName, listener)</h3><ul><li><code>eventName</code> {any} 事件名</li><li><code>listener</code> {Function} 回调函数</li></ul><p>添加 <code>listener</code> 函数到名为 <code>eventName</code> 的事件的监听器数组的末尾。 不会检查 <code>listener</code> 是否已被添加。 多次调用并传入相同的 <code>eventName</code> 和 <code>listener</code> 会导致 <code>listener</code> 被添加与调用多次。</p><pre><code class=lang-js>server.on(&#39;connection&#39;, (stream) =&gt; {
+  console.log(&#39;有连接！&#39;);
+});
+</code></pre><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><p>默认情况下，事件监听器会按照添加的顺序依次调用。 <code>emitter.prependListener()</code> 方法可用于将事件监听器添加到监听器数组的开头。</p><pre><code class=lang-js>const myEE = new EventEmitter();
+myEE.on(&#39;foo&#39;, () =&gt; console.log(&#39;a&#39;));
+myEE.prependListener(&#39;foo&#39;, () =&gt; console.log(&#39;b&#39;));
+myEE.emit(&#39;foo&#39;);
+// 打印:
+//   b
+//   a
+</code></pre><h3 id=emitter-once-eventname-listener->emitter.once(eventName, listener)</h3><ul><li><code>eventName</code> {any} 事件名</li><li><code>listener</code> {Function} 回调函数</li></ul><p>添加一个单次 <code>listener</code> 函数到名为 <code>eventName</code> 的事件。 下次触发 <code>eventName</code> 事件时，监听器会被移除，然后调用。</p><pre><code class=lang-js>server.once(&#39;connection&#39;, (stream) =&gt; {
+  console.log(&#39;首次调用！&#39;);
+});
+</code></pre><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><p>默认情况下，事件监听器会按照添加的顺序依次调用。 <code>emitter.prependOnceListener()</code> 方法可用于将事件监听器添加到监听器数组的开头。</p><pre><code class=lang-js>const myEE = new EventEmitter();
+myEE.once(&#39;foo&#39;, () =&gt; console.log(&#39;a&#39;));
+myEE.prependOnceListener(&#39;foo&#39;, () =&gt; console.log(&#39;b&#39;));
+myEE.emit(&#39;foo&#39;);
+// 打印:
+//   b
+//   a
+</code></pre><h3 id=emitter-prependlistener-eventname-listener->emitter.prependListener(eventName, listener)</h3><ul><li><code>eventName</code> {any} 事件名</li><li><code>listener</code> {Function} 回调函数</li></ul><p>添加 <code>listener</code> 函数到名为 <code>eventName</code> 的事件的监听器数组的开头。 不会检查 <code>listener</code> 是否已被添加。 多次调用并传入相同的 <code>eventName</code> 和 <code>listener</code> 会导致 <code>listener</code> 被添加与调用多次。</p><pre><code class=lang-js>server.prependListener(&#39;connection&#39;, (stream) =&gt; {
+  console.log(&#39;有连接！&#39;);
+});
+</code></pre><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><h3 id=emitter-prependoncelistener-eventname-listener->emitter.prependOnceListener(eventName, listener)</h3><ul><li><code>eventName</code> {any} 事件名</li><li><code>listener</code> {Function} 回调函数</li></ul><p>添加一个单次 <code>listener</code> 函数到名为 <code>eventName</code> 的事件的监听器数组的开头。 下次触发 <code>eventName</code> 事件时，监听器会被移除，然后调用。</p><pre><code class=lang-js>server.prependOnceListener(&#39;connection&#39;, (stream) =&gt; {
+  console.log(&#39;首次调用！&#39;);
+});
+</code></pre><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><h3 id=emitter-removealllisteners-eventname->emitter.removeAllListeners([eventName])</h3><ul><li><code>eventName</code> {any}</li></ul><p>移除全部或指定 <code>eventName</code> 的监听器。</p><p>注意，在代码中移除其他地方添加的监听器是一个不好的做法，尤其是当 <code>EventEmitter</code> 实例是其他组件或模块（如 socket 或文件流）创建的。</p><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><h3 id=emitter-removelistener-eventname-listener->emitter.removeListener(eventName, listener)</h3><ul><li><code>eventName</code> {any}</li><li><code>listener</code> {Function}</li></ul><p>从名为 <code>eventName</code> 的事件的监听器数组中移除指定的 <code>listener</code>。</p><pre><code class=lang-js>const callback = (stream) =&gt; {
+  console.log(&#39;有连接！&#39;);
+};
+server.on(&#39;connection&#39;, callback);
+// ...
+server.removeListener(&#39;connection&#39;, callback);
+</code></pre><p><code>removeListener</code> 最多只会从监听器数组里移除一个监听器实例。 如果任何单一的监听器被多次添加到指定 <code>eventName</code> 的监听器数组中，则必须多次调用 <code>removeListener</code> 才能移除每个实例。</p><p>注意，一旦一个事件被触发，所有绑定到它的监听器都会按顺序依次触发。 这意味着，在事件触发后、最后一个监听器完成执行前，任何 <code>removeListener()</code> 或 <code>removeAllListeners()</code> 调用都不会从 <code>emit()</code> 中移除它们。 随后的事件会像预期的那样发生。</p><pre><code class=lang-js>const myEmitter = new MyEmitter();
+
+const callbackA = () =&gt; {
+  console.log(&#39;A&#39;);
+  myEmitter.removeListener(&#39;event&#39;, callbackB);
+};
+
+const callbackB = () =&gt; {
+  console.log(&#39;B&#39;);
+};
+
+myEmitter.on(&#39;event&#39;, callbackA);
+
+myEmitter.on(&#39;event&#39;, callbackB);
+
+// callbackA 移除了监听器 callbackB，但它依然会被调用。
+// 触发是内部的监听器数组为 [callbackA, callbackB]
+myEmitter.emit(&#39;event&#39;);
+// 打印:
+//   A
+//   B
+
+// callbackB 被移除了。
+// 内部监听器数组为 [callbackA]
+myEmitter.emit(&#39;event&#39;);
+// 打印:
+//   A
+</code></pre><p>因为监听器是使用内部数组进行管理的，所以调用它会改变在监听器被移除后注册的任何监听器的位置索引。 虽然这不会影响监听器的调用顺序，但意味着由 <code>emitter.listeners()</code> 方法返回的监听器数组副本需要被重新创建。</p><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p><h3 id=emitter-setmaxlisteners-n->emitter.setMaxListeners(n)</h3><ul><li><code>n</code> {integer}</li></ul><p>默认情况下，如果为特定事件添加了超过 <code>10</code> 个监听器，则 <code>EventEmitter</code> 会打印一个警告。 此限制有助于寻找内存泄露。 但是，并不是所有的事件都要被限为 <code>10</code> 个。 <code>emitter.setMaxListeners()</code> 方法允许修改指定的 <code>EventEmitter</code> 实例的限制。 值设为 <code>Infinity</code>（或 <code>0</code>）表明不限制监听器的数量。</p><p>返回一个 <code>EventEmitter</code> 引用，可以链式调用。</p></div></div></div></body><script src=js/all.js></script></html>

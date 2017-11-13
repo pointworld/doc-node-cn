@@ -1,0 +1,838 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-errors">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="errors">
+            <div id="apicontent">
+                <h1 id="errors">Errors</h1>
+<!--type=misc-->
+<p>Node.js 中运行的应用程序一般会遇到以下四类错误：</p>
+<ul>
+<li>标准的 JavaScript 错误：<ul>
+<li>{EvalError} : 当调用 <code>eval()</code> 失败时抛出。</li>
+<li>{SyntaxError} : 当 JavaScript 语法错误时抛出。</li>
+<li>{RangeError} : 当值不在预期范围内时抛出。</li>
+<li>{ReferenceError} : 当使用未定义的变量时抛出。</li>
+<li>{TypeError} : 当传入错误类型的参数时抛出。</li>
+<li>{URIError} : 当全局的 URI 处理函数被误用时抛出。</li>
+</ul>
+</li>
+<li>由底层操作系触发的系统错误，例如试图打开一个不存在的文件、试图通过一个已关闭的 socket 发送数据等。</li>
+<li>由应用程序代码触发的用户自定义的错误。</li>
+<li>断言错误是错误的一个特殊类别，每当 Node.js 检测到一个不应该发生的异常逻辑时触发。
+这类错误通常由 <code>assert</code> 模块引起。</li>
+</ul>
+<p>所有由 Node.js 引起的 JavaScript 错误与系统错误都继承自或实例化自标准的 JavaScript {Error} 类，且保证至少提供类中的属性。</p>
+<h2 id="error-propagation-and-interception">Error Propagation and Interception</h2>
+<!--type=misc-->
+<p>Node.js 支持几种当应用程序运行时发生的错误的冒泡和处理的机制。
+如何报告和处理这些错误完全取决于错误的类型和被调用的 API 的风格。</p>
+<p>所有 JavaScript 错误都会被作为异常处理，异常会立即产生并使用标准的 JavaScript <code>throw</code> 机制抛出一个错误。
+这些都是使用 JavaScript 语言提供的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch"><code>try / catch</code> 语句</a>处理的。</p>
+<pre><code class="lang-js">// 抛出一个 ReferenceError，因为 z 为 undefined
+try {
+  const m = 1;
+  const n = m + z;
+} catch (err) {
+  // 在这里处理错误。
+}
+</code></pre>
+<p>JavaScript 的 <code>throw</code> 机制的任何使用都会引起异常，异常必须使用 <code>try / catch</code> 处理，否则 Node.js 进程会立即退出。</p>
+<p>除了少数例外，同步的 API（任何不接受 <code>callback</code> 函数的阻塞方法，例如 <a href="fs.html#fs_fs_readfilesync_path_options"><code>fs.readFileSync</code></a>）会使用 <code>throw</code> 报告错误。</p>
+<p>异步的 API 中发生的错误可能会以多种方式进行报告：</p>
+<ul>
+<li>大多数的异步方法都接受一个 <code>callback</code> 函数，该函数会接受一个 <code>Error</code> 对象传入作为第一个参数。
+如果第一个参数不是 <code>null</code> 而是一个 <code>Error</code> 实例，则说明发生了错误，应该进行处理。</li>
+</ul>
+<!-- eslint-disable no-useless-return -->
+<pre><code class="lang-js">  const fs = require(&#39;fs&#39;);
+  fs.readFile(&#39;一个不存在的文件&#39;, (err, data) =&gt; {
+    if (err) {
+      console.error(&#39;读取文件出错！&#39;, err);
+      return;
+    }
+    // 否则处理数据
+  });
+</code></pre>
+<ul>
+<li><p>当一个异步方法被一个 <code>EventEmitter</code> 对象调用时，错误会被分发到对象的 <code>&#39;error&#39;</code> 事件上。</p>
+<pre><code class="lang-js">const net = require(&#39;net&#39;);
+const connection = net.connect(&#39;localhost&#39;);
+
+// 添加一个 &#39;error&#39; 事件句柄到一个流：
+connection.on(&#39;error&#39;, (err) =&gt; {
+  // 如果连接被服务器重置，或无法连接，或发生任何错误，则错误会被发送到这里。 
+  console.error(err);
+});
+
+connection.pipe(process.stdout);
+</code></pre>
+</li>
+<li><p>Node.js API 中有一小部分普通的异步方法仍可能使用 <code>throw</code> 机制抛出异常，且必须使用 <code>try / catch</code> 处理。
+这些方法并没有一个完整的列表；请参阅各个方法的文档以确定所需的合适的错误处理机制。</p>
+</li>
+</ul>
+<p><code>&#39;error&#39;</code> 事件机制的使用常见于<a href="stream.html">基于流</a>和<a href="events.html#events_class_eventemitter">基于事件触发器</a>的 API，它们本身就代表了一系列的异步操作（相对于要么成功要么失败的单一操作）。</p>
+<p>对于所有的 <code>EventEmitter</code> 对象，如果没有提供一个 <code>&#39;error&#39;</code> 事件句柄，则错误会被抛出，并造成 Node.js 进程报告一个未处理的异常且随即崩溃，除非：
+适当地使用 <a href="domain.html"><code>domain</code></a> 模块或已经注册了一个 <a href="process.html#process_event_uncaughtexception"><code>process.on(&#39;uncaughtException&#39;)</code></a> 事件的句柄。</p>
+<pre><code class="lang-js">const EventEmitter = require(&#39;events&#39;);
+const ee = new EventEmitter();
+
+setImmediate(() =&gt; {
+  // 这会使进程崩溃，因为还为添加 &#39;error&#39; 事件句柄。
+  ee.emit(&#39;error&#39;, new Error(&#39;这会崩溃&#39;));
+});
+</code></pre>
+<p>这种方式产生的错误无法使用 <code>try / catch</code> 截获，因为它们是在调用的代码已经退出后抛出的。</p>
+<p>开发者必须查阅各个方法的文档以明确在错误发生时这些方法是如何冒泡的。</p>
+<h3 id="node-js-style-callbacks">Node.js style callbacks</h3>
+<!--type=misc-->
+<p>大多数由 Node.js 核心 API 暴露出来的异步方法都遵循一个被称为“Node.js 风格的回调”的惯用模式。
+使用这种模式，一个回调函数是作为一个参数传给方法的。
+当操作完成或发生错误时，回调函数会被调用，并带上错误对象（如果有）作为第一个参数。
+如果没有发生错误，则第一个参数为 <code>null</code>。</p>
+<pre><code class="lang-js">const fs = require(&#39;fs&#39;);
+
+function nodeStyleCallback(err, data) {
+  if (err) {
+    console.error(&#39;There was an error&#39;, err);
+    return;
+  }
+  console.log(data);
+}
+
+fs.readFile(&#39;/some/file/that/does-not-exist&#39;, nodeStyleCallback);
+fs.readFile(&#39;/some/file/that/does-exist&#39;, nodeStyleCallback);
+</code></pre>
+<p>JavaScript 的 <code>try / catch</code> 机制无法用于捕获由异步 API 引起的错误。
+尝试使用 <code>throw</code> 而不是一个 Node.js 风格的回调，是初学者常犯的错误：</p>
+<pre><code class="lang-js">// 这无法使用：
+const fs = require(&#39;fs&#39;);
+
+try {
+  fs.readFile(&#39;/some/file/that/does-not-exist&#39;, (err, data) =&gt; {
+    // 假设的错误：在这里抛出
+    if (err) {
+      throw err;
+    }
+  });
+} catch (err) {
+  // 这不会捕获到抛出！
+  console.error(err);
+}
+</code></pre>
+<p>这无法使用，因为传给 <code>fs.readFile()</code> 的回调函数是被异步地调用。
+当回调被调用时，周围的代码（包括 <code>try { } catch (err) { }</code> 区域）已经退出。
+大多数情况下，在回调内抛出一个错误会使 Node.js 进程崩溃。
+如果<a href="domain.html">域</a>已启用，或已在 <code>process.on(&#39;uncaughtException&#39;)</code> 注册了一个句柄，则这些错误可被捕获。</p>
+<h2 id="class-error">Class: Error</h2>
+<!--type=class-->
+<p>一个通用的 JavaScript <code>Error</code> 对象，它不表示错误发生的具体情况。
+<code>Error</code> 对象会捕捉一个“堆栈跟踪”，详细说明被实例化的 <code>Error</code> 对象在代码中的位置，并可能提供错误的文字描述。</p>
+<p>所有由 Node.js 产生的错误，包括所有系统的和 JavaScript 的错误都实例化自或继承自 <code>Error</code> 类。</p>
+<h3 id="new-error-message-">new Error(message)</h3>
+<ul>
+<li><code>message</code> {string}</li>
+</ul>
+<p>新建一个 <code>Error</code> 实例，并设置 <code>error.message</code> 属性以提供文本信息。
+如果 <code>message</code> 传的是一个对象，则会调用 <code>message.toString()</code> 生成文本信息。
+<code>error.stack</code> 属性表示被调用的 <code>new Error()</code> 在代码中的位置。
+堆栈跟踪是基于 <a href="https://github.com/v8/v8/wiki/Stack-Trace-API">V8 的堆栈跟踪 API</a> 的。
+堆栈跟踪只会取（a）异步代码执行的开头或（b）<code>Error.stackTraceLimit</code> 属性给出的栈帧中的最小项。</p>
+<h3 id="error-capturestacktrace-targetobject-constructoropt-">Error.captureStackTrace(targetObject[, constructorOpt])</h3>
+<ul>
+<li><code>targetObject</code> {Object}</li>
+<li><code>constructorOpt</code> {Function}</li>
+</ul>
+<p>在 <code>targetObject</code> 上创建一个 <code>.stack</code> 属性，当访问时返回一个表示代码中调用 <code>Error.captureStackTrace()</code> 的位置的字符串。</p>
+<pre><code class="lang-js">const myObject = {};
+Error.captureStackTrace(myObject);
+myObject.stack;  // 类似 `new Error().stack`
+</code></pre>
+<p>The first line of the trace will be prefixed with <code>${myObject.name}: ${myObject.message}</code>.</p>
+<p>可选的 <code>constructorOpt</code> 参数接受一个函数。
+如果提供了，则 <code>constructorOpt</code> 之上包括自身在内的全部栈帧都会被生成的堆栈跟踪省略。</p>
+<p><code>constructorOpt</code> 参数用在向最终用户隐藏错误生成的具体细节时非常有用。例如：</p>
+<pre><code class="lang-js">function MyError() {
+  Error.captureStackTrace(this, MyError);
+}
+
+// 没传入 MyError 到 captureStackTrace，MyError 帧会显示在 .stack 属性。
+// 通过传入构造函数，可以省略该帧，且保留其下面的所有帧。
+new MyError().stack;
+</code></pre>
+<h3 id="error-stacktracelimit">Error.stackTraceLimit</h3>
+<ul>
+<li>{number}</li>
+</ul>
+<p><code>Error.stackTraceLimit</code> 属性指定了堆栈跟踪收集的栈帧数量（无论是 <code>new Error().stack</code> 或 <code>Error.captureStackTrace(obj)</code> 产生的）。</p>
+<p>默认值为 <code>10</code> ，但可设为任何有效的 JavaScript 数值。
+值改变后的变化会影响所有捕获到的堆栈跟踪。</p>
+<p>如果设为一个非数值或负数，则堆栈跟踪不会捕捉任何栈帧。</p>
+<h4 id="error-code">error.code</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>error.code</code> 属性是标识错误类别的字符标签。详见 <a href="#nodejs-error-codes">Node.js Error Codes</a> 关于特定的错误码</p>
+<h4 id="error-message">error.message</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>error.message</code> 属性是错误的字符串描述，通过调用 <code>new Error(message)</code> 设置。
+传给构造函数的 <code>message</code> 也会出现在 <code>Error</code> 的堆栈跟踪的第一行。
+但是，<code>Error</code> 对象创建后改变这个属性可能不会改变堆栈跟踪的第一行（比如当 <code>error.stack</code> 在该属性被改变之前被读取）。</p>
+<pre><code class="lang-js">const err = new Error(&#39;错误信息&#39;);
+console.error(err.message);
+// 打印: 错误信息
+</code></pre>
+<h3 id="error-stack">error.stack</h3>
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>error.stack</code> 属性是一个字符串，描述代码中 <code>Error</code> 被实例化的位置。</p>
+<p>例子：</p>
+<pre><code class="lang-txt">Error: Things keep happening!
+   at /home/gbusey/file.js:525:2
+   at Frobnicator.refrobulate (/home/gbusey/business-logic.js:424:21)
+   at Actor.&lt;anonymous&gt; (/home/gbusey/actors.js:400:8)
+   at increaseSynergy (/home/gbusey/actors.js:701:6)
+</code></pre>
+<p>第一行会被格式化为 <code>&lt;error class name&gt;: &lt;error message&gt;</code>，且带上一系列栈帧（每一行都以 &quot;at &quot; 开头）。
+每一帧描述了一个代码中导致错误生成的调用点。
+V8 引擎会试图显示每个函数的名称（变量名、函数名、或对象的方法名），但偶尔也可能找不到一个合适的名称。
+如果 V8 引擎没法确定一个函数的名称，则只显示帧的位置信息。
+否则，在位置信息的旁边会显示明确的函数名。</p>
+<p>注意，帧只由 JavaScript 函数产生。
+例如，同步地执行一个名为 <code>cheetahify</code> 的 C++ 插件，且插件自身调用一个 JavaScript 函数，代表 <code>cheetahify</code> 回调的栈帧不会出现在堆栈跟踪里：</p>
+<pre><code class="lang-js">const cheetahify = require(&#39;./native-binding.node&#39;);
+
+function makeFaster() {
+  // cheetahify 同步地调用 speedy.
+  cheetahify(function speedy() {
+    throw new Error(&#39;oh no!&#39;);
+  });
+}
+
+makeFaster();
+// will throw:
+//   /home/gbusey/file.js:6
+//       throw new Error(&#39;oh no!&#39;);
+//           ^
+//   Error: oh no!
+//       at speedy (/home/gbusey/file.js:6:11)
+//       at makeFaster (/home/gbusey/file.js:5:3)
+//       at Object.&lt;anonymous&gt; (/home/gbusey/file.js:10:1)
+//       at Module._compile (module.js:456:26)
+//       at Object.Module._extensions..js (module.js:474:10)
+//       at Module.load (module.js:356:32)
+//       at Function.Module._load (module.js:312:12)
+//       at Function.Module.runMain (module.js:497:10)
+//       at startup (node.js:119:16)
+//       at node.js:906:3
+</code></pre>
+<p>位置信息会是其中之一：</p>
+<ul>
+<li><code>native</code>，帧表示一个 V8 引擎内部的调用（比如，<code>[].forEach</code>）。</li>
+<li><code>plain-filename.js:line:column</code>，帧表示一个 Node.js 内部的调用。</li>
+<li><code>/absolute/path/to/file.js:line:column</code>，帧表示一个用户程序或其依赖的调用。</li>
+</ul>
+<p>代表堆栈跟踪的字符串是在 <code>error.stack</code> 属性被访问时才生成的。</p>
+<p>堆栈跟踪捕获的帧的数量是由 <code>Error.stackTraceLimit</code> 或当前事件循环中可用的帧数量的最小值界定的。</p>
+<p>系统级的错误是由扩展的 <code>Error</code> 实例产生的，详见<a href="#errors_system_errors">系统错误</a>。</p>
+<h2 id="class-assertionerror">Class: AssertionError</h2>
+<p>A subclass of <code>Error</code> that indicates the failure of an assertion. Such errors
+commonly indicate inequality of actual and expected value.</p>
+<p>For example:</p>
+<pre><code class="lang-js">assert.strictEqual(1, 2);
+// AssertionError [ERR_ASSERTION]: 1 === 2
+</code></pre>
+<h2 id="class-rangeerror">Class: RangeError</h2>
+<p><code>Error</code> 的一个子类，表明一个函数的一个给定的参数的值不在可接受的集合或范围内；
+无论是一个数字范围还是给定函数参数的选项的集合。</p>
+<p>例子：</p>
+<pre><code class="lang-js">require(&#39;net&#39;).connect(-1);
+// 抛出 &quot;RangeError: &quot;port&quot; option should be &gt;= 0 and &lt; 65536: -1&quot;
+</code></pre>
+<p>Node.js 会生成并以参数校验的形式立即抛出 <code>RangeError</code> 实例。</p>
+<h2 id="class-referenceerror">Class: ReferenceError</h2>
+<p><code>Error</code> 的一个子类，表明试图访问一个未定义的变量。
+这些错误通常表明代码有拼写错误或程序已损坏。</p>
+<p>虽然客户端代码可能产生和传播这些错误，但在实践中，只有 V8 引擎会这么做。</p>
+<pre><code class="lang-js">doesNotExist;
+// 抛出 ReferenceError，在这个程序中 doesNotExist 不是一个变量。
+</code></pre>
+<p>除非应用程序是动态生成并运行的代码，否则 <code>ReferenceError</code> 实例应该始终被视为代码中或其依赖中的错误。</p>
+<h2 id="class-syntaxerror">Class: SyntaxError</h2>
+<p><code>Error</code> 的一个子类，表明程序不是有效的 JavaScript 代码。
+这些错误是代码执行的结果产生和传播的。
+代码执行可能产生自 <code>eval</code>、<code>Function</code>、<code>require</code> 或 <a href="vm.html">vm</a>。
+这些错误几乎都表明程序已损坏。</p>
+<pre><code class="lang-js">try {
+  require(&#39;vm&#39;).runInThisContext(&#39;binary ! isNotOk&#39;);
+} catch (err) {
+  // err 是一个 SyntaxError
+}
+</code></pre>
+<p><code>SyntaxError</code> 实例在创建它们的上下文中是不可恢复的。
+它们只可被其他上下文捕获。</p>
+<h2 id="class-typeerror">Class: TypeError</h2>
+<p><code>Error</code> 的一个子类，表明提供的参数不是一个被允许的类型。
+例如，将一个函数传给一个期望字符串的参数会被视为一个 <code>TypeError</code>。</p>
+<pre><code class="lang-js">require(&#39;url&#39;).parse(() =&gt; { });
+// 抛出 TypeError，因为它期望的是一个字符串
+</code></pre>
+<p>Node.js 会生成并以参数校验的形式立即抛出 <code>TypeError</code> 实例。</p>
+<h2 id="exceptions-vs-errors">Exceptions vs. Errors</h2>
+<!--type=misc-->
+<p>JavaScript 异常是一个作为一个无效操作的结果或作为一个 <code>throw</code> 声明的目标所抛出的值。
+虽然它不要求这些值是 <code>Error</code> 的实例或继承自 <code>Error</code> 的类的实例，但所有通过 Node.js 或 JavaScript 运行时抛出的异常都是 <code>Error</code> 实例。</p>
+<p>有些异常在 JavaScript 层是无法恢复的。
+这些异常总会引起 Node.js 进程的崩溃。
+例如 <code>assert()</code> 检测或在 C++ 层调用的 <code>abort()</code>。</p>
+<h2 id="system-errors">System Errors</h2>
+<p>系统错误是当程序运行环境中发生异常时产生的。
+特别是，当应用程序违反了操作系统的限制时发生的操作错误，例如试图读取一个不存在的文件或用户没有足够的权限。</p>
+<p>系统错误通常产生于系统调用层级。
+在大多数 Unix 系统上，可通过运行 <code>man 2 intro</code>、<code>man 3 errno</code>、或<a href="http://man7.org/linux/man-pages/man3/errno.3.html">在线文档</a>获取错误代码的详细清单和含义。</p>
+<p>系统错误是由扩展的 <code>Error</code> 对象加上附加属性表现的。</p>
+<h3 id="class-system-error">Class: System Error</h3>
+<h4 id="error-code">error.code</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>The <code>error.code</code> property is a string representing the error code, which is
+typically <code>E</code> followed by a sequence of capital letters.</p>
+<h4 id="error-errno">error.errno</h4>
+<ul>
+<li>{string|number}</li>
+</ul>
+<p><code>error.errno</code> 属性是一个数值或字符串。
+如果返回一个数值，则数值是一个负数，对应 <a href="http://docs.libuv.org/en/v1.x/errors.html"><code>libuv 错误处理</code></a> 中定义的错误码。
+详见 uv-errno.h 头文件（Node.js 源代码中的 <code>deps/uv/include/uv-errno.h</code>）。
+如果返回一个字符串，则同 <code>error.code</code>。</p>
+<h4 id="error-syscall">error.syscall</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>error.syscall</code> 属性是一个字符串，描述失败的 <a href="http://man7.org/linux/man-pages/man2/syscall.2.html">系统调用</a>。</p>
+<h4 id="error-path">error.path</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>When present (e.g. in <code>fs</code> or <code>child_process</code>), the <code>error.path</code> property is a
+string containing a relevant invalid pathname.</p>
+<h4 id="error-address">error.address</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>When present (e.g. in <code>net</code> or <code>dgram</code>), the <code>error.address</code> property is a
+string describing the address to which the connection failed.</p>
+<h4 id="error-port">error.port</h4>
+<ul>
+<li>{number}</li>
+</ul>
+<p>When present (e.g. in <code>net</code> or <code>dgram</code>), the <code>error.port</code> property is a number
+representing the connection&#39;s port that is not available.</p>
+<h3 id="common-system-errors">Common System Errors</h3>
+<p>以下列表是不完整的，但列举了编写 Node.js 程序时会遇到的一些常见的系统错误。
+详细的列表可从 <a href="http://man7.org/linux/man-pages/man3/errno.3.html">ERRNO 文档</a>找到。</p>
+<ul>
+<li><p><code>EACCES</code> (拒绝访问): 试图以被一个文件的访问权限禁止的方式访问一个文件。</p>
+</li>
+<li><p><code>EADDRINUSE</code> (地址已被使用):  试图绑定一个服务器（<a href="net.html"><code>net</code></a>、<a href="http.html"><code>http</code></a> 或 <a href="https.html"><code>https</code></a>）到本地地址，但因另一个本地系统的服务器已占用了该地址而导致失败。</p>
+</li>
+<li><p><code>ECONNREFUSED</code> (连接被拒绝): 无法连接，因为目标机器积极拒绝。
+这通常是因为试图连接到外部主机上的废弃的服务。</p>
+</li>
+<li><p><code>ECONNRESET</code> (连接被重置): 一个连接被强行关闭。
+这通常是因为连接到远程 socket 超时或重启。
+常发生于 <a href="http.html"><code>http</code></a> 和 <a href="net.html"><code>net</code></a> 模块。</p>
+</li>
+<li><p><code>EEXIST</code> (文件已存在): 一个操作的目标文件已存在，而要求目标不存在。</p>
+</li>
+<li><p><code>EISDIR</code> (是一个目录): 一个操作要求一个文件，但给定的路径是一个目录。</p>
+</li>
+<li><p><code>EMFILE</code> (系统打开了太多文件): 已达到系统<a href="https://en.wikipedia.org/wiki/File_descriptor">文件描述符</a>允许的最大数量，且描述符的请求不能被满足直到至少关闭其中一个。
+当一次并行打开多个文件时会发生这个错误，尤其是在进程的文件描述限制数量较低的操作系统（如 macOS）。
+要解决这个限制，可在运行 Node.js 进程的同一 shell 中运行 <code>ulimit -n 2048</code>。</p>
+</li>
+<li><p><code>ENOENT</code> (无此文件或目录): 通常是由 <a href="fs.html"><code>fs</code></a> 操作引起的，表明指定的路径不存在，即给定的路径找不到文件或目录。</p>
+</li>
+<li><p><code>ENOTDIR</code> (不是一个目录): 给定的路径虽然存在，但不是一个目录。
+通常是由 <a href="fs.html#fs_fs_readdir_path_options_callback"><code>fs.readdir</code></a> 引起的。</p>
+</li>
+<li><p><code>ENOTEMPTY</code> (目录非空): 一个操作的目标是一个非空的目录，而要求的是一个空目录。
+通常是由 <a href="fs.html#fs_fs_unlink_path_callback"><code>fs.unlink</code></a> 引起的。</p>
+</li>
+<li><p><code>EPERM</code> (操作不被允许): 试图执行一个需要更高权限的操作。</p>
+</li>
+<li><p><code>EPIPE</code> (管道损坏): 写入一个管道、socket 或 FIFO 时没有进程读取数据。
+常见于 <a href="net.html"><code>net</code></a> 和 <a href="http.html"><code>http</code></a> 层，表明远端要写入的流已被关闭。</p>
+</li>
+<li><p><code>ETIMEDOUT</code> (操作超时): 一个连接或发送的请求失败，因为连接方在一段时间后没有做出合适的响应。
+常见于 <a href="http.html"><code>http</code></a> 或 <a href="net.html"><code>net</code></a>。
+往往标志着 <code>socket.end()</code> 没有被正确地调用。</p>
+</li>
+</ul>
+<p><a id="nodejs-error-codes"></a></p>
+<h2 id="node-js-error-codes">Node.js Error Codes</h2>
+<p><a id="ERR_ARG_NOT_ITERABLE"></a></p>
+<h3 id="err_arg_not_iterable">ERR_ARG_NOT_ITERABLE</h3>
+<p>Used generically to identify that an iterable argument (i.e. a value that works
+with <code>for...of</code> loops) is required, but not provided to a Node.js API.</p>
+<p><a id="ERR_ASSERTION"></a></p>
+<h3 id="err_assertion">ERR_ASSERTION</h3>
+<p>Used as special type of error that can be triggered whenever Node.js detects an
+exceptional logic violation that should never occur. These are raised typically
+by the <code>assert</code> module.</p>
+<p><a id="ERR_BUFFER_OUT_OF_BOUNDS"></a></p>
+<h3 id="err_buffer_out_of_bounds">ERR_BUFFER_OUT_OF_BOUNDS</h3>
+<p>Used when attempting to perform an operation outside the bounds of a <code>Buffer</code>.</p>
+<p><a id="ERR_CHILD_CLOSED_BEFORE_REPLY"></a></p>
+<h3 id="err_child_closed_before_reply">ERR_CHILD_CLOSED_BEFORE_REPLY</h3>
+<p>Used when a child process is closed before the parent received a reply.</p>
+<p><a id="ERR_CONSOLE_WRITABLE_STREAM"></a></p>
+<h3 id="err_console_writable_stream">ERR_CONSOLE_WRITABLE_STREAM</h3>
+<p>Used when <code>Console</code> is instantiated without <code>stdout</code> stream or when <code>stdout</code> or
+<code>stderr</code> streams are not writable.</p>
+<p><a id="ERR_CPU_USAGE"></a></p>
+<h3 id="err_cpu_usage">ERR_CPU_USAGE</h3>
+<p>Used when the native call from <code>process.cpuUsage</code> cannot be processed properly.</p>
+<p><a id="ERR_DNS_SET_SERVERS_FAILED"></a></p>
+<h3 id="err_dns_set_servers_failed">ERR_DNS_SET_SERVERS_FAILED</h3>
+<p>Used when <code>c-ares</code> failed to set the DNS server.</p>
+<p><a id="ERR_FALSY_VALUE_REJECTION"></a></p>
+<h3 id="err_falsy_value_rejection">ERR_FALSY_VALUE_REJECTION</h3>
+<p>Used by the <code>util.callbackify()</code> API when a callbackified <code>Promise</code> is rejected
+with a falsy value (e.g. <code>null</code>).</p>
+<p><a id="ERR_HTTP_HEADERS_SENT"></a></p>
+<h3 id="err_http_headers_sent">ERR_HTTP_HEADERS_SENT</h3>
+<p>Used when headers have already been sent and another attempt is made to add
+more headers.</p>
+<p><a id="ERR_HTTP_INVALID_STATUS_CODE"></a></p>
+<h3 id="err_http_invalid_status_code">ERR_HTTP_INVALID_STATUS_CODE</h3>
+<p>Used for status codes outside the regular status code ranges (100-999).</p>
+<p><a id="ERR_HTTP_TRAILER_INVALID"></a></p>
+<h3 id="err_http_trailer_invalid">ERR_HTTP_TRAILER_INVALID</h3>
+<p>Used when the <code>Trailer</code> header is set even though the transfer encoding does not
+support that.</p>
+<p><a id="ERR_HTTP2_CONNECT_AUTHORITY"></a></p>
+<h3 id="err_http2_connect_authority">ERR_HTTP2_CONNECT_AUTHORITY</h3>
+<p>For HTTP/2 requests using the <code>CONNECT</code> method, the <code>:authority</code> pseudo-header
+is required.</p>
+<p><a id="ERR_HTTP2_CONNECT_PATH"></a></p>
+<h3 id="err_http2_connect_path">ERR_HTTP2_CONNECT_PATH</h3>
+<p>For HTTP/2 requests using the <code>CONNECT</code> method, the <code>:path</code> pseudo-header is
+forbidden.</p>
+<p><a id="ERR_HTTP2_CONNECT_SCHEME"></a></p>
+<h3 id="err_http2_connect_scheme">ERR_HTTP2_CONNECT_SCHEME</h3>
+<p>The HTTP/2 requests using the <code>CONNECT</code> method, the <code>:scheme</code> pseudo-header is
+forbidden.</p>
+<p><a id="ERR_HTTP2_ERROR"></a></p>
+<h3 id="err_http2_error">ERR_HTTP2_ERROR</h3>
+<p>A non-specific HTTP/2 error has occurred.</p>
+<p><a id="ERR_HTTP2_FRAME_ERROR"></a></p>
+<h3 id="err_http2_frame_error">ERR_HTTP2_FRAME_ERROR</h3>
+<p>Used when a failure occurs sending an individual frame on the HTTP/2
+session.</p>
+<p><a id="ERR_HTTP2_HEADERS_OBJECT"></a></p>
+<h3 id="err_http2_headers_object">ERR_HTTP2_HEADERS_OBJECT</h3>
+<p>Used when an HTTP/2 Headers Object is expected.</p>
+<p><a id="ERR_HTTP2_HEADERS_SENT"></a></p>
+<h3 id="err_http2_headers_sent">ERR_HTTP2_HEADERS_SENT</h3>
+<p>Used when an attempt is made to send multiple response headers.</p>
+<p><a id="ERR_HTTP2_HEADER_SINGLE_VALUE"></a></p>
+<h3 id="err_http2_header_single_value">ERR_HTTP2_HEADER_SINGLE_VALUE</h3>
+<p>Used when multiple values have been provided for an HTTP header field that
+required to have only a single value.</p>
+<p><a id="ERR_HTTP2_INFO_HEADERS_AFTER_RESPOND"></a></p>
+<h3 id="err_http2_info_headers_after_respond">ERR_HTTP2_INFO_HEADERS_AFTER_RESPOND</h3>
+<p>HTTP/2 Informational headers must only be sent <em>prior</em> to calling the
+<code>Http2Stream.prototype.respond()</code> method.</p>
+<p><a id="ERR_HTTP2_INFO_STATUS_NOT_ALLOWED"></a></p>
+<h3 id="err_http2_info_status_not_allowed">ERR_HTTP2_INFO_STATUS_NOT_ALLOWED</h3>
+<p>Informational HTTP status codes (<code>1xx</code>) may not be set as the response status
+code on HTTP/2 responses.</p>
+<p><a id="ERR_HTTP2_INVALID_CONNECTION_HEADERS"></a></p>
+<h3 id="err_http2_invalid_connection_headers">ERR_HTTP2_INVALID_CONNECTION_HEADERS</h3>
+<p>HTTP/1 connection specific headers are forbidden to be used in HTTP/2
+requests and responses.</p>
+<p><a id="ERR_HTTP2_INVALID_HEADER_VALUE"></a></p>
+<h3 id="err_http2_invalid_header_value">ERR_HTTP2_INVALID_HEADER_VALUE</h3>
+<p>Used to indicate that an invalid HTTP/2 header value has been specified.</p>
+<p><a id="ERR_HTTP2_INVALID_INFO_STATUS"></a></p>
+<h3 id="err_http2_invalid_info_status">ERR_HTTP2_INVALID_INFO_STATUS</h3>
+<p>An invalid HTTP informational status code has been specified. Informational
+status codes must be an integer between <code>100</code> and <code>199</code> (inclusive).</p>
+<p><a id="ERR_HTTP2_INVALID_PACKED_SETTINGS_LENGTH"></a></p>
+<p>Input <code>Buffer</code> and <code>Uint8Array</code> instances passed to the
+<code>http2.getUnpackedSettings()</code> API must have a length that is a multiple of
+six.</p>
+<p><a id="ERR_HTTP2_INVALID_PSEUDOHEADER"></a></p>
+<h3 id="err_http2_invalid_pseudoheader">ERR_HTTP2_INVALID_PSEUDOHEADER</h3>
+<p>Only valid HTTP/2 pseudoheaders (<code>:status</code>, <code>:path</code>, <code>:authority</code>, <code>:scheme</code>,
+and <code>:method</code>) may be used.</p>
+<p><a id="ERR_HTTP2_INVALID_SESSION"></a></p>
+<h3 id="err_http2_invalid_session">ERR_HTTP2_INVALID_SESSION</h3>
+<p>Used when any action is performed on an <code>Http2Session</code> object that has already
+been destroyed.</p>
+<p><a id="ERR_HTTP2_INVALID_SETTING_VALUE"></a></p>
+<h3 id="err_http2_invalid_setting_value">ERR_HTTP2_INVALID_SETTING_VALUE</h3>
+<p>An invalid value has been specified for an HTTP/2 setting.</p>
+<p><a id="ERR_HTTP2_INVALID_STREAM"></a></p>
+<h3 id="err_http2_invalid_stream">ERR_HTTP2_INVALID_STREAM</h3>
+<p>Used when an operation has been performed on a stream that has already been
+destroyed.</p>
+<p><a id="ERR_HTTP2_MAX_PENDING_SETTINGS_ACK"></a></p>
+<h3 id="err_http2_max_pending_settings_ack">ERR_HTTP2_MAX_PENDING_SETTINGS_ACK</h3>
+<p>Whenever an HTTP/2 <code>SETTINGS</code> frame is sent to a connected peer, the peer is
+required to send an acknowledgement that it has received and applied the new
+SETTINGS. By default, a maximum number of un-acknowledged <code>SETTINGS</code> frame may
+be sent at any given time. This error code is used when that limit has been
+reached.</p>
+<p><a id="ERR_HTTP2_OUT_OF_STREAMS"></a></p>
+<h3 id="err_http2_out_of_streams">ERR_HTTP2_OUT_OF_STREAMS</h3>
+<p>Used when the maximum number of streams on a single HTTP/2 session have been
+created.</p>
+<p><a id="ERR_HTTP2_PAYLOAD_FORBIDDEN"></a></p>
+<h3 id="err_http2_payload_forbidden">ERR_HTTP2_PAYLOAD_FORBIDDEN</h3>
+<p>Used when a message payload is specified for an HTTP response code for which
+a payload is forbidden.</p>
+<p><a id="ERR_HTTP2_PSEUDOHEADER_NOT_ALLOWED"></a></p>
+<h3 id="err_http2_pseudoheader_not_allowed">ERR_HTTP2_PSEUDOHEADER_NOT_ALLOWED</h3>
+<p>Used to indicate that an HTTP/2 pseudo-header has been used inappropriately.
+Pseudo-headers are header key names that begin with the <code>:</code> prefix.</p>
+<p><a id="ERR_HTTP2_PUSH_DISABLED"></a></p>
+<h3 id="err_http2_push_disabled">ERR_HTTP2_PUSH_DISABLED</h3>
+<p>Used when push streams have been disabled by the client but an attempt to
+create a push stream is made.</p>
+<p><a id="ERR_HTTP2_SEND_FILE"></a></p>
+<h3 id="err_http2_send_file">ERR_HTTP2_SEND_FILE</h3>
+<p>Used when an attempt is made to use the
+<code>Http2Stream.prototype.responseWithFile()</code> API to send a non-regular file.</p>
+<p><a id="ERR_HTTP2_SOCKET_BOUND"></a></p>
+<h3 id="err_http2_socket_bound">ERR_HTTP2_SOCKET_BOUND</h3>
+<p>Used when an attempt is made to connect a <code>Http2Session</code> object to a
+<code>net.Socket</code> or <code>tls.TLSSocket</code> that has already been bound to another
+<code>Http2Session</code> object.</p>
+<p><a id="ERR_HTTP2_STATUS_101"></a></p>
+<h3 id="err_http2_status_101">ERR_HTTP2_STATUS_101</h3>
+<p>Use of the <code>101</code> Informational status code is forbidden in HTTP/2.</p>
+<p><a id="ERR_HTTP2_STATUS_INVALID"></a></p>
+<h3 id="err_http2_status_invalid">ERR_HTTP2_STATUS_INVALID</h3>
+<p>An invalid HTTP status code has been specified. Status codes must be an integer
+between <code>100</code> and <code>599</code> (inclusive).</p>
+<p><a id="ERR_HTTP2_STREAM_CLOSED"></a></p>
+<h3 id="err_http2_stream_closed">ERR_HTTP2_STREAM_CLOSED</h3>
+<p>Used when an action has been performed on an HTTP/2 Stream that has already
+been closed.</p>
+<p><a id="ERR_HTTP2_STREAM_ERROR"></a></p>
+<h3 id="err_http2_stream_error">ERR_HTTP2_STREAM_ERROR</h3>
+<p>Used when a non-zero error code has been specified in an <code>RST_STREAM</code> frame.</p>
+<p><a id="ERR_HTTP2_STREAM_SELF_DEPENDENCY"></a></p>
+<h3 id="err_http2_stream_self_dependency">ERR_HTTP2_STREAM_SELF_DEPENDENCY</h3>
+<p>When setting the priority for an HTTP/2 stream, the stream may be marked as
+a dependency for a parent stream. This error code is used when an attempt is
+made to mark a stream and dependent of itself.</p>
+<p><a id="ERR_HTTP2_UNSUPPORTED_PROTOCOL"></a></p>
+<h3 id="err_http2_unsupported_protocol">ERR_HTTP2_UNSUPPORTED_PROTOCOL</h3>
+<p>Used when <code>http2.connect()</code> is passed a URL that uses any protocol other than
+<code>http:</code> or <code>https:</code>.</p>
+<p><a id="ERR_INDEX_OUT_OF_RANGE"></a></p>
+<h3 id="err_index_out_of_range">ERR_INDEX_OUT_OF_RANGE</h3>
+<p>Used when a given index is out of the accepted range (e.g. negative offsets).</p>
+<p><a id="ERR_INVALID_ARG_TYPE"></a></p>
+<h3 id="err_invalid_arg_type">ERR_INVALID_ARG_TYPE</h3>
+<p>Used generically to identify that an argument of the wrong type has been passed
+to a Node.js API.</p>
+<p><a id="ERR_INVALID_ARRAY_LENGTH"></a></p>
+<h3 id="err_invalid_array_length">ERR_INVALID_ARRAY_LENGTH</h3>
+<p>Used when an Array is not of the expected length or in a valid range.</p>
+<p><a id="ERR_INVALID_BUFFER_SIZE"></a></p>
+<h3 id="err_invalid_buffer_size">ERR_INVALID_BUFFER_SIZE</h3>
+<p>Used when performing a swap on a <code>Buffer</code> but it&#39;s size is not compatible with the operation.</p>
+<p><a id="ERR_INVALID_CALLBACK"></a></p>
+<h3 id="err_invalid_callback">ERR_INVALID_CALLBACK</h3>
+<p>Used generically to identify that a callback function is required and has not
+been provided to a Node.js API.</p>
+<p><a id="ERR_INVALID_CHAR"></a></p>
+<h3 id="err_invalid_char">ERR_INVALID_CHAR</h3>
+<p>Used when invalid characters are detected in headers.</p>
+<p><a id="ERR_INVALID_CURSOR_POS"></a></p>
+<h3 id="err_invalid_cursor_pos">ERR_INVALID_CURSOR_POS</h3>
+<p>The <code>&#39;ERR_INVALID_CURSOR_POS&#39;</code> is thrown specifically when a cursor on a given
+stream is attempted to move to a specified row without a specified column.</p>
+<p><a id="ERR_INVALID_DOMAIN_NAME"></a></p>
+<h3 id="err_invalid_domain_name">ERR_INVALID_DOMAIN_NAME</h3>
+<p>Used when <code>hostname</code> can not be parsed from a provided URL.</p>
+<p><a id="ERR_INVALID_FD"></a></p>
+<h3 id="err_invalid_fd">ERR_INVALID_FD</h3>
+<p>Used when a file descriptor (&#39;fd&#39;) is not valid (e.g. it has a negative value).</p>
+<p><a id="ERR_INVALID_FILE_URL_HOST"></a></p>
+<h3 id="err_invalid_file_url_host">ERR_INVALID_FILE_URL_HOST</h3>
+<p>Used when a Node.js API that consumes <code>file:</code> URLs (such as certain functions in
+the <a href="fs.html"><code>fs</code></a> module) encounters a file URL with an incompatible host. Currently,
+this situation can only occur on Unix-like systems, where only <code>localhost</code> or an
+empty host is supported.</p>
+<p><a id="ERR_INVALID_FILE_URL_PATH"></a></p>
+<h3 id="err_invalid_file_url_path">ERR_INVALID_FILE_URL_PATH</h3>
+<p>Used when a Node.js API that consumes <code>file:</code> URLs (such as certain
+functions in the <a href="fs.html"><code>fs</code></a> module) encounters a file URL with an incompatible
+path. The exact semantics for determining whether a path can be used is
+platform-dependent.</p>
+<p><a id="ERR_INVALID_HANDLE_TYPE"></a></p>
+<h3 id="err_invalid_handle_type">ERR_INVALID_HANDLE_TYPE</h3>
+<p>Used when an attempt is made to send an unsupported &quot;handle&quot; over an IPC
+communication channel to a child process. See <a href="child_process.html#child_process_subprocess_send_message_sendhandle_options_callback"><code>subprocess.send()</code></a> and
+<a href="process.html#process_process_send_message_sendhandle_options_callback"><code>process.send()</code></a> for more information.</p>
+<p><a id="ERR_INVALID_HTTP_TOKEN"></a></p>
+<h3 id="err_invalid_http_token">ERR_INVALID_HTTP_TOKEN</h3>
+<p>Used when <code>options.method</code> received an invalid HTTP token.</p>
+<p><a id="ERR_INVALID_IP_ADDRESS"></a></p>
+<h3 id="err_invalid_ip_address">ERR_INVALID_IP_ADDRESS</h3>
+<p>Used when an IP address is not valid.</p>
+<p><a id="ERR_INVALID_OPT_VALUE"></a></p>
+<h3 id="err_invalid_opt_value">ERR_INVALID_OPT_VALUE</h3>
+<p>Used generically to identify when an invalid or unexpected value has been
+passed in an options object.</p>
+<p><a id="ERR_INVALID_OPT_VALUE_ENCODING"></a></p>
+<h3 id="err_invalid_opt_value_encoding">ERR_INVALID_OPT_VALUE_ENCODING</h3>
+<p>Used when an invalid or unknown file encoding is passed.</p>
+<p><a id="ERR_INVALID_PROTOCOL"></a></p>
+<h3 id="err_invalid_protocol">ERR_INVALID_PROTOCOL</h3>
+<p>Used when an invalid <code>options.protocol</code> is passed.</p>
+<p><a id="ERR_INVALID_REPL_EVAL_CONFIG"></a></p>
+<h3 id="err_invalid_repl_eval_config">ERR_INVALID_REPL_EVAL_CONFIG</h3>
+<p>Used when both <code>breakEvalOnSigint</code> and <code>eval</code> options are set
+in the REPL config, which is not supported.</p>
+<p><a id="ERR_INVALID_SYNC_FORK_INPUT"></a></p>
+<h3 id="err_invalid_sync_fork_input">ERR_INVALID_SYNC_FORK_INPUT</h3>
+<p>Used when a <code>Buffer</code>, <code>Uint8Array</code> or <code>string</code> is provided as stdio input to a
+synchronous fork. See the documentation for the
+<a href="child_process.html"><code>child_process</code></a> module for more information.</p>
+<p><a id="ERR_INVALID_THIS"></a></p>
+<h3 id="err_invalid_this">ERR_INVALID_THIS</h3>
+<p>Used generically to identify that a Node.js API function is called with an
+incompatible <code>this</code> value.</p>
+<p>Example:</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+const urlSearchParams = new URLSearchParams(&#39;foo=bar&amp;baz=new&#39;);
+
+const buf = Buffer.alloc(1);
+urlSearchParams.has.call(buf, &#39;foo&#39;);
+// Throws a TypeError with code &#39;ERR_INVALID_THIS&#39;
+</code></pre>
+<p><a id="ERR_INVALID_TUPLE"></a></p>
+<h3 id="err_invalid_tuple">ERR_INVALID_TUPLE</h3>
+<p>Used when an element in the <code>iterable</code> provided to the <a href="url.html#url_the_whatwg_url_api">WHATWG</a> <a href="url.html#url_constructor_new_urlsearchparams_iterable"><code>URLSearchParams</code> constructor</a> does not
+represent a <code>[name, value]</code> tuple – that is, if an element is not iterable, or
+does not consist of exactly two elements.</p>
+<p><a id="ERR_INVALID_URL"></a></p>
+<h3 id="err_invalid_url">ERR_INVALID_URL</h3>
+<p>Used when an invalid URL is passed to the <a href="url.html#url_the_whatwg_url_api">WHATWG</a>
+<a href="url.html#url_constructor_new_url_input_base"><code>URL</code> constructor</a> to be parsed. The thrown error object
+typically has an additional property <code>&#39;input&#39;</code> that contains the URL that failed
+to parse.</p>
+<p><a id="ERR_INVALID_URL_SCHEME"></a></p>
+<h3 id="err_invalid_url_scheme">ERR_INVALID_URL_SCHEME</h3>
+<p>Used generically to signify an attempt to use a URL of an incompatible scheme
+(aka protocol) for a specific purpose. It is currently only used in the
+<a href="url.html#url_the_whatwg_url_api">WHATWG URL API</a> support in the <a href="fs.html"><code>fs</code></a> module (which only accepts URLs with
+<code>&#39;file&#39;</code> scheme), but may be used in other Node.js APIs as well in the future.</p>
+<p><a id="ERR_IPC_CHANNEL_CLOSED"></a></p>
+<h3 id="err_ipc_channel_closed">ERR_IPC_CHANNEL_CLOSED</h3>
+<p>Used when an attempt is made to use an IPC communication channel that has
+already been closed.</p>
+<p><a id="ERR_IPC_DISCONNECTED"></a></p>
+<h3 id="err_ipc_disconnected">ERR_IPC_DISCONNECTED</h3>
+<p>Used when an attempt is made to disconnect an already disconnected IPC
+communication channel between two Node.js processes. See the documentation for
+the <a href="child_process.html"><code>child_process</code></a> module for more information.</p>
+<p><a id="ERR_IPC_ONE_PIPE"></a></p>
+<h3 id="err_ipc_one_pipe">ERR_IPC_ONE_PIPE</h3>
+<p>Used when an attempt is made to create a child Node.js process using more than
+one IPC communication channel. See the documentation for the
+<a href="child_process.html"><code>child_process</code></a> module for more information.</p>
+<p><a id="ERR_IPC_SYNC_FORK"></a></p>
+<h3 id="err_ipc_sync_fork">ERR_IPC_SYNC_FORK</h3>
+<p>Used when an attempt is made to open an IPC communication channel with a
+synchronous forked Node.js process. See the documentation for the
+<a href="child_process.html"><code>child_process</code></a> module for more information.</p>
+<p><a id="ERR_METHOD_NOT_IMPLEMENTED"></a></p>
+<h3 id="err_method_not_implemented">ERR_METHOD_NOT_IMPLEMENTED</h3>
+<p>Used when a method is required but not implemented.</p>
+<p><a id="ERR_MISSING_ARGS"></a></p>
+<h3 id="err_missing_args">ERR_MISSING_ARGS</h3>
+<p>Used when a required argument of a Node.js API is not passed. This is only used
+for strict compliance with the API specification (which in some cases may accept
+<code>func(undefined)</code> but not <code>func()</code>). In most native Node.js APIs,
+<code>func(undefined)</code> and <code>func()</code> are treated identically, and the
+<a href="#ERR_INVALID_ARG_TYPE"><code>ERR_INVALID_ARG_TYPE</code></a> error code may be used instead.</p>
+<p><a id="ERR_MULTIPLE_CALLBACK"></a></p>
+<h3 id="err_multiple_callback">ERR_MULTIPLE_CALLBACK</h3>
+<p>Used when a callback is called more then once.</p>
+<p><em>Note</em>: A callback is almost always meant to only be called once as the query
+can either be fulfilled or rejected but not both at the same time. The latter
+would be possible by calling a callback more then once.</p>
+<p><a id="ERR_NO_CRYPTO"></a></p>
+<h3 id="err_no_crypto">ERR_NO_CRYPTO</h3>
+<p>Used when an attempt is made to use crypto features while Node.js is not
+compiled with OpenSSL crypto support.</p>
+<p><a id="ERR_NO_ICU"></a></p>
+<h3 id="err_no_icu">ERR_NO_ICU</h3>
+<p>Used when an attempt is made to use features that require <a href="intl.html#intl_internationalization_support">ICU</a>, while
+Node.js is not compiled with ICU support.</p>
+<p><a id="ERR_NO_LONGER_SUPPORTED"></a></p>
+<h3 id="err_no_longer_supported">ERR_NO_LONGER_SUPPORTED</h3>
+<p>Used when a Node.js API is called in an unsupported manner.</p>
+<p>For example: <code>Buffer.write(string, encoding, offset[, length])</code></p>
+<p><a id="ERR_PARSE_HISTORY_DATA"></a></p>
+<h3 id="err_parse_history_data">ERR_PARSE_HISTORY_DATA</h3>
+<p><a id="ERR_SOCKET_ALREADY_BOUND"></a></p>
+<h3 id="err_socket_already_bound">ERR_SOCKET_ALREADY_BOUND</h3>
+<p>Used when an attempt is made to bind a socket that has already been bound.</p>
+<p><a id="ERR_SOCKET_BAD_PORT"></a></p>
+<h3 id="err_socket_bad_port">ERR_SOCKET_BAD_PORT</h3>
+<p>Used when an API function expecting a port &gt; 0 and &lt; 65536 receives an invalid
+value.</p>
+<p><a id="ERR_SOCKET_BAD_TYPE"></a></p>
+<h3 id="err_socket_bad_type">ERR_SOCKET_BAD_TYPE</h3>
+<p>Used when an API function expecting a socket type (<code>udp4</code> or <code>udp6</code>) receives an
+invalid value.</p>
+<p><a id="ERR_SOCKET_CANNOT_SEND"></a></p>
+<h3 id="err_socket_cannot_send">ERR_SOCKET_CANNOT_SEND</h3>
+<p>Used when data cannot be sent on a socket.</p>
+<p><a id="ERR_SOCKET_DGRAM_NOT_RUNNING"></a></p>
+<h3 id="err_socket_dgram_not_running">ERR_SOCKET_DGRAM_NOT_RUNNING</h3>
+<p>Used when a call is made and the UDP subsystem is not running.</p>
+<p><a id="ERR_STDERR_CLOSE"></a></p>
+<h3 id="err_stderr_close">ERR_STDERR_CLOSE</h3>
+<p>Used when an attempt is made to close the <code>process.stderr</code> stream. By design,
+Node.js does not allow <code>stdout</code> or <code>stderr</code> Streams to be closed by user code.</p>
+<p><a id="ERR_STDOUT_CLOSE"></a></p>
+<h3 id="err_stdout_close">ERR_STDOUT_CLOSE</h3>
+<p>Used when an attempt is made to close the <code>process.stdout</code> stream. By design,
+Node.js does not allow <code>stdout</code> or <code>stderr</code> Streams to be closed by user code.</p>
+<p><a id="ERR_STREAM_WRAP"></a></p>
+<h3 id="err_stream_wrap">ERR_STREAM_WRAP</h3>
+<p>Used to prevent an abort if a string decoder was set on the Socket or if in
+<code>objectMode</code>.</p>
+<p>Example</p>
+<pre><code class="lang-js">const Socket = require(&#39;net&#39;).Socket;
+const instance = new Socket();
+
+instance.setEncoding(&#39;utf-8&#39;);
+</code></pre>
+<p><a id="ERR_UNKNOWN_BUILTIN_MODULE"></a></p>
+<h3 id="err_unknown_builtin_module">ERR_UNKNOWN_BUILTIN_MODULE</h3>
+<p>Used to identify a specific kind of internal Node.js error that should not
+typically be triggered by user code. Instances of this error point to an
+internal bug within the Node.js binary itself.</p>
+<p><a id="ERR_UNESCAPED_CHARACTERS"></a></p>
+<h3 id="err_unescaped_characters">ERR_UNESCAPED_CHARACTERS</h3>
+<p>Used when a string that contains unescaped characters was received.</p>
+<p><a id="ERR_UNKNOWN_ENCODING"></a></p>
+<h3 id="err_unknown_encoding">ERR_UNKNOWN_ENCODING</h3>
+<p>Used when an invalid or unknown encoding option is passed to an API.</p>
+<p><a id="ERR_UNKNOWN_SIGNAL"></a></p>
+<h3 id="err_unknown_signal">ERR_UNKNOWN_SIGNAL</h3>
+<p>Used when an invalid or unknown process signal is passed to an API expecting a
+valid signal (such as <a href="child_process.html#child_process_subprocess_kill_signal"><code>subprocess.kill()</code></a>).</p>
+<p><a id="ERR_UNKNOWN_STDIN_TYPE"></a></p>
+<h3 id="err_unknown_stdin_type">ERR_UNKNOWN_STDIN_TYPE</h3>
+<p>Used when an attempt is made to launch a Node.js process with an unknown <code>stdin</code>
+file type. Errors of this kind cannot <em>typically</em> be caused by errors in user
+code, although it is not impossible. Occurrences of this error are most likely
+an indication of a bug within Node.js itself.</p>
+<p><a id="ERR_UNKNOWN_STREAM_TYPE"></a></p>
+<h3 id="err_unknown_stream_type">ERR_UNKNOWN_STREAM_TYPE</h3>
+<p>Used when an attempt is made to launch a Node.js process with an unknown
+<code>stdout</code> or <code>stderr</code> file type. Errors of this kind cannot <em>typically</em> be caused
+by errors in user code, although it is not impossible. Occurrences of this error
+are most likely an indication of a bug within Node.js itself.</p>
+<p><a id="ERR_VALUE_OUT_OF_RANGE"></a></p>
+<h3 id="err_value_out_of_range">ERR_VALUE_OUT_OF_RANGE</h3>
+<p>Used when a number value is out of range.</p>
+<p><a id="ERR_V8BREAKITERATOR"></a></p>
+<h3 id="err_v8breakiterator">ERR_V8BREAKITERATOR</h3>
+<p>Used when the V8 BreakIterator API is used but the full ICU data set is not
+installed.</p>
+<p><a id="ERR_VALUE_OUT_OF_RANGE"></a></p>
+<h3 id="err_value_out_of_range">ERR_VALUE_OUT_OF_RANGE</h3>
+<p>Used when a given value is out of the accepted range.</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

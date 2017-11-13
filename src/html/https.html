@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-https">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="https">
+            <div id="apicontent">
+                <h1 id="https">HTTPS</h1>
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<p>HTTPS 是 HTTP 基于 TLS/SSL 的版本。在 Node.js 中，它被实现为一个独立的模块。</p>
+<h2 id="class-https-agent">Class: https.Agent</h2>
+<!-- YAML
+added: v0.4.5
+-->
+<p>HTTPS 的一个类似于 <a href="http.html#http_class_http_agent"><code>http.Agent</code></a> 的代理对象。查看 <a href="#https_https_request_options_callback"><code>https.request()</code></a> 获取更多信息。</p>
+<h2 id="class-https-server">Class: https.Server</h2>
+<!-- YAML
+added: v0.4.5
+-->
+<p>HTTPS 的一个类似于 <a href="http.html#http_class_http_agent"><code>http.Agent</code></a> 的代理对象。查看 <a href="#https_https_request_options_callback"><code>https.request()</code></a> 获取更多信息。</p>
+<h3 id="server-settimeout-msecs-callback-">server.setTimeout([msecs][, callback])</h3>
+<!-- YAML
+added: v0.11.2
+-->
+<ul>
+<li><code>msecs</code> {number} 默认值是 120000 (2 分钟).</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<p>查看 <a href="http.html#http_server_settimeout_msecs_callback"><code>http.Server#setTimeout()</code></a>。</p>
+<h3 id="server-timeout">server.timeout</h3>
+<!-- YAML
+added: v0.11.2
+-->
+<ul>
+<li>{number} 默认值是 120000 (2 分钟).</li>
+</ul>
+<p>查看 <a href="http.html#http_server_timeout"><code>http.Server#timeout</code></a>。</p>
+<h3 id="server-keepalivetimeout">server.keepAliveTimeout</h3>
+<!-- YAML
+added: v8.0.0
+-->
+<ul>
+<li>{number} 默认值是 5000 (5 秒钟).
+查看 <a href="http.html#http_server_keepalivetimeout"><code>http.Server#keepAliveTimeout</code></a>.</li>
+</ul>
+<h2 id="https-createserver-options-requestlistener-">https.createServer([options][, requestListener])</h2>
+<!-- YAML
+added: v0.3.4
+-->
+<ul>
+<li><code>options</code> {Object} 接受来自 <a href="tls.html#tls_tls_createserver_options_secureconnectionlistener"><code>tls.createServer()</code></a> 和 <a href="tls.html#tls_tls_createsecurecontext_options"><code>tls.createSecureContext()</code></a> 的 <code>options</code> .</li>
+<li><code>requestListener</code> {Function} 添加到 <code>request</code> 事件的监听器.</li>
+</ul>
+<p>例子:</p>
+<pre><code class="lang-js">// curl -k https://localhost:8000/
+const https = require(&#39;https&#39;);
+const fs = require(&#39;fs&#39;);
+
+const options = {
+  key: fs.readFileSync(&#39;test/fixtures/keys/agent2-key.pem&#39;),
+  cert: fs.readFileSync(&#39;test/fixtures/keys/agent2-cert.pem&#39;)
+};
+
+https.createServer(options, (req, res) =&gt; {
+  res.writeHead(200);
+  res.end(&#39;hello world\n&#39;);
+}).listen(8000);
+</code></pre>
+<p>或者</p>
+<pre><code class="lang-js">const https = require(&#39;https&#39;);
+const fs = require(&#39;fs&#39;);
+
+const options = {
+  pfx: fs.readFileSync(&#39;test/fixtures/test_cert.pfx&#39;),
+  passphrase: &#39;sample&#39;
+};
+
+https.createServer(options, (req, res) =&gt; {
+  res.writeHead(200);
+  res.end(&#39;hello world\n&#39;);
+}).listen(8000);
+</code></pre>
+<h3 id="server-close-callback-">server.close([callback])</h3>
+<!-- YAML
+added: v0.1.90
+-->
+<ul>
+<li><code>callback</code> {Function}</li>
+</ul>
+<p>查看 <a href="http.html#http_server_close_callback"><code>http.close()</code></a> 获取细节。</p>
+<h3 id="server-listen-handle-callback-">server.listen(handle[, callback])</h3>
+<ul>
+<li><code>handle</code> {Object}</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<h3 id="server-listen-path-callback-">server.listen(path[, callback])</h3>
+<ul>
+<li><code>path</code> {string}</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<h3 id="server-listen-port-host-backlog-callback-">server.listen([port][, host][, backlog][, callback])</h3>
+<ul>
+<li><code>port</code> {number}</li>
+<li><code>hostname</code> {string}</li>
+<li><code>backlog</code> {number}</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<p>查看 <a href="http.html#http_server_listen_port_hostname_backlog_callback"><code>http.listen()</code></a> 获取细节。</p>
+<h2 id="https-get-options-callback-">https.get(options[, callback])</h2>
+<ul>
+<li><code>port</code> {number}</li>
+<li><code>hostname</code> {string}</li>
+<li><code>backlog</code> {number}</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<p>查看 <a href="http.html#http_server_listen_port_hostname_backlog_callback"><code>http.listen()</code></a> 获取细节。</p>
+<h2 id="https-globalagent">https.globalAgent</h2>
+<!-- YAML
+added: v0.5.9
+-->
+<p><a href="#https_class_https_agent"><code>https.Agent</code></a> 的全局实例，用于所有 HTTPS 客户端请求。</p>
+<h2 id="https-request-options-callback-">https.request(options[, callback])</h2>
+<!-- YAML
+added: v0.3.6
+changes:
+  - version: v7.5.0
+    pr-url: https://github.com/nodejs/node/pull/10638
+    description: The `options` parameter can be a WHATWG `URL` object.
+-->
+<ul>
+<li><code>options</code> {Object | string | URL} Accepts all <code>options</code> from <a href="http.html#http_http_request_options_callback"><code>http.request()</code></a>,
+with some differences in default values:<ul>
+<li><code>protocol</code> Defaults to <code>https:</code></li>
+<li><code>port</code> Defaults to <code>443</code>.</li>
+<li><code>agent</code> Defaults to <code>https.globalAgent</code>.</li>
+</ul>
+</li>
+<li><code>callback</code> {Function}</li>
+</ul>
+<p>向一个安全的服务器发起一个请求。</p>
+<p>The following additional <code>options</code> from <a href="tls.html#tls_tls_connect_options_callback"><code>tls.connect()</code></a> are also accepted when using a
+  custom <a href="#https_class_https_agent"><code>Agent</code></a>:
+  <code>pfx</code>, <code>key</code>, <code>passphrase</code>, <code>cert</code>, <code>ca</code>, <code>ciphers</code>, <code>rejectUnauthorized</code>, <code>secureProtocol</code>, <code>servername</code></p>
+<p>参数 <code>options</code> 可以是一个对象、或字符串、或 <a href="url.html#url_the_whatwg_url_api"><code>URL</code></a> 对象。
+如果参数 <code>options</code> 是一个字符串, 它自动被 <a href="url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost"><code>url.parse()</code></a> 所解析。
+If it is a <a href="url.html#url_the_whatwg_url_api"><code>URL</code></a> object, it will be automatically converted to an ordinary <code>options</code> object.</p>
+<p>例子:</p>
+<pre><code class="lang-js">const https = require(&#39;https&#39;);
+
+const options = {
+  hostname: &#39;encrypted.google.com&#39;,
+  port: 443,
+  path: &#39;/&#39;,
+  method: &#39;GET&#39;
+};
+
+const req = https.request(options, (res) =&gt; {
+  console.log(&#39;状态码：&#39;, res.statusCode);
+  console.log(&#39;请求头：&#39;, res.headers);
+
+  res.on(&#39;data&#39;, (d) =&gt; {
+    process.stdout.write(d);
+  });
+});
+
+req.on(&#39;error&#39;, (e) =&gt; {
+  console.error(e);
+});
+req.end();
+</code></pre>
+<p>Example using options from <a href="tls.html#tls_tls_connect_options_callback"><code>tls.connect()</code></a>:</p>
+<pre><code class="lang-js">const options = {
+  hostname: &#39;encrypted.google.com&#39;,
+  port: 443,
+  path: &#39;/&#39;,
+  method: &#39;GET&#39;,
+  key: fs.readFileSync(&#39;test/fixtures/keys/agent2-key.pem&#39;),
+  cert: fs.readFileSync(&#39;test/fixtures/keys/agent2-cert.pem&#39;)
+};
+options.agent = new https.Agent(options);
+
+const req = https.request(options, (res) =&gt; {
+  // ...
+});
+</code></pre>
+<p>也可以不对连接池使用 <code>Agent</code>。</p>
+<p>例子:</p>
+<pre><code class="lang-js">const options = {
+  hostname: &#39;encrypted.google.com&#39;,
+  port: 443,
+  path: &#39;/&#39;,
+  method: &#39;GET&#39;,
+  key: fs.readFileSync(&#39;test/fixtures/keys/agent2-key.pem&#39;),
+  cert: fs.readFileSync(&#39;test/fixtures/keys/agent2-cert.pem&#39;),
+  agent: false
+};
+
+const req = https.request(options, (res) =&gt; {
+  // ...
+});
+</code></pre>
+<p>Example using a <a href="url.html#url_the_whatwg_url_api"><code>URL</code></a> as <code>options</code>:</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+
+const options = new URL(&#39;https://abc:xyz@example.com&#39;);
+
+const req = https.request(options, (res) =&gt; {
+  // ...
+});
+</code></pre>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

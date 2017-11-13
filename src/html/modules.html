@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-modules">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="modules">
+            <div id="apicontent">
+                <h1 id="modules">Modules</h1>
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<!--name=module-->
+<p>Node.js 有一个简单的模块加载系统。
+在 Node.js 中，文件和模块是一一对应的（每个文件被视为一个独立的模块）。</p>
+<p>例子，假设有一个名为 <code>foo.js</code> 的文件：</p>
+<pre><code class="lang-js">const circle = require(&#39;./circle.js&#39;);
+console.log(`半径为 4 的圆的面积是 ${circle.area(4)}`);
+</code></pre>
+<p>在第一行中，<code>foo.js</code> 加载了同一目录下的 <code>circle.js</code> 模块。</p>
+<p><code>circle.js</code> 文件的内容为：</p>
+<pre><code class="lang-js">const { PI } = Math;
+
+exports.area = (r) =&gt; PI * r ** 2;
+
+exports.circumference = (r) =&gt; 2 * PI * r;
+</code></pre>
+<p><code>circle.js</code> 模块导出了 <code>area()</code> 和 <code>circumference()</code> 两个函数。
+通过在特殊的 <code>exports</code> 对象上指定额外的属性，函数和对象可以被添加到模块的根部。</p>
+<p>模块内的本地变量是私有的，因为模块被 Node.js 包装在一个函数中（详见<a href="#modules_the_module_wrapper">模块包装器</a>）。
+在这个例子中，变量 <code>PI</code> 是 <code>circle.js</code> 私有的。</p>
+<p><code>module.exports</code>属性可以被赋予一个新的值（例如函数或对象）。</p>
+<p>如下，<code>bar.js</code> 会用到 <code>square</code> 模块，<code>square</code> 导出一个构造函数：</p>
+<pre><code class="lang-js">const square = require(&#39;./square.js&#39;);
+const mySquare = square(2);
+console.log(`正方形的面积是 ${mySquare.area()}`);
+</code></pre>
+<p><code>square</code> 模块定义在 <code>square.js</code> 中：</p>
+<pre><code class="lang-js">// 赋值给 `exports` 不会修改模块，必须使用 `module.exports`
+module.exports = (width) =&gt; {
+  return {
+    area: () =&gt; width ** 2
+  };
+};
+</code></pre>
+<p>模块系统在 <code>require(&#39;module&#39;)</code> 模块中实现。</p>
+<h2 id="accessing-the-main-module">Accessing the main module</h2>
+<!-- type=misc -->
+<p>当 Node.js 直接运行一个文件时，<code>require.main</code> 会被设为它的 <code>module</code>。
+这意味着可以通过 <code>require.main === module</code> 来判断一个文件是否被直接运行：</p>
+<p>对于 <code>foo.js</code> 文件，如果通过 <code>node foo.js</code> 运行则为 <code>true</code>，但如果通过 <code>require(&#39;./foo&#39;)</code> 运行则为 <code>false</code>。</p>
+<p>因为 <code>module</code> 提供了一个 <code>filename</code> 属性（通常等同于 <code>__filename</code>），所以可以通过检查 <code>require.main.filename</code> 来获取当前应用程序的入口点。</p>
+<h2 id="addenda-package-manager-tips">Addenda: Package Manager Tips</h2>
+<!-- type=misc -->
+<p>Node.js 的 <code>require()</code> 函数的语义被设计得足够通用化，可以支持许多合理的目录结构。
+包管理器程序（如 <code>dpkg</code>、<code>rpm</code> 和 <code>npm</code>）可以不用修改就能够从 Node.js 模块构建本地包。</p>
+<p>以下是一个推荐的目录结构：</p>
+<p>假设想要在 <code>/usr/lib/node/&lt;some-package&gt;/&lt;some-version&gt;</code> 目录中保存一个特定版本的包的内容。</p>
+<p>包可以依赖于其他包。
+为了安装包 <code>foo</code>，可能需要安装一个指定版本的 <code>bar</code> 包。
+<code>bar</code> 包也可能有依赖，且在某些情况下，依赖可能有冲突或形成循环。</p>
+<p>因为 Node.js 会查找它所加载的模块的实际路径（也就是说会解析符号链接），然后在 <code>node_modules</code> 目录中寻找它们的依赖，<a href="#modules_loading_from_node_modules_folders">如下所述</a>，这种情况使用以下体系结构很容易解决：</p>
+<ul>
+<li><code>/usr/lib/node/foo/1.2.3/</code> - <code>foo</code> 包的内容，版本 1.2.3。</li>
+<li><code>/usr/lib/node/bar/4.3.2/</code> - <code>foo</code> 依赖的 <code>bar</code> 包的内容。</li>
+<li><code>/usr/lib/node/foo/1.2.3/node_modules/bar</code> - <code>/usr/lib/node/bar/4.3.2/</code> 的符号链接。</li>
+<li><code>/usr/lib/node/bar/4.3.2/node_modules/*</code> - <code>bar</code> 所依赖的包的符号链接</li>
+</ul>
+<p>因此，即便存在循环依赖或依赖冲突，每个模块还是可以获得它所依赖的包的一个可用版本。</p>
+<p>当 <code>foo</code> 包中的代码调用 <code>require(&#39;bar&#39;)</code>，它会获得符号链接 <code>/usr/lib/node/foo/1.2.3/node_modules/bar</code> 指向的版本。
+然后，当 <code>bar</code> 包中的代码调用 <code>require(&#39;queue&#39;)</code>，它会获得符号链接 <code>/usr/lib/node/bar/4.3.2/node_modules/quux</code> 指向的版本。</p>
+<p>此外，为了进一步优化模块查找过程，不要将包直接放在 <code>/usr/lib/node</code> 目录中，而是将它们放在 <code>/usr/lib/node_modules/&lt;name&gt;/&lt;version&gt;</code> 目录中。
+这样 Node.js 就不会在 <code>/usr/node_modules</code> 或 <code>/node_modules</code> 目录中查找缺失的依赖。</p>
+<p>为了使模块在 Node.js 的 REPL 中可用，可能需要将 <code>/usr/lib/node_modules</code> 目录添加到 <code>$NODE_PATH</code> 环境变量中。
+由于在 <code>node_modules</code> 目录中查找模块使用的是相对路径，而调用 <code>require()</code> 的文件是基于实际路径的，因此包本身可以放在任何地方。</p>
+<h2 id="all-together-">All Together...</h2>
+<!-- type=misc -->
+<p>Node.js 的 <code>require()</code> 函数的语义被设计得足够通用化，可以支持许多合理的目录结构。
+包管理器程序（如 <code>dpkg</code>、<code>rpm</code> 和 <code>npm</code>）可以不用修改就能够从 Node.js 模块构建本地包。</p>
+<p>以下是一个推荐的目录结构：</p>
+<p>假设想要在 <code>/usr/lib/node/&lt;some-package&gt;/&lt;some-version&gt;</code> 目录中保存一个特定版本的包的内容。</p>
+<p>包可以依赖于其他包。
+为了安装包 <code>foo</code>，可能需要安装一个指定版本的 <code>bar</code> 包。
+<code>bar</code> 包也可能有依赖，且在某些情况下，依赖可能有冲突或形成循环。</p>
+<p>因为 Node.js 会查找它所加载的模块的实际路径（也就是说会解析符号链接），然后在 <code>node_modules</code> 目录中寻找它们的依赖，<a href="#modules_loading_from_node_modules_folders">如下所述</a>，这种情况使用以下体系结构很容易解决：</p>
+<ul>
+<li><code>/usr/lib/node/foo/1.2.3/</code> - <code>foo</code> 包的内容，版本 1.2.3。</li>
+<li><code>/usr/lib/node/bar/4.3.2/</code> - <code>foo</code> 依赖的 <code>bar</code> 包的内容。</li>
+<li><code>/usr/lib/node/foo/1.2.3/node_modules/bar</code> - <code>/usr/lib/node/bar/4.3.2/</code> 的符号链接。</li>
+<li><code>/usr/lib/node/bar/4.3.2/node_modules/*</code> - <code>bar</code> 所依赖的包的符号链接</li>
+</ul>
+<p>因此，即便存在循环依赖或依赖冲突，每个模块还是可以获得它所依赖的包的一个可用版本。</p>
+<p>当 <code>foo</code> 包中的代码调用 <code>require(&#39;bar&#39;)</code>，它会获得符号链接 <code>/usr/lib/node/foo/1.2.3/node_modules/bar</code> 指向的版本。
+然后，当 <code>bar</code> 包中的代码调用 <code>require(&#39;queue&#39;)</code>，它会获得符号链接 <code>/usr/lib/node/bar/4.3.2/node_modules/quux</code> 指向的版本。</p>
+<p>此外，为了进一步优化模块查找过程，不要将包直接放在 <code>/usr/lib/node</code> 目录中，而是将它们放在 <code>/usr/lib/node_modules/&lt;name&gt;/&lt;version&gt;</code> 目录中。
+这样 Node.js 就不会在 <code>/usr/node_modules</code> 或 <code>/node_modules</code> 目录中查找缺失的依赖。</p>
+<p>为了使模块在 Node.js 的 REPL 中可用，可能需要将 <code>/usr/lib/node_modules</code> 目录添加到 <code>$NODE_PATH</code> 环境变量中。
+由于在 <code>node_modules</code> 目录中查找模块使用的是相对路径，而调用 <code>require()</code> 的文件是基于实际路径的，因此包本身可以放在任何地方。</p>
+<h2 id="caching">Caching</h2>
+<!--type=misc-->
+<p>模块在第一次加载后会被缓存。
+这也意味着（类似其他缓存机制）如果每次调用 <code>require(&#39;foo&#39;)</code> 都解析到同一文件，则返回相同的对象。</p>
+<p>多次调用 <code>require(foo)</code> 不会导致模块的代码被执行多次。
+这是一个重要的特性。
+借助它, 可以返回“部分完成”的对象，从而允许加载传递的依赖, 即使它们会导致循环。</p>
+<p>如果想要多次执行一个模块，可以导出一个函数，然后调用该函数。</p>
+<h3 id="module-caching-caveats">Module Caching Caveats</h3>
+<!--type=misc-->
+<p>模块是基于其解析的文件名进行缓存的。
+由于调用模块的位置的不同，模块可能被解析成不同的文件名（比如从 <code>node_modules</code> 目录加载），这样就不能保证 <code>require(&#39;foo&#39;)</code> 总能返回完全相同的对象。</p>
+<p>此外，在不区分大小写的文件系统或操作系统中，被解析成不同的文件名可以指向同一文件，但缓存仍然会将它们视为不同的模块，并多次重新加载。
+例如，<code>require(&#39;./foo&#39;)</code> 和 <code>require(&#39;./FOO&#39;)</code> 返回两个不同的对象，而不会管 <code>./foo</code> 和 <code>./FOO</code> 是否是相同的文件。</p>
+<h2 id="core-modules">Core Modules</h2>
+<!--type=misc-->
+<p>模块是基于其解析的文件名进行缓存的。
+由于调用模块的位置的不同，模块可能被解析成不同的文件名（比如从 <code>node_modules</code> 目录加载），这样就不能保证 <code>require(&#39;foo&#39;)</code> 总能返回完全相同的对象。</p>
+<p>此外，在不区分大小写的文件系统或操作系统中，被解析成不同的文件名可以指向同一文件，但缓存仍然会将它们视为不同的模块，并多次重新加载。
+例如，<code>require(&#39;./foo&#39;)</code> 和 <code>require(&#39;./FOO&#39;)</code> 返回两个不同的对象，而不会管 <code>./foo</code> 和 <code>./FOO</code> 是否是相同的文件。</p>
+<h2 id="cycles">Cycles</h2>
+<!--type=misc-->
+<p>当循环调用 <code>require()</code> 时，一个模块可能在未完成执行时被返回。</p>
+<p>例如以下情况:</p>
+<p><code>a.js</code>:</p>
+<pre><code class="lang-js">console.log(&#39;a 开始&#39;);
+exports.done = false;
+const b = require(&#39;./b.js&#39;);
+console.log(&#39;在 a 中，b.done = %j&#39;, b.done);
+exports.done = true;
+console.log(&#39;a 结束&#39;);
+</code></pre>
+<p><code>b.js</code>:</p>
+<pre><code class="lang-js">console.log(&#39;b 开始&#39;);
+exports.done = false;
+const a = require(&#39;./a.js&#39;);
+console.log(&#39;在 b 中，a.done = %j&#39;, a.done);
+exports.done = true;
+console.log(&#39;b 结束&#39;);
+</code></pre>
+<p><code>main.js</code>:</p>
+<pre><code class="lang-js">console.log(&#39;main 开始&#39;);
+const a = require(&#39;./a.js&#39;);
+const b = require(&#39;./b.js&#39;);
+console.log(&#39;在 main 中，a.done=%j，b.done=%j&#39;, a.done, b.done);
+</code></pre>
+<p>当 <code>main.js</code> 加载 <code>a.js</code> 时，<code>a.js</code> 又加载 <code>b.js</code>。
+此时，<code>b.js</code> 会尝试去加载 <code>a.js</code>。
+为了防止无限的循环，会返回一个 <code>a.js</code> 的 <code>exports</code> 对象的 <strong>未完成的副本</strong> 给 <code>b.js</code> 模块。
+然后 <code>b.js</code> 完成加载，并将 <code>exports</code> 对象提供给 <code>a.js</code> 模块。</p>
+<p>当 <code>main.js</code> 加载这两个模块时，它们都已经完成加载。
+因此，该程序的输出会是：</p>
+<pre><code class="lang-txt">$ node main.js
+main 开始
+a 开始
+b 开始
+在 b 中，a.done = false
+b 结束
+在 a 中，b.done = true
+a 结束
+在 main 中，a.done=true，b.done=true
+</code></pre>
+<p>需要仔细的规划, 以允许循环模块依赖在应用程序内正常工作.</p>
+<!--type=misc-->
+<p>如果按确切的文件名没有找到模块，则 Node.js 会尝试带上 <code>.js</code>、<code>.json</code> 或 <code>.node</code> 拓展名再加载。</p>
+<p><code>.js</code> 文件会被解析为 JavaScript 文本文件，<code>.json</code> 文件会被解析为 JSON 文本文件。
+<code>.node</code> 文件会被解析为通过 <code>dlopen</code> 加载的编译后的插件模块。</p>
+<p>以 <code>&#39;/&#39;</code> 为前缀的模块是文件的绝对路径。
+例如，<code>require(&#39;/home/marco/foo.js&#39;)</code> 会加载 <code>/home/marco/foo.js</code> 文件。</p>
+<p>以 <code>&#39;./&#39;</code> 为前缀的模块是相对于调用 <code>require()</code> 的文件的。
+也就是说，<code>circle.js</code> 必须和 <code>foo.js</code> 在同一目录下以便于 <code>require(&#39;./circle&#39;)</code> 找到它。</p>
+<p>当没有以 <code>&#39;/&#39;</code>、<code>&#39;./&#39;</code> 或 <code>&#39;../&#39;</code> 开头来表示文件时，这个模块必须是一个核心模块或加载自 <code>node_modules</code> 目录。</p>
+<p>如果给定的路径不存在，则 <code>require()</code> 会抛出一个 <code>code</code> 属性为 <code>&#39;MODULE_NOT_FOUND&#39;</code> 的 <a href="errors.html#errors_class_error"><code>Error</code></a>。</p>
+<h2 id="folders-as-modules">Folders as Modules</h2>
+<!--type=misc-->
+<p>可以把程序和库放到一个单独的目录，然后提供一个单一的入口来指向它。
+把目录递给 <code>require()</code> 作为一个参数，有三种方式。</p>
+<p>第一种方式是在根目录下创建一个 <code>package.json</code> 文件，并指定一个 <code>main</code> 模块。
+例子，<code>package.json</code> 文件类似：</p>
+<pre><code class="lang-json">{ &quot;name&quot; : &quot;some-library&quot;,
+  &quot;main&quot; : &quot;./lib/some-library.js&quot; }
+</code></pre>
+<p>如果这是在 <code>./some-library</code> 目录中，则 <code>require(&#39;./some-library&#39;)</code> 会试图加载 <code>./some-library/lib/some-library.js</code>。</p>
+<p>这就是 Node.js 处理 <code>package.json</code> 文件的方式。</p>
+<p>注意：如果 <code>package.json</code> 中 <code>&quot;main&quot;</code> 入口指定的文件不存在，则无法解析，Node.js 会将模块视为不存在，并抛出默认错误：</p>
+<pre><code class="lang-txt">Error: Cannot find module &#39;some-library&#39;
+</code></pre>
+<p>如果目录里没有 <code>package.json</code> 文件，则 Node.js 就会试图加载目录下的 <code>index.js</code> 或 <code>index.node</code> 文件。
+例如，如果上面的例子中没有 <code>package.json</code> 文件，则 <code>require(&#39;./some-library&#39;)</code> 会试图加载：</p>
+<ul>
+<li><code>./some-library/index.js</code></li>
+<li><code>./some-library/index.node</code></li>
+</ul>
+<h2 id="loading-from-node_modules-folders">Loading from <code>node_modules</code> Folders</h2>
+<!--type=misc-->
+<p>如果传递给 <code>require()</code> 的模块标识符不是一个<a href="#modules_core_modules">核心模块</a>，也没有以 <code>&#39;/&#39;</code> 、 <code>&#39;../&#39;</code> 或 <code>&#39;./&#39;</code> 开头，则 Node.js 会从当前模块的父目录开始，尝试从它的 <code>/node_modules</code> 目录里加载模块。
+Node.js 不会附加 <code>node_modules</code> 到一个已经以 <code>node_modules</code> 结尾的路径上。</p>
+<p>如果还是没有找到，则移动到再上一层父目录，直到文件系统的根目录。</p>
+<p>例子，如果在 <code>&#39;/home/ry/projects/foo.js&#39;</code> 文件里调用了 <code>require(&#39;bar.js&#39;)</code>，则 Node.js 会按以下顺序查找：</p>
+<ul>
+<li><code>/home/ry/projects/node_modules/bar.js</code></li>
+<li><code>/home/ry/node_modules/bar.js</code></li>
+<li><code>/home/node_modules/bar.js</code></li>
+<li><code>/node_modules/bar.js</code></li>
+</ul>
+<p>这使得程序本地化它们的依赖，避免它们产生冲突。</p>
+<p>通过在模块名后包含一个路径后缀，可以请求特定的文件或分布式的子模块。
+例如，<code>require(&#39;example-module/path/to/file&#39;)</code> 会把 <code>path/to/file</code> 解析成相对于 <code>example-module</code> 的位置。
+后缀路径同样遵循模块的解析语法。</p>
+<h2 id="loading-from-the-global-folders">Loading from the global folders</h2>
+<!-- type=misc -->
+<p>如果 <code>NODE_PATH</code> 环境变量被设为一个以冒号分割的绝对路径列表，则当在其他地方找不到模块时 Node.js 会搜索这些路径。</p>
+<p>注意：在 Windows 系统中，<code>NODE_PATH</code> 是以分号间隔的。</p>
+<p>在当前的<a href="#modules_all_together">模块解析</a>算法运行之前，<code>NODE_PATH</code> 最初是创建来支持从不同路径加载模块的。</p>
+<p>虽然 <code>NODE_PATH</code> 仍然被支持，但现在不太需要，因为 Node.js 生态系统已制定了一套存放依赖模块的约定。
+有时当人们没意识到 <code>NODE_PATH</code> 必须被设置时，依赖 <code>NODE_PATH</code> 的部署会出现意料之外的行为。
+有时一个模块的依赖会改变，导致在搜索 <code>NODE_PATH</code> 时加载了不同的版本（甚至不同的模块）。</p>
+<p>此外，Node.js 还会搜索以下位置：</p>
+<ul>
+<li>1: <code>$HOME/.node_modules</code></li>
+<li>2: <code>$HOME/.node_libraries</code></li>
+<li>3: <code>$PREFIX/lib/node</code></li>
+</ul>
+<p>其中 <code>$HOME</code> 是用户的主目录，<code>$PREFIX</code> 是 Node.js 里配置的 <code>node_prefix</code>。</p>
+<p>这些主要是历史原因。</p>
+<p>注意：强烈建议将所有的依赖放在本地的 <code>node_modules</code> 目录。
+这样将会更快地加载，且更可靠。</p>
+<h2 id="the-module-wrapper">The module wrapper</h2>
+<!-- type=misc -->
+<p>在执行模块代码之前，Node.js 会使用一个如下的函数包装器将其包装：</p>
+<pre><code class="lang-js">(function(exports, require, module, __filename, __dirname) {
+// 模块的代码实际上在这里
+});
+</code></pre>
+<p>通过这样做，Node.js 实现了以下几点：</p>
+<ul>
+<li>它保持了顶层的变量（用 <code>var</code>、<code>const</code> 或 <code>let</code> 定义）作用在模块范围内，而不是全局对象。</li>
+<li>它有助于提供一些看似全局的但实际上是模块特定的变量，例如：<ul>
+<li>实现者可以用于从模块中导出值的 <code>module</code> 和 <code>exports</code> 对象。</li>
+<li>包含模块绝对文件名和目录路径的快捷变量 <code>__filename</code> 和 <code>__dirname</code> 。</li>
+</ul>
+</li>
+</ul>
+<h2 id="the-module-scope">The module scope</h2>
+<h3 id="-_-_dirname">__dirname</h3>
+<!-- YAML
+added: v0.1.27
+-->
+<ul>
+<li>{string}<!-- type=var -->
+当前模块的文件夹名称。等同于 <a href="#modules_filename"><code>__filename</code></a> 的 <a href="path.html#path_path_dirname_path"><code>path.dirname()</code></a> 的值。</li>
+</ul>
+<!--
+The directory name of the current module. This the same as the
+[`path.dirname()`][] of the [`__filename`][].
+-->
+<p>示例：运行位于 <code>/Users/mjr</code>目录下的example.js文件：<code>node example.js</code>
+<!--Example: running `node example.js` from `/Users/mjr`--></p>
+<pre><code class="lang-js">console.log(__dirname);
+// Prints: /Users/mjr
+console.log(path.dirname(__filename));
+// Prints: /Users/mjr
+</code></pre>
+<h3 id="-_-_filename">__filename</h3>
+<!-- YAML
+added: v0.0.1
+-->
+<!-- type=var -->
+<ul>
+<li>{string}</li>
+</ul>
+<p>当前模块的文件名称---解析后的绝对路径。</p>
+<p>在主程序中这不一定要跟命令行中使用的名称一致。</p>
+<p>参阅 <a href="#modules_dirname"><code>__dirname</code></a> 以获取当前模块的目录名称。</p>
+<p>例如：</p>
+<p>在 <code>/Users/mjr</code> 目录下执行 <code>node example.js</code> </p>
+<pre><code class="lang-js">console.log(__filename);
+// Prints: /Users/mjr/example.js
+console.log(__dirname);
+// Prints: /Users/mjr
+</code></pre>
+<p>给定两个模块： <code>a</code> 和 <code>b</code>, 其中 <code>b</code> 是 <code>a</code> 的一个依赖。</p>
+<p>文件目录结构如下：</p>
+<ul>
+<li><code>/Users/mjr/app/a.js</code></li>
+<li><code>/Users/mjr/app/node_modules/b/b.js</code></li>
+</ul>
+<p><code>b.js</code> 中对 <code>__filename</code> 的引用将会返回 <code>/Users/mjr/app/node_modules/b/b.js</code>
+<code>a.js</code> 中对 <code>__filename</code> 的引用将会返回 <code>/Users/mjr/app/a.js</code></p>
+<h3 id="exports">exports</h3>
+<!-- YAML
+added: v0.1.12
+-->
+<!-- type=var -->
+<p>这是一个对于 <code>module.exports</code> 的更简短的引用形式。查看关于<a href="#modules_exports_shortcut">exports shortcut</a>的章节，详细了解什么时候使用<code>exports</code>、什么时候使用<code>module.exports</code>。</p>
+<h3 id="module">module</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<!-- type=var -->
+<ul>
+<li>{Object}</li>
+</ul>
+<p>对当前模块的引用, 查看关于 <a href="#modules_the_module_object"><code>module</code> object</a> 的章节。 <code>module.exports</code> 用于指定一个模块所导出的内容，即可以通过 <code>require()</code> 访问的内容。</p>
+<h3 id="require-">require()</h3>
+<!-- YAML
+added: v0.1.13
+-->
+<!-- type=var -->
+<ul>
+<li>{Function}</li>
+</ul>
+<p>引入模块.</p>
+<h4 id="require-cache">require.cache</h4>
+<!-- YAML
+added: v0.3.0
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p>被引入的模块将被缓存在这个对象中。从此对象中删除键值对将会导致下一次 <code>require</code> 重新加载被删除的模块。注意不能删除 <a href="addons.html">native addons</a>（原生插件），因为它们的重载将会导致错误。</p>
+<h4 id="require-extensions">require.extensions</h4>
+<!-- YAML
+added: v0.3.0
+deprecated: v0.10.6
+-->
+<blockquote>
+<p>稳定性: 0 - 废弃的</p>
+</blockquote>
+<ul>
+<li>{Object}</li>
+</ul>
+<p>指示 <code>require</code> 怎样处理特定的文件扩展名</p>
+<p>例如：把 <code>.sjs</code> 文件当做 <code>.js</code> 文件处理：</p>
+<pre><code class="lang-js">require.extensions[&#39;.sjs&#39;] = require.extensions[&#39;.js&#39;];
+</code></pre>
+<p><strong>废弃的</strong>  以前这被用来将非 JavaScript 模块按需编译后加载到 Node.js 中。
+然而，在实践中，有更多更好的解决方案，比如用其它 Node.js 程序加载模块，
+或者提前将它们编译为 JavaScript 模块。</p>
+<p>由于模块系统已锁定，这个特性可能永远不会消失，但是鉴于其复杂性和可能导致的小问题，
+最好不要碰它。</p>
+<p>模块系统把一个 <code>require(...)</code> 解析为文件名的操作数随着新注册文件扩展名的增加
+呈线性递增。</p>
+<p>也就是说，增加文件扩展名数量降低了模块导入的速度，这不应该被提倡。</p>
+<h4 id="require-resolve-">require.resolve()</h4>
+<!-- YAML
+added: v0.3.0
+-->
+<p>使用内部的 <code>require()</code> 机制查询模块的位置,
+此操作只返回解析后的文件名，不会加载此模块。</p>
+<h2 id="the-module-object">The <code>module</code> Object</h2>
+<!-- YAML
+added: v0.3.0
+-->
+<p>使用内部的 <code>require()</code> 机制查询模块的位置,
+此操作只返回解析后的文件名，不会加载此模块。</p>
+<h3 id="module-children">module.children</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{Array}</li>
+</ul>
+<p>被该模块引用的模块对象。</p>
+<h3 id="module-exports">module.exports</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{Array}</li>
+</ul>
+<p>被该模块引用的模块对象。</p>
+<h4 id="exports-shortcut">exports shortcut</h4>
+<!-- YAML
+added: v0.1.16
+-->
+<p><code>exports</code> 变量是在模块的文件级别作用域内有效的，它在模块被执行前被赋予 <code>module.exports</code> 的值。</p>
+<p>它有一个快捷方式，以便 <code>module.exports.f = ...</code> 可以被更简洁地写成 <code>exports.f = ...</code>。
+注意，就像任何变量，如果一个新的值被赋值给 <code>exports</code>，它就不再绑定到 <code>module.exports</code>：</p>
+<pre><code class="lang-js">module.exports.hello = true; // 从对模块的引用中导出
+exports = { hello: false };  // 不导出，只在模块内有效
+</code></pre>
+<p>当 <code>module.exports</code> 属性被一个新的对象完全替代时，也会重新赋值 <code>exports</code>，例如：</p>
+<!-- eslint-disable func-name-matching -->
+<pre><code class="lang-js">module.exports = exports = function Constructor() {
+  // ... 及其他
+};
+</code></pre>
+<p>为了解释这个行为，想象对 <code>require()</code> 的假设实现，它跟 <code>require()</code> 的实际实现相当类似：</p>
+<pre><code class="lang-js">function require(/* ... */) {
+  const module = { exports: {} };
+  ((module, exports) =&gt; {
+    // 模块代码在这。在这个例子中，定义了一个函数。
+    function someFunc() {}
+    exports = someFunc;
+    // 此时，exports 不再是一个 module.exports 的快捷方式，
+    // 且这个模块依然导出一个空的默认对象。
+    module.exports = someFunc;
+    // 此时，该模块导出 someFunc，而不是默认对象。
+  })(module, module.exports);
+  return module.exports;
+}
+</code></pre>
+<h3 id="module-filename">module.filename</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p>模块的完全解析后的文件名。</p>
+<h3 id="module-id">module.id</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p>模块的标识符。
+通常是完全解析后的文件名。</p>
+<h3 id="module-loaded">module.loaded</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{boolean}</li>
+</ul>
+<p>模块是否已经加载完成，或正在加载中。</p>
+<h3 id="module-parent">module.parent</h3>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{Object} 模块对象</li>
+</ul>
+<p>最先引用该模块的模块。</p>
+<h3 id="module-paths">module.paths</h3>
+<!-- YAML
+added: v0.4.0
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p>模块的搜索路径。</p>
+<h3 id="module-require-id-">module.require(id)</h3>
+<!-- YAML
+added: v0.5.1
+-->
+<ul>
+<li><code>id</code> {string}</li>
+<li>返回: {Object} 已解析的模块的 <code>module.exports</code></li>
+</ul>
+<p><code>module.require</code> 方法提供了一种类似 <code>require()</code> 从原始模块被调用的加载模块的方式。</p>
+<p>注意，为了做到这个，需要获得一个 <code>module</code> 对象的引用。
+因为 <code>require()</code> 会返回 <code>module.exports</code>，且 <code>module</code> <strong>只</strong>在一个特定的模块代码中有效，所以为了使用它，必须明确地导出。</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

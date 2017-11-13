@@ -1,0 +1,290 @@
+<!DOCTYPE html><html id=maincontent><head><meta charset=UTF-8><link rel=stylesheet href=css/api.css></head><body class="alt apidoc" id=api-section-child_process><div id=content class=clearfix><div id=column2 class=interior><div id=intro class=interior><a href=http://nodejs.cn/ >Node.js 中文网</a><div><input placeholder="API 快速搜索" id=search_input></div></div><ul><li><a class=nav-assert href=assert.html>assert - 断言</a></li><li><a class=nav-buffer href=buffer.html>Buffer - 缓冲器</a></li><li><a class=nav-child_process href=child_process.html>child_process - 子进程</a></li><li><a class=nav-cluster href=cluster.html>cluster - 集群</a></li><li><a class=nav-console href=console.html>console - 控制台</a></li><li><a class=nav-crypto href=crypto.html>crypto - 加密</a></li><li><a class=nav-dgram href=dgram.html>dgram - 数据报</a></li><li><a class=nav-dns href=dns.html>dns - 域名服务器</a></li><li><a class=nav-errors href=errors.html>Error - 异常</a></li><li><a class=nav-events href=events.html>events - 事件</a></li><li><a class=nav-fs href=fs.html>fs - 文件系统</a></li><li><a class=nav-globals href=globals.html>global - 全局变量</a></li><li><a class=nav-http href=http.html>http - HTTP</a></li><li><a class=nav-https href=https.html>https - HTTPS</a></li><li><a class=nav-modules href=modules.html>module - 模块</a></li><li><a class=nav-net href=net.html>net - 网络</a></li><li><a class=nav-os href=os.html>os - 操作系统</a></li><li><a class=nav-path href=path.html>path - 路径</a></li><li><a class=nav-process href=process.html>process - 进程</a></li><li><a class=nav-querystring href=querystring.html>querystring - 查询字符串</a></li><li><a class=nav-readline href=readline.html>readline - 逐行读取</a></li><li><a class=nav-repl href=repl.html>repl - 交互式解释器</a></li><li><a class=nav-stream href=stream.html>stream - 流</a></li><li><a class=nav-string_decoder href=string_decoder.html>string_decoder - 字符串解码器</a></li><li><a class=nav-timers href=timers.html>timer - 定时器</a></li><li><a class=nav-tls href=tls.html>tls - 安全传输层</a></li><li><a class=nav-tty href=tty.html>tty - 终端</a></li><li><a class=nav-url href=url.html>url - 网址</a></li><li><a class=nav-util href=util.html>util - 实用工具</a></li><li><a class=nav-v8 href=v8.html>v8 - V8引擎</a></li><li><a class=nav-vm href=vm.html>vm - 虚拟机</a></li><li><a class=nav-zlib href=zlib.html>zlib - 压缩</a></li></ul><div class=line></div><ul><li><a class=nav--api-documentation-documentation_stability_index href=documentation.html>试验的API</a></li><li><a class=nav-async_hooks href=async_hooks.html>async_hooks</a></li><li><a class=nav-http2 href=http2.html>http2</a></li><li><a class=nav-inspector href=inspector.html>inspector</a></li><li><a class=nav-n-api href=n-api.html>napi</a></li></ul><div class=line></div><ul><li><a class=nav-documentation href=documentation.html>关于本文档</a></li><li><a class=nav-synopsis href=synopsis.html>用法与例子</a></li><li><a class=nav-addons href=addons.html>C++插件</a></li><li><a class=nav-cli href=cli.html>命令行选项</a></li><li><a class=nav-debugger href=debugger.html>debugger调试器</a></li><li><a class=nav-intl href=intl.html>国际化</a></li><li><a class=nav-tracing href=tracing.html>事件跟踪</a></li></ul></div><div id=column1 class="vs interior" data-id=child_process><div id=apicontent><h1 id=child-process>Child Process</h1><blockquote><p>稳定性: 2</p></blockquote><p><code>child_process</code> 模块提供了衍生子进程的功能，它与 popen(3) 类似，但不完全相同。 这个功能主要由 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 函数提供：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const ls = spawn(&#39;ls&#39;, [&#39;-lh&#39;, &#39;/usr&#39;]);
+
+ls.stdout.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`输出：${data}`);
+});
+
+ls.stderr.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`错误：${data}`);
+});
+
+ls.on(&#39;close&#39;, (code) =&gt; {
+  console.log(`子进程退出码：${code}`);
+});
+</code></pre><p>默认情况下，在 Node.js 的父进程与衍生的子进程之间会建立 <code>stdin</code>、<code>stdout</code> 和 <code>stderr</code> 的管道。 数据能以非阻塞的方式在管道中流通。 注意，有些程序会在内部使用行缓冲 I/O。 虽然这并不影响 Node.js，但这意味着发送到子过程的数据可能无法被立即使用。</p><p><a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 方法会异步地衍生子进程，且不会阻塞 Node.js 事件循环。 <a href=#child_process_child_process_spawnsync_command_args_options><code>child_process.spawnSync()</code></a> 方法则以同步的方式提供同样的功能，但会阻塞事件循环，直到衍生的子进程退出或终止。</p><p>为了方便起见，<code>child_process</code> 模块提供了一些同步和异步的替代方法用于 <code>child_process.spawn()</code> 和 <code>child_process.spawnSync()</code>。 注意，每个替代方法都是在 <code>child_process.spawn()</code> 或 <code>child_process.spawnSync()</code> 的基础上实现的。</p><ul><li><a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a>: 衍生一个 shell 并在 shell 上运行命令，当完成时会传入 <code>stdout</code> 和 <code>stderr</code> 到回调函数。</li><li><a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a>: 类似 <code>child_process.exec()</code>，但直接衍生命令，且无需先衍生一个 shell。</li><li><a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a>: 衍生一个新的 Node.js 进程，并通过建立一个 IPC 通讯通道来调用一个指定的模块，该通道允许父进程与子进程之间相互发送信息。</li><li><a href=#child_process_child_process_execsync_command_options><code>child_process.execSync()</code></a>: <code>child_process.exec()</code> 的同步方法，会阻塞 Node.js 事件循环。</li><li><a href=#child_process_child_process_execfilesync_file_args_options><code>child_process.execFileSync()</code></a>: <code>child_process.execFile()</code> 的同步方法，会阻塞 Node.js 事件循环。</li></ul><p>对于某些用例，如自动化的 shell 脚本，<a href=#child_process_synchronous_process_creation>同步的方法</a> 可能更方便。 大多数情况下，同步的方法会明显影响性能，因为它会拖延事件循环直到衍生进程完成。</p><h2 id=asynchronous-process-creation>Asynchronous Process Creation</h2><p><a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a>、<a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a>、<a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 和 <a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 方法都遵循与其他 Node.js API 一样的惯用的异步编程模式。</p><p>每个方法都返回一个 <a href=#child_process_child_process><code>ChildProcess</code></a> 实例。 这些对象实现了 Node.js <a href=events.html#events_class_eventemitter><code>EventEmitter</code></a> 的 API，允许父进程注册监听器函数，在子进程生命周期期间，当特定的事件发生时会调用这些函数。</p><p><a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 和 <a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 返回可以额外指定一个可选的 <code>callback</code> 函数，当子进程结束时会被调用。</p><h3 id=spawning-bat-and-cmd-files-on-windows>Spawning <code>.bat</code> and <code>.cmd</code> files on Windows</h3><p><a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 和 <a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 之间的重大区别会根据平台的不同而不同。 在类 Unix 操作系统上（Unix、 Linux、 macOS），<a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 效率更高，因为它不需要衍生一个 shell。 但是在 Windows 上，<code>.bat</code> 和 <code>.cmd</code> 文件在没有终端的情况下是不可执行的，因此不能使用 <a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 启动。 当在 Windows 下运行时，要调用 <code>.bat</code> 和 <code>.cmd</code> 文件，可以通过使用设置了 <code>shell</code> 选项的 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a>、或使用 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a>、或衍生 <code>cmd.exe</code> 并将 <code>.bat</code> 或 <code>.cmd</code> 文件作为一个参数传入（也就是 <code>shell</code> 选项和 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 所做的工作）。 在任何情况下，如果脚本文件名包含了空格，则需要用加上引号。</p><pre><code class=lang-js>// 仅限 Windows 系统
+const { spawn } = require(&#39;child_process&#39;);
+const bat = spawn(&#39;cmd.exe&#39;, [&#39;/c&#39;, &#39;my.bat&#39;]);
+
+bat.stdout.on(&#39;data&#39;, (data) =&gt; {
+  console.log(data.toString());
+});
+
+bat.stderr.on(&#39;data&#39;, (data) =&gt; {
+  console.log(data.toString());
+});
+
+bat.on(&#39;exit&#39;, (code) =&gt; {
+  console.log(`子进程退出码：${code}`);
+});
+</code></pre><pre><code class=lang-js>// 或
+const { exec } = require(&#39;child_process&#39;);
+exec(&#39;my.bat&#39;, (err, stdout, stderr) =&gt; {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(stdout);
+});
+
+// 文件名带有空格的脚本：
+const bat = spawn(&#39;&quot;my script.cmd&quot;&#39;, [&#39;a&#39;, &#39;b&#39;], { shell: true });
+// 或：
+exec(&#39;&quot;my script.cmd&quot; a b&#39;, (err, stdout, stderr) =&gt; {
+  // ...
+});
+</code></pre><h3 id=child_process-exec-command-options-callback->child_process.exec(command[, options][, callback])</h3><ul><li><code>command</code> {string} 要运行的命令，用空格分隔参数</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>env</code> {Object} 环境变量键值对</li><li><code>encoding</code> {string} （默认: <code>&#39;utf8&#39;</code>）</li><li><code>shell</code> {string} 用于执行命令的 shell （默认：在 UNIX 上为 <code>&#39;/bin/sh&#39;</code>，在 Windows 上为 <code>process.env.ComSpec</code>。 See <a href=#child_process_shell_requirements>Shell Requirements</a> and <a href=#child_process_default_windows_shell>Default Windows Shell</a>.）</li><li><code>timeout</code> {number} （默认: <code>0</code>）</li><li><a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code></a> {number} stdout 或 stderr 允许的最大字节数。 默认为 <code>200*1024</code>。 如果超过限制，则子进程会被终止。 查看警告： <a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code> and Unicode</a>.</li><li><code>killSignal</code> {string|integer} （默认: <code>&#39;SIGTERM&#39;</code>）</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li></ul></li><li><code>callback</code> {Function} 当进程终止时调用，并带上输出。<ul><li><code>error</code> {Error}</li><li><code>stdout</code> {string|Buffer}</li><li><code>stderr</code> {string|Buffer}</li></ul></li><li>返回: {ChildProcess}</li></ul><p>衍生一个 shell，然后在 shell 中执行 <code>command</code>，且缓冲任何产生的输出。传入 exec 函数的 <code>command</code> 字符串会被 shell 直接处理，特殊字符（因 <a href=https://en.wikipedia.org/wiki/List_of_command-line_interpreters>shell</a> 而异）需要相应处理：</p><pre><code class=lang-js>exec(&#39;&quot;/path/to/test file/test.sh&quot; arg1 arg2&#39;);
+// 使用双引号这样路径中的空格就不会被解释为多个参数
+
+exec(&#39;echo &quot;The \\$HOME variable is $HOME&quot;&#39;);
+// 第一个 $HOME 被转义了，但第二个没有
+</code></pre><p>注意：不要把未经检查的用户输入传入到该函数。 任何包括 shell 元字符的输入都可被用于触发任何命令的执行。</p><pre><code class=lang-js>const { exec } = require(&#39;child_process&#39;);
+exec(&#39;cat *.js bad_file | wc -l&#39;, (error, stdout, stderr) =&gt; {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+</code></pre><p>如果提供了一个 <code>callback</code> 函数，则它被调用时会带上参数 <code>(error, stdout, stderr)</code>。 当成功时，<code>error</code> 会是 <code>null</code>。 当失败时，<code>error</code> 会是一个 <a href=errors.html#errors_class_error><code>Error</code></a> 实例。 <code>error.code</code> 属性会是子进程的退出码，<code>error.signal</code> 会被设为终止进程的信号。 除 <code>0</code> 以外的任何退出码都被认为是一个错误。</p><p>传给回调的 <code>stdout</code> 和 <code>stderr</code> 参数会包含子进程的 stdout 和 stderr 的输出。 默认情况下，Node.js 会解码输出为 UTF-8，并将字符串传给回调。 <code>encoding</code> 选项可用于指定用于解码 stdout 和 stderr 输出的字符编码。 如果 <code>encoding</code> 是 <code>&#39;buffer&#39;</code>、或一个无法识别的字符编码，则传入 <code>Buffer</code> 对象到回调函数。</p><p><code>options</code> 参数可以作为第二个参数传入，用于自定义如何衍生进程。 默认的选项是：</p><pre><code class=lang-js>const defaults = {
+  encoding: &#39;utf8&#39;,
+  timeout: 0,
+  maxBuffer: 200 * 1024,
+  killSignal: &#39;SIGTERM&#39;,
+  cwd: null,
+  env: null
+};
+</code></pre><p>如果 <code>timeout</code> 大于 <code>0</code>，当子进程运行超过 <code>timeout</code> 毫秒时，父进程就会发送由 <code>killSignal</code> 属性标识的信号（默认为 <code>&#39;SIGTERM&#39;</code>）。</p><p>注意：不像 POSIX 系统调用中的 exec(3)，<code>child_process.exec()</code> 不会替换现有的进程，且使用一个 shell 来执行命令。</p><p>如果调用该方法的 <a href=util.html#util_util_promisify_original><code>util.promisify()</code></a> 版本，将会返回一个包含 <code>stdout</code> 和 <code>stderr</code> 的 Promise 对象。在出现错误的情况洗，将返回 rejected 状态的 promise，拥有与回调函数一样的 <code>error</code> 对象，但附加了 <code>stdout</code> 和 <code>stderr</code> 属性。</p><p>例子:</p><pre><code class=lang-js>const util = require(&#39;util&#39;);
+const exec = util.promisify(require(&#39;child_process&#39;).exec);
+
+async function lsExample() {
+  const { stdout, stderr } = await exec(&#39;ls&#39;);
+  console.log(&#39;stdout:&#39;, stdout);
+  console.log(&#39;stderr:&#39;, stderr);
+}
+lsExample();
+</code></pre><h3 id=child_process-execfile-file-args-options-callback->child_process.execFile(file[, args][, options][, callback])</h3><ul><li><code>file</code> {string} 要运行的可执行文件的名称或路径</li><li><code>args</code> {Array} 字符串参数列表</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>env</code> {Object} 环境变量键值对</li><li><code>encoding</code> {string} （默认: <code>&#39;utf8&#39;</code>）</li><li><code>timeout</code> {number} （默认: <code>0</code>）</li><li><a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code></a> {number} stdout 或 stderr 允许的最大字节数。 默认为 <code>200*1024</code>。 如果超过限制，则子进程会被终止。 See caveat at <a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code> and Unicode</a>.</li><li><code>killSignal</code> {string|integer} （默认: <code>&#39;SIGTERM&#39;</code>）</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li></ul></li><li><code>callback</code> {Function} 当进程终止时调用，并带上输出。<ul><li><code>error</code> {Error}</li><li><code>stdout</code> {string|Buffer}</li><li><code>stderr</code> {string|Buffer}</li></ul></li><li>返回: {ChildProcess}</li></ul><p><code>child_process.execFile()</code> 函数类似 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a>，除了不衍生一个 shell。 而是，指定的可执行的 <code>file</code> 被直接衍生为一个新进程，这使得它比 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 更高效。</p><p>它支持和 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 一样的选项。 由于没有衍生 shell，因此不支持像 I/O 重定向和文件查找这样的行为。</p><pre><code class=lang-js>const { execFile } = require(&#39;child_process&#39;);
+const child = execFile(&#39;node&#39;, [&#39;--version&#39;], (error, stdout, stderr) =&gt; {
+  if (error) {
+    throw error;
+  }
+  console.log(stdout);
+});
+</code></pre><p>传给回调的 <code>stdout</code> 和 <code>stderr</code> 参数会包含子进程的 stdout 和 stderr 的输出。 默认情况下，Node.js 会解码输出为 UTF-8，并将字符串传给回调。 <code>encoding</code> 选项可用于指定用于解码 stdout 和 stderr 输出的字符编码。 如果 <code>encoding</code> 是 <code>&#39;buffer&#39;</code>、或一个无法识别的字符编码，则传入 <code>Buffer</code> 对象到回调函数。</p><p>如果调用该方法的 <a href=util.html#util_util_promisify_original><code>util.promisify()</code></a> 版本， 它会返回一个拥有 <code>stdout</code> 和 <code>stderr</code> 属性的 Promise 对象. 在发生错误的情况下, 返回一个 rejected 状态的 promise, 拥有与回调 函数一样的 <code>error</code> 对象, 但是附加了 <code>stdout</code> 和 <code>stderr</code> 这两个属性.</p><pre><code class=lang-js>const util = require(&#39;util&#39;);
+const execFile = util.promisify(require(&#39;child_process&#39;).execFile);
+async function getVersion() {
+  const { stdout } = await execFile(&#39;node&#39;, [&#39;--version&#39;]);
+  console.log(stdout);
+}
+getVersion();
+</code></pre><h3 id=child_process-fork-modulepath-args-options->child_process.fork(modulePath[, args][, options])</h3><ul><li><code>modulePath</code> {string} 要在子进程中运行的模块</li><li><code>args</code> {Array} 字符串参数列表</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>env</code> {Object} 环境变量键值对</li><li><code>execPath</code> {string} 用来创建子进程的执行路径</li><li><code>execArgv</code> {Array} 要传给执行路径的字符串参数列表 （默认: <code>process.execArgv</code>）</li><li><code>silent</code> {boolean} 如果为 <code>true</code>，则子进程中的 stdin、 stdout 和 stderr 会被导流到父进程中，否则它们会继承自父进程，详见 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 的 <a href=#child_process_options_stdio><code>stdio</code></a> 中的 <code>&#39;pipe&#39;</code> 和 <code>&#39;inherit&#39;</code> 选项。 （默认: <code>false</code>）</li><li><code>stdio</code> {Array|string} 详见 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 的 <a href=#child_process_options_stdio><code>stdio</code></a>。 当提供了该选项，则它会覆盖 <code>silent</code>。 如果使用了数组变量，则该数组必须包含一个值为 <code>&#39;ipc&#39;</code> 的子项，否则会抛出错误。 例如 <code>[0, 1, 2, &#39;ipc&#39;]</code>。</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li></ul></li><li>返回: {ChildProcess}</li></ul><p><code>child_process.fork()</code> 方法是 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 的一个特殊情况，专门用于衍生新的 Node.js 进程。 跟 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 一样返回一个 <a href=#child_process_child_process><code>ChildProcess</code></a> 对象。 返回的 <a href=#child_process_child_process><code>ChildProcess</code></a> 会有一个额外的内置的通信通道，它允许消息在父进程和子进程之间来回传递。 详见 <a href=#child_process_subprocess_send_message_sendhandle_options_callback><code>subprocess.send()</code></a>。</p><p>衍生的 Node.js 子进程与两者之间建立的 IPC 通信信道的异常是独立于父进程的。 每个进程都有自己的内存，使用自己的 V8 实例。 由于需要额外的资源分配，因此不推荐衍生大量的 Node.js 进程。</p><p>默认情况下，<code>child_process.fork()</code> 会使用父进程中的 <a href=process.html#process_process_execpath><code>process.execPath</code></a> 衍生新的 Node.js 实例。 <code>options</code> 对象中的 <code>execPath</code> 属性可以替换要使用的执行路径。</p><p>使用自定义的 <code>execPath</code> 启动的 Node.js 进程，会使用子进程的环境变量 <code>NODE_CHANNEL_FD</code> 中指定的文件描述符（fd）与父进程通信。 fd 上的输入和输出期望被分割成一行一行的 JSON 对象。</p><p>注意，不像 POSIX 系统回调中的 fork(2)，<code>child_process.fork()</code> 不会克隆当前进程。</p><h3 id=child_process-spawn-command-args-options->child_process.spawn(command[, args][, options])</h3><ul><li><code>command</code> {string} 要运行的命令</li><li><code>args</code> {Array} 字符串参数列表</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>env</code> {Object} 环境变量键值对</li><li><code>argv0</code> {string} 显式地设置要发给子进程的 <code>argv[0]</code> 的值。 如果未指定，则设为 <code>command</code>。</li><li><code>stdio</code> {Array|string} 子进程的 stdio 配置。 （详见 <a href=#child_process_options_stdio><code>options.stdio</code></a>）</li><li><code>detached</code> {boolean} 准备将子进程独立于父进程运行。 具体行为取决于平台。（详见 <a href=#child_process_options_detached><code>options.detached</code></a>）</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li><li><code>shell</code> {boolean|string} 如果为 <code>true</code>，则在一个 shell 中运行 <code>command</code>。 在 UNIX 上使用 <code>&#39;/bin/sh&#39;</code>，在 Windows 上使用 <code>process.env.ComSpec</code>。 一个不同的 shell 可以被指定为字符串。 See <a href=#child_process_shell_requirements>Shell Requirements</a> and <a href=#child_process_default_windows_shell>Default Windows Shell</a>. 默认为 <code>false</code>（没有 shell）。</li></ul></li><li>返回: {ChildProcess}</li></ul><p><code>child_process.spawn()</code> 方法使用给定的 <code>command</code> 和 <code>args</code> 中的命令行参数来衍生一个新进程。 如果省略 <code>args</code>，则默认为一个空数组。</p><p>注意：不要把未经检查的用户输入传入到该函数。 任何包括 shell 元字符的输入都可被用于触发任何命令的执行。</p><p>第三个参数可以用来指定额外的选项，默认如下：</p><pre><code class=lang-js>const defaults = {
+  cwd: undefined,
+  env: process.env
+};
+</code></pre><p>使用 <code>cwd</code> 来指定衍生的进程的工作目录。 如果没有给出，则默认继承当前的工作目录。</p><p>使用 <code>env</code> 来指定环境变量，这会在新进程中可见，默认为 <a href=process.html#process_process_env><code>process.env</code></a>。</p><p>例子，运行 <code>ls -lh /usr</code>，捕获 <code>stdout</code>、<code>stderr</code>、以及退出码：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const ls = spawn(&#39;ls&#39;, [&#39;-lh&#39;, &#39;/usr&#39;]);
+
+ls.stdout.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`stderr: ${data}`);
+});
+
+ls.on(&#39;close&#39;, (code) =&gt; {
+  console.log(`子进程退出码：${code}`);
+});
+</code></pre><p>例子，一种执行 <code>&#39;ps ax | grep ssh&#39;</code> 的方法：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const ps = spawn(&#39;ps&#39;, [&#39;ax&#39;]);
+const grep = spawn(&#39;grep&#39;, [&#39;ssh&#39;]);
+
+ps.stdout.on(&#39;data&#39;, (data) =&gt; {
+  grep.stdin.write(data);
+});
+
+ps.stderr.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`ps stderr: ${data}`);
+});
+
+ps.on(&#39;close&#39;, (code) =&gt; {
+  if (code !== 0) {
+    console.log(`ps 进程退出码：${code}`);
+  }
+  grep.stdin.end();
+});
+
+grep.stdout.on(&#39;data&#39;, (data) =&gt; {
+  console.log(data.toString());
+});
+
+grep.stderr.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`grep stderr: ${data}`);
+});
+
+grep.on(&#39;close&#39;, (code) =&gt; {
+  if (code !== 0) {
+    console.log(`grep 进程退出码：${code}`);
+  }
+});
+</code></pre><p>例子，检测失败的 <code>spawn</code>：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const subprocess = spawn(&#39;bad_command&#39;);
+
+subprocess.on(&#39;error&#39;, (err) =&gt; {
+  console.log(&#39;启动子进程失败。&#39;);
+});
+</code></pre><p>注意：某些平台（macOS, Linux）会使用 <code>argv[0]</code> 的值作为进程的标题，而其他平台（Windows, SunOS）则使用 <code>command</code>。</p><p>注意，Node.js 一般会在启动时用 <code>process.execPath</code> 重写 <code>argv[0]</code>，所以 Node.js 子进程中的 <code>process.argv[0]</code> 不会匹配从父进程传给 <code>spawn</code> 的 <code>argv0</code> 参数，可以使用 <code>process.argv0</code> 属性获取它。</p><h4 id=options-detached>options.detached</h4><p>在 Windows 上，设置 <code>options.detached</code> 为 <code>true</code> 可以使子进程在父进程退出后继续运行。 子进程有自己的控制台窗口。 一旦启用一个子进程，它将不能被禁用。</p><p>在非 Windows 平台上，如果将 <code>options.detached</code> 设为 <code>true</code>，则子进程会成为新的进程组和会话的领导者。 注意，子进程在父进程退出后可以继续运行，不管它们是否被分离。 详见 setsid(2)。</p><p>默认情况下，父进程会等待被分离的子进程退出。 为了防止父进程等待给定的 <code>subprocess</code>，可以使用 <code>subprocess.unref()</code> 方法。 这样做会导致父进程的事件循环不包含子进程的引用计数，使得父进程独立于子进程退出，除非子进程和父进程之间建立了一个 IPC 信道。</p><p>当使用 <code>detached</code> 选项来启动一个长期运行的进程时，该进程不会在父进程退出后保持在后台运行，除非提供了一个不连接到父进程的 <code>stdio</code> 配置。 如果父进程的 <code>stdio</code> 是继承的，则子进程会保持连接到控制终端。</p><p>例子，一个长期运行的进程，为了忽视父进程的终止，通过分离且忽视其父进程的 <code>stdio</code> 文件描述符来实现：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+
+const subprocess = spawn(process.argv[0], [&#39;child_program.js&#39;], {
+  detached: true,
+  stdio: &#39;ignore&#39;
+});
+
+subprocess.unref();
+</code></pre><p>也可以将子进程的输出重定向到文件：</p><pre><code class=lang-js>const fs = require(&#39;fs&#39;);
+const { spawn } = require(&#39;child_process&#39;);
+const out = fs.openSync(&#39;./out.log&#39;, &#39;a&#39;);
+const err = fs.openSync(&#39;./out.log&#39;, &#39;a&#39;);
+
+const subprocess = spawn(&#39;prg&#39;, [], {
+  detached: true,
+  stdio: [ &#39;ignore&#39;, out, err ]
+});
+
+subprocess.unref();
+</code></pre><h4 id=options-stdio>options.stdio</h4><p><code>options.stdio</code> 选项用于配置子进程与父进程之间建立的管道。 默认情况下，子进程的 stdin、 stdout 和 stderr 会重定向到 <a href=#child_process_child_process><code>ChildProcess</code></a> 对象上相应的 <a href=#child_process_subprocess_stdin><code>subprocess.stdin</code></a>、 <a href=#child_process_subprocess_stdout><code>subprocess.stdout</code></a> 和 <a href=#child_process_subprocess_stderr><code>subprocess.stderr</code></a> 流。 这等同于将 <code>options.stdio</code> 设为 <code>[&#39;pipe&#39;, &#39;pipe&#39;, &#39;pipe&#39;]</code>。</p><p>为了方便起见，<code>options.stdio</code> 可以是以下字符串之一：</p><ul><li><code>&#39;pipe&#39;</code> - 等同于 <code>[&#39;pipe&#39;, &#39;pipe&#39;, &#39;pipe&#39;]</code> （默认）</li><li><code>&#39;ignore&#39;</code> - 等同于 <code>[&#39;ignore&#39;, &#39;ignore&#39;, &#39;ignore&#39;]</code></li><li><code>&#39;inherit&#39;</code> - 等同于 <code>[process.stdin, process.stdout, process.stderr]</code> 或 <code>[0,1,2]</code></li></ul><p>另外，<code>option.stdio</code> 的值是一个每个索引都对应一个子进程 fd 的数组。 fd 的 0、1 和 2 分别对应 stdin、stdout 和 stderr。 额外的 fd 可以被指定来创建父进程和子进程之间的额外管道。 该值是以下之一：</p><ol><li><code>&#39;pipe&#39;</code> - 创建一个子进程和父进程之间的管道。 在管道的父端以 <a href=#child_process_options_stdio><code>subprocess.stdio[fd]</code></a> 的形式作为 <code>child_process</code> 对象的一个属性暴露给父进程。 为 fd 创建的管道 0 - 2 也可分别作为 <a href=#child_process_subprocess_stdin><code>subprocess.stdin</code></a>、<a href=#child_process_subprocess_stdout><code>subprocess.stdout</code></a> 和 <a href=#child_process_subprocess_stderr><code>subprocess.stderr</code></a>。</li><li><code>&#39;ipc&#39;</code> - 创建一个用于父进程和子进程之间传递消息或文件描述符的 IPC 通道符。 一个 <a href=#child_process_child_process><code>ChildProcess</code></a> 最多只能有一个 IPC stdio 文件描述符。 设置该选项可启用 <a href=#child_process_subprocess_send_message_sendhandle_options_callback><code>subprocess.send()</code></a> 方法。 如果子进程把 JSON 消息写入到该文件描述符，则 [<code>subprocess.on(&#39;message&#39;)</code>] 事件句柄会被父进程触发。 如果子进程是一个 Node.js 进程，则一个已存在的 IPC 通道会在子进程中启用 <a href=process.html#process_process_send_message_sendhandle_options_callback><code>process.send()</code></a>、<a href=process.html#process_process_disconnect><code>process.disconnect()</code></a>、<a href=process.html#process_event_disconnect><code>process.on(&#39;disconnect&#39;)</code></a> 和 <a href=process.html#process_event_message><code>process.on(&#39;message&#39;)</code></a>。</li><li><code>&#39;ignore&#39;</code> - 指示 Node.js 在子进程中忽略 fd。 由于 Node.js 总是会为它衍生的进程打开 fd 0 - 2，所以设置 fd 为 <code>&#39;ignore&#39;</code> 可以使 Node.js 打开 <code>/dev/null</code> 并将它附加到子进程的 fd 上。</li><li>{Stream} 对象 - 共享一个指向子进程的 tty、文件、socket 或管道的可读或可写流。 流的底层文件描述符在子进程中是重复对应该 <code>stdio</code> 数组的索引的 fd。 注意，该流必须有一个底层描述符（文件流直到 <code>&#39;open&#39;</code> 事件发生才需要）。</li><li>正整数 - 整数值被解析为一个正在父进程中打开的文件描述符。 它和子进程共享，类似于 {Stream} 是如何被共享的。</li><li><code>null</code>, <code>undefined</code> - 使用默认值。 对于 stdio fd 0、1 和 2（换言之，stdin、stdout 和 stderr）而言是创建了一个管道。 对于 fd 3 及以上而言，默认值为 <code>&#39;ignore&#39;</code>。</li></ol><p>例子：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+
+// 子进程使用父进程的 stdios
+spawn(&#39;prg&#39;, [], { stdio: &#39;inherit&#39; });
+
+// 衍生的子进程只共享 stderr
+spawn(&#39;prg&#39;, [], { stdio: [&#39;pipe&#39;, &#39;pipe&#39;, process.stderr] });
+
+// 打开一个额外的 fd=4，用于与程序交互
+spawn(&#39;prg&#39;, [], { stdio: [&#39;pipe&#39;, null, null, null, &#39;pipe&#39;] });
+</code></pre><p>当在父进程和子进程之间建立了一个 IPC 通道，且子进程是一个 Node.js 进程，则子进程会带着未引用的 IPC 通道（使用 <code>unref()</code>）启动，直到子进程为 <a href=process.html#process_event_disconnect><code>process.on(&#39;disconnect&#39;)</code></a> 事件或 <a href=process.html#process_event_message><code>process.on(&#39;message&#39;)</code></a> 事件注册了一个事件句柄。 这使得子进程可以在进程没有通过打开的 IPC 通道保持打开的情况下正常退出。</p><p>详见 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 和 <a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a>。</p><h2 id=synchronous-process-creation>Synchronous Process Creation</h2><p><a href=#child_process_child_process_spawnsync_command_args_options><code>child_process.spawnSync()</code></a>、<a href=#child_process_child_process_execsync_command_options><code>child_process.execSync()</code></a> 和 <a href=#child_process_child_process_execfilesync_file_args_options><code>child_process.execFileSync()</code></a> 方法是<strong>同步的</strong>且<strong>会</strong>阻塞 Node.js 的事件循环，暂停任何额外代码的执行直到衍生的进程退出。</p><p>像这样的阻塞调用有利于简化普通用途的脚本任务，且启动时有利于简化应用配置的加载/处理。</p><h3 id=child_process-execfilesync-file-args-options->child_process.execFileSync(file[, args][, options])</h3><ul><li><code>file</code> {string} 要运行的可执行文件的名称或路径</li><li><code>args</code> {Array} 字符串参数列表</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>input</code> {string|Buffer|Uint8Array} 要作为 stdin 传给衍生进程的值<ul><li>提供该值会覆盖 <code>stdio[0]</code></li></ul></li><li><code>stdio</code> {string|Array} 子进程的 stdio 配置。（默认: <code>&#39;pipe&#39;</code>）<ul><li><code>stderr</code> 默认会输出到父进程中的 stderr，除非指定了 <code>stdio</code></li></ul></li><li><code>env</code> {Object} 环境变量键值对</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li><li><code>timeout</code> {number} 进程允许运行的最大时间数，以毫秒为单位。（默认: <code>undefined</code>）</li><li><code>killSignal</code> {string|integer} 当衍生进程将被杀死时要使用的信号值。（默认: <code>&#39;SIGTERM&#39;</code>）</li><li><a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code></a> {number} stdout 或 stderr 允许的最大字节数。 默认为 <code>200*1024</code>。 如果超过限制，则子进程会被终止。 See caveat at <a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code> and Unicode</a>.</li><li><code>encoding</code> {string} 用于所有 stdio 输入和输出的编码。（默认: <code>&#39;buffer&#39;</code>）</li></ul></li><li>返回: {Buffer|string} 该命令的 stdout</li></ul><p><code>child_process.execFileSync()</code> 方法与 <a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 基本相同，除了该方法直到子进程完全关闭后才返回。 当遇到超时且发送了 <code>killSignal</code> 时，则该方法直到进程完全退出后才返回结果。</p><p>注意，如果子进程拦截并处理了 <code>SIGTERM</code> 信号且没有退出，则父进程会一直等待直到子进程退出。</p><p>如果进程超时，或有一个非零的退出码，则该方法会抛出错误。 <a href=errors.html#errors_class_error><code>Error</code></a> 对象会包含从 <a href=#child_process_child_process_spawnsync_command_args_options><code>child_process.spawnSync()</code></a> 返回的整个结果。</p><h3 id=child_process-execsync-command-options->child_process.execSync(command[, options])</h3><ul><li><code>command</code> {string} 要运行的命令</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>input</code> {string|Buffer|Uint8Array}} 要作为 stdin 传给衍生进程的值<ul><li>提供该值会覆盖 <code>stdio[0]</code></li></ul></li><li><code>stdio</code> {string|Array} 子进程的 stdio 配置。（默认: <code>&#39;pipe&#39;</code>）<ul><li><code>stderr</code> 默认会输出到父进程中的 stderr，除非指定了 <code>stdio</code></li></ul></li><li><code>env</code> {Object} 环境变量键值对</li><li><code>shell</code> {string} 用于执行命令的 shell （默认：在 UNIX 上为 <code>&#39;/bin/sh&#39;</code>，在 Windows 上为 <code>process.env.ComSpec</code>。 See <a href=#child_process_shell_requirements>Shell Requirements</a> and <a href=#child_process_default_windows_shell>Default Windows Shell</a>.）</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li><li><code>timeout</code> {number} 进程允许运行的最大时间数，以毫秒为单位。（默认: <code>undefined</code>）</li><li><code>killSignal</code> {string|integer} 当衍生进程将被杀死时要使用的信号值。（默认: <code>&#39;SIGTERM&#39;</code>）</li><li><a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code></a> {number} stdout 或 stderr 允许的最大字节数。 默认为 <code>200*1024</code>。 如果超过限制，则子进程会被终止。 See caveat at <a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code> and Unicode</a>.</li><li><code>encoding</code> {string} 用于所有 stdio 输入和输出的编码。（默认: <code>&#39;buffer&#39;</code>）</li></ul></li><li>返回: {Buffer|string} 该命令的 stdout</li></ul><p><code>child_process.execSync()</code> 方法与 <a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a> 基本相同，除了该方法直到子进程完全关闭后才返回。 当遇到超时且发送了 <code>killSignal</code> 时，则该方法直到进程完全退出后才返回结果。 注意，如果子进程拦截并处理了 <code>SIGTERM</code> 信号且没有退出，则父进程会一直等待直到子进程退出。</p><p>如果进程超时，或有一个非零的退出码，则该方法会抛出错误。 <a href=errors.html#errors_class_error><code>Error</code></a> 对象会包含从 <a href=#child_process_child_process_spawnsync_command_args_options><code>child_process.spawnSync()</code></a> 返回的整个结果。</p><p>注意：不要把未经检查的用户输入传入到该函数。 任何包括 shell 元字符的输入都可被用于触发任何命令的执行。</p><h3 id=child_process-spawnsync-command-args-options->child_process.spawnSync(command[, args][, options])</h3><ul><li><code>command</code> {string} 要运行的命令</li><li><code>args</code> {Array} 字符串参数列表</li><li><code>options</code> {Object}<ul><li><code>cwd</code> {string} 子进程的当前工作目录</li><li><code>input</code> {string|Buffer|Uint8Array} 要作为 stdin 传给衍生进程的值<ul><li>提供该值会覆盖 <code>stdio[0]</code></li></ul></li><li><code>stdio</code> {string|Array} 子进程的 stdio 配置</li><li><code>env</code> {Object} 环境变量键值对</li><li><code>uid</code> {number} 设置该进程的用户标识。（详见 setuid(2)）</li><li><code>gid</code> {number} 设置该进程的组标识。（详见 setgid(2)）</li><li><code>timeout</code> {number} 进程允许运行的最大时间数，以毫秒为单位。（默认: <code>undefined</code>）</li><li><code>killSignal</code> {string|integer} 当衍生进程将被杀死时要使用的信号值。（默认: <code>&#39;SIGTERM&#39;</code>）</li><li><a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code></a> {number} stdout 或 stderr 允许的最大字节数。 默认为 <code>200*1024</code>。 如果超过限制，则子进程会被终止。 See caveat at <a href=#child_process_maxbuffer_and_unicode><code>maxBuffer</code> and Unicode</a>.</li><li><code>encoding</code> {string} 用于所有 stdio 输入和输出的编码。（默认: <code>&#39;buffer&#39;</code>）</li><li><code>shell</code> {boolean|string} 如果为 <code>true</code>，则在一个 shell 中运行 <code>command</code>。 在 UNIX 上使用 <code>&#39;/bin/sh&#39;</code>，在 Windows 上使用 <code>process.env.ComSpec</code>。 一个不同的 shell 可以被指定为字符串。 See <a href=#child_process_shell_requirements>Shell Requirements</a> and <a href=#child_process_default_windows_shell>Default Windows Shell</a>. 默认为 <code>false</code>（没有 shell）。</li></ul></li><li>返回: {Object}<ul><li><code>pid</code> {number} 子进程的 pid</li><li><code>output</code> {Array} stdio 输出返回的结果数组</li><li><code>stdout</code> {Buffer|string} <code>output[1]</code> 的内容</li><li><code>stderr</code> {Buffer|string} <code>output[2]</code> 的内容</li><li><code>status</code> {number} 子进程的退出码</li><li><code>signal</code> {string} 用于杀死子进程的信号</li><li><code>error</code> {Error} 如果子进程失败或超时产生的错误对象</li></ul></li></ul><p><code>child_process.spawnSync()</code> 方法与 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 基本相同，除了该方法直到子进程完全关闭后才返回。 当遇到超时且发送了 <code>killSignal</code> 时，则该方法直到进程完全退出后才返回结果。 注意，如果子进程拦截并处理了 <code>SIGTERM</code> 信号且没有退出，则父进程会一直等待直到子进程退出。</p><p>注意：不要把未经检查的用户输入传入到该函数。 任何包括 shell 元字符的输入都可被用于触发任何命令的执行。</p><h2 id=class-childprocess>Class: ChildProcess</h2><p><code>ChildProcess</code> 类的实例是 <a href=events.html#events_class_eventemitter><code>EventEmitter</code></a>，代表衍生的子进程。</p><p><code>ChildProcess</code> 的实例不被直接创建。 而是，使用 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a>、<a href=#child_process_child_process_exec_command_options_callback><code>child_process.exec()</code></a>、<a href=#child_process_child_process_execfile_file_args_options_callback><code>child_process.execFile()</code></a> 或 <a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a> 方法创建 <code>ChildProcess</code> 实例。</p><h3 id=event-close->Event: &#39;close&#39;</h3><ul><li><code>code</code> {number} 如果子进程退出自身，则该值是退出码。</li><li><code>signal</code> {string} 子进程被终止时的信号。</li></ul><p>当子进程的 stdio 流被关闭时会触发 <code>&#39;close&#39;</code> 事件。 这与 <a href=#child_process_event_exit><code>&#39;exit&#39;</code></a> 事件不同，因为多个进程可能共享同一 stdio 流。</p><h3 id=event-disconnect->Event: &#39;disconnect&#39;</h3><p>在父进程中调用 <a href=#child_process_subprocess_disconnect><code>subprocess.disconnect()</code></a> 或在子进程中调用 <a href=process.html#process_process_disconnect><code>process.disconnect()</code></a> 后会触发 <code>&#39;disconnect&#39;</code> 事件。 断开后就不能再发送或接收信息，且 <a href=#child_process_subprocess_connected><code>subprocess.connected</code></a> 属性会被设为 <code>false</code>。</p><h3 id=event-error->Event: &#39;error&#39;</h3><ul><li><code>err</code> {Error} 错误对象。</li></ul><p>每当出现以下情况时触发 <code>&#39;error&#39;</code> 事件：</p><ol><li><p>进程无法被衍生；</p></li><li><p>进程无法被杀死；</p></li><li><p>向子进程发送信息失败。</p></li></ol><p>注意，在错误发生后，<code>&#39;exit&#39;</code> 事件可能会也可能不会触发。 当同时监听了 <code>&#39;exit&#39;</code> 和 <code>&#39;error&#39;</code> 事件，谨防处理函数被多次调用。</p><p>详见 <a href=#child_process_subprocess_kill_signal><code>subprocess.kill()</code></a> 和 <a href=#child_process_subprocess_send_message_sendhandle_options_callback><code>subprocess.send()</code></a>。</p><h3 id=event-exit->Event: &#39;exit&#39;</h3><ul><li><code>code</code> {number} 如果子进程退出自身，则该值是退出码。</li><li><code>signal</code> {string} 子进程被终止时的信号。</li></ul><p>子进程结束后会触发 <code>&#39;exit&#39;</code> 事件。 如果进程退出了，则 <code>code</code> 是进程的最终退出码，否则为 <code>null</code>。 如果进程是收到的信号而终止的，则 <code>signal</code> 是信号的字符串名称，否则为 <code>null</code>。 这两个总有一个是非空的。</p><p>注意，当 <code>&#39;exit&#39;</code> 事件被触发时，子进程的 stdio 流可能依然是打开的。</p><p>另外，还要注意，Node.js 建立了 <code>SIGINT</code> 和 <code>SIGTERM</code> 的信号处理程序，且 Node.js 进程收到这些信号也不会立即终止。 相反，Node.js 会执行一系列的清理操作后重新引发处理信号。</p><p>详见 waitpid(2)。</p><h3 id=event-message->Event: &#39;message&#39;</h3><ul><li><code>message</code> {Object} 一个已解析的 JSON 对象或原始值。</li><li><code>sendHandle</code> {Handle} 一个 <a href=net.html#net_class_net_socket><code>net.Socket</code></a> 或 <a href=net.html#net_class_net_server><code>net.Server</code></a> 对象 或 <code>undefined</code>。</li></ul><p>当一个子进程使用 <a href=process.html#process_process_send_message_sendhandle_options_callback><code>process.send()</code></a> 发送消息时会触发 <code>&#39;message&#39;</code> 事件。</p><p><a name=child_process_child_channel></a></p><h3 id=subprocess-channel>subprocess.channel</h3><ul><li>{Object} 代表子进程的IPC通道的管道。</li></ul><p><code>subprocess.channel</code> 属性是当前子进程的 IPC 通道的引用。如果当前没有 IPC 通道，则该属性为 <code>undefined</code>。</p><p><a name=child_process_child_connected></a></p><h3 id=subprocess-connected>subprocess.connected</h3><ul><li>{boolean} 调用 <code>subprocess.disconnect()</code> 后会被设为 <code>false</code></li></ul><p><code>subprocess.connected</code> 属性表明是否仍可以从一个子进程发送和接收消息。 当 <code>subprocess.connected</code> 为 <code>false</code> 时，则不能再发送或接收的消息。</p><p><a name=child_process_child_disconnect></a></p><h3 id=subprocess-disconnect->subprocess.disconnect()</h3><p>关闭父进程与子进程之间的 IPC 通道，一旦没有其他的连接使其保持活跃，则允许子进程正常退出。 调用该方法后，父进程和子进程上各自的 <code>subprocess.connected</code> 和 <code>subprocess.connected</code> 属性都会被设为 <code>false</code>，且进程之间不能再传递消息。</p><p>当正在接收的进程中没有消息时，就会触发 <code>&#39;disconnect&#39;</code> 事件。 这经常在调用 <code>subprocess.disconnect()</code> 后立即被触发。</p><p>注意，当子进程是一个 Node.js 实例时（例如通过 <a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a> 衍生的），可以在子进程内调用 <code>process.disconnect()</code> 方法来关闭 IPC 通道。</p><p><a name=child_process_child_kill_signal></a></p><h3 id=subprocess-kill-signal->subprocess.kill([signal])</h3><ul><li><code>signal</code> {string}</li></ul><p><code>subprocess.kill()</code> 方法向子进程发送一个信号。 如果没有给定参数，则进程会发送 <code>&#39;SIGTERM&#39;</code> 信号。 查看 signal(7) 了解可用的信号列表。</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const grep = spawn(&#39;grep&#39;, [&#39;ssh&#39;]);
+
+grep.on(&#39;close&#39;, (code, signal) =&gt; {
+  console.log(`子进程收到信号 ${signal} 而终止`);
+});
+
+// 发送 SIGHUP 到进程
+grep.kill(&#39;SIGHUP&#39;);
+</code></pre><p>如果信号没有被送达，<a href=#child_process_child_process><code>ChildProcess</code></a> 对象可能会触发一个 <a href=#child_process_event_error><code>&#39;error&#39;</code></a> 事件。 向一个已经退出的子进程发送信号不是一个错误，但可能有无法预知的后果。 特别是，如果进程的 PID 已经重新分配给其他进程，则信号会被发送到该进程，从而可能有意想不到的结果。</p><p>注意，当函数被调用 <code>kill</code> 时，已发送到子进程的信号可能没有实际终止该进程。</p><p>详见 kill(2)。</p><p>注意：在 Linux 上，当试图杀死父进程时，子进程的子进程不会被终止。 这有可能发生在当在一个 shell 中运行一个新进程时，或使用 <code>ChildProcess</code> 中的 <code>shell</code> 选项时，例如：</p><pre><code class=lang-js>&#39;use strict&#39;;
+const { spawn } = require(&#39;child_process&#39;);
+
+const subprocess = spawn(
+  &#39;sh&#39;,
+  [
+    &#39;-c&#39;,
+    `node -e &quot;setInterval(() =&gt; {
+      console.log(process.pid, &#39;is alive&#39;)
+    }, 500);&quot;`
+  ], {
+    stdio: [&#39;inherit&#39;, &#39;inherit&#39;, &#39;inherit&#39;]
+  }
+);
+
+setTimeout(() =&gt; {
+  subprocess.kill(); // 不会终止 shell 中的 node 进程
+}, 2000);
+</code></pre><h3 id=subprocess-killed>subprocess.killed</h3><ul><li>{boolean} 当 <code>subprocess.kill()</code> 成功终止子进程时被设置为 <code>true</code>。</li></ul><p><code>subprocess.killed</code> 属性表明该子进程已经成功地被 <code>subprocess.kill()</code> 终止。</p><p><a name=child_process_child_pid></a></p><h3 id=subprocess-pid>subprocess.pid</h3><ul><li>{number} 整数</li></ul><p>返回子进程的进程标识（PID）。</p><p>例子：</p><pre><code class=lang-js>const { spawn } = require(&#39;child_process&#39;);
+const grep = spawn(&#39;grep&#39;, [&#39;ssh&#39;]);
+
+console.log(`衍生的子进程的 pid：${grep.pid}`);
+grep.stdin.end();
+</code></pre><p><a name=child_process_child_send_message_sendhandle_options_callback></a></p><h3 id=subprocess-send-message-sendhandle-options-callback->subprocess.send(message[, sendHandle[, options]][, callback])</h3><ul><li><code>message</code> {Object}</li><li><code>sendHandle</code> {Handle}</li><li><code>options</code> {Object}</li><li><code>callback</code> {Function}</li><li>返回: {boolean}</li></ul><p>当父进程和子进程之间建立了一个 IPC 通道时（例如，使用 <a href=#child_process_child_process_fork_modulepath_args_options><code>child_process.fork()</code></a>），<code>subprocess.send()</code> 方法可用于发送消息到子进程。 当子进程是一个 Node.js 实例时，消息可以通过 <a href=process.html#process_event_message><code>process.on(&#39;message&#39;)</code></a> 事件接收。</p><p>例子，父进程脚本如下：</p><pre><code class=lang-js>const cp = require(&#39;child_process&#39;);
+const n = cp.fork(`${__dirname}/sub.js`);
+
+n.on(&#39;message&#39;, (m) =&gt; {
+  console.log(&#39;父进程收到消息：&#39;, m);
+});
+
+n.send({ hello: &#39;world&#39; });
+</code></pre><p>然后是子进程脚本，<code>&#39;sub.js&#39;</code> 可能看上去像这样：</p><pre><code class=lang-js>process.on(&#39;message&#39;, (m) =&gt; {
+  console.log(&#39;子进程收到消息：&#39;, m);
+});
+
+process.send({ foo: &#39;bar&#39; });
+</code></pre><p>Node.js 中的子进程有一个自己的 <a href=process.html#process_process_send_message_sendhandle_options_callback><code>process.send()</code></a> 方法，允许子进程发送消息回父进程。</p><p>当发送一个 <code>{cmd: &#39;NODE_foo&#39;}</code> 消息时，是一个特例。 所有在 <code>cmd</code> 属性里包含一个 <code>NODE_</code> 前缀的都会被认为是预留给 Node.js 核心代码内部使用的，且不会触发子进程的 <a href=process.html#process_event_message><code>process.on(&#39;message&#39;)</code></a> 事件。 而是，这种消息可使用 <code>process.on(&#39;internalMessage&#39;)</code> 事件触发，且被 Node.js 内部消费。 应用程序应避免使用这种消息或监听 <code>&#39;internalMessage&#39;</code> 事件。</p><p>可选的 <code>sendHandle</code> 参数可能被传给 <code>subprocess.send()</code>，它用于传入一个 TCP 服务器或 socket 对象给子进程。 子进程会接收对象作为第二个参数，并传给注册在 <a href=process.html#process_event_message><code>process.on(&#39;message&#39;)</code></a> 事件上的回调函数。 socket 上接收或缓冲的任何数据不会被发送给子进程。</p><p><code>options</code> 参数，如果存在的话，是一个用于处理发送数据参数对象。<code>options</code> 支持以下属性：</p><ul><li><code>keepOpen</code> - 一个 Boolean 值，当传入 <code>net.Socket</code> 实例时可用。 当为 <code>true</code> 时，socket 在发送进程中保持打开。 默认为 <code>false</code>。</li></ul><p>可选的 <code>callback</code> 是一个函数，它在消息发送之后、子进程收到消息之前被调用。 该函数被调用时只有一个参数：成功时是 <code>null</code>，失败时是一个 <a href=errors.html#errors_class_error><code>Error</code></a> 对象。</p><p>如果没有提供 <code>callback</code> 函数，且消息没被发送，则一个 <code>&#39;error&#39;</code> 事件将被 <a href=#child_process_child_process><code>ChildProcess</code></a> 对象触发。 这是有可能发生的，例如当子进程已经退出时。</p><p>如果通道已关闭，或当未发送的消息的积压超过阈值使其无法发送更多时，<code>subprocess.send()</code> 会返回 <code>false</code>。 除此以外，该方法返回 <code>true</code>。 <code>callback</code> 函数可用于实现流量控制。</p><h4 id=example-sending-a-server-object>Example: sending a server object</h4><p><code>sendHandle</code> 参数可用于将一个 TCP server 对象句柄传给子进程，如下所示：</p><pre><code class=lang-js>const subprocess = require(&#39;child_process&#39;).fork(&#39;subprocess.js&#39;);
+
+// 开启 server 对象，并发送该句柄。
+const server = require(&#39;net&#39;).createServer();
+server.on(&#39;connection&#39;, (socket) =&gt; {
+  socket.end(&#39;被父进程处理&#39;);
+});
+server.listen(1337, () =&gt; {
+  subprocess.send(&#39;server&#39;, server);
+});
+</code></pre><p>子进程接收 server 对象如下：</p><pre><code class=lang-js>process.on(&#39;message&#39;, (m, server) =&gt; {
+  if (m === &#39;server&#39;) {
+    server.on(&#39;connection&#39;, (socket) =&gt; {
+      socket.end(&#39;被子进程处理&#39;);
+    });
+  }
+});
+</code></pre><p>当服务器在父进程和子进程之间是共享的，则一些连接可被父进程处理，另一些可被子进程处理。</p><p>上面的例子使用了一个 <code>net</code> 模块创建的服务器，而 <code>dgram</code> 模块的服务器使用完全相同的工作流程，但它监听一个 <code>&#39;message&#39;</code> 事件而不是 <code>&#39;connection&#39;</code> 事件，且使用 <code>server.bind</code> 而不是 <code>server.listen()</code>。 目前仅 UNIX 平台支持这一点。</p><h4 id=example-sending-a-socket-object>Example: sending a socket object</h4><p>同样，<code>sendHandle</code> 参数可用于将一个 socket 句柄传给子进程。 以下例子衍生了两个子进程，分别用于处理 &quot;normal&quot; 连接或优先处理 &quot;special&quot; 连接：</p><pre><code class=lang-js>const { fork } = require(&#39;child_process&#39;);
+const normal = fork(&#39;subprocess.js&#39;, [&#39;normal&#39;]);
+const special = fork(&#39;subprocess.js&#39;, [&#39;special&#39;]);
+
+// 开启 server，并发送 socket 给子进程。
+// 使用 `pauseOnConnect` 防止 socket 在被发送到子进程之前被读取。
+const server = require(&#39;net&#39;).createServer({ pauseOnConnect: true });
+server.on(&#39;connection&#39;, (socket) =&gt; {
+
+  // 特殊优先级
+  if (socket.remoteAddress === &#39;74.125.127.100&#39;) {
+    special.send(&#39;socket&#39;, socket);
+    return;
+  }
+  // 普通优先级
+  normal.send(&#39;socket&#39;, socket);
+});
+server.listen(1337);
+</code></pre><p><code>subprocess.js</code> 会接收到一个 socket 句柄，并作为第二个参数传给事件回调函数：</p><pre><code class=lang-js>process.on(&#39;message&#39;, (m, socket) =&gt; {
+  if (m === &#39;socket&#39;) {
+    socket.end(`请求被 ${process.argv[2]} 优先级处理`);
+  }
+});
+process.on(&#39;message&#39;, (m, socket) =&gt; {
+  if (m === &#39;socket&#39;) {
+    if (socket) {
+      // 检查客户端 socket 是否存在。
+      // socket 在被发送与被子进程接收这段时间内可被关闭。
+      socket.end(`请求被 ${process.argv[2]} 优先级处理`);
+    }
+  }
+});
+</code></pre><p>一旦一个 socket 已被传给了子进程，则父进程不再能够跟踪 socket 何时被销毁。 为了表明这个，<code>.connections</code> 属性会变成 <code>null</code>。 当发生这种情况时，建议不要使用 <code>.maxConnections</code>。</p><p>建议在子进程中的任何 <code>message</code> 处理程序都需要验证 <code>socket</code> 是否存在，因为连接可能会在它在发送给子进程的这段时间内被关闭。</p><p>注意，该函数内部使用 <a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify><code>JSON.stringify()</code></a> 序列化 <code>message</code>。</p><p><a name=child_process_child_stderr></a></p><h3 id=subprocess-stderr>subprocess.stderr</h3><ul><li>{stream.Readable}</li></ul><p>一个代表子进程的 <code>stderr</code> 的可读流。</p><p>如果子进程被衍生时 <code>stdio[2]</code> 被设为任何不是 <code>&#39;pipe&#39;</code> 的值，则这会是 <code>null</code>。</p><p><code>subprocess.stderr</code> 是 <code>subprocess.stdio[2]</code> 的一个别名。 这两个属性指向相同的值。</p><p><a name=child_process_child_stdin></a></p><h3 id=subprocess-stdin>subprocess.stdin</h3><ul><li>{stream.Writable}</li></ul><p>一个代表子进程的 <code>stdin</code> 的可写流。</p><p>注意，如果一个子进程正在等待读取所有的输入，则子进程不会继续直到流已通过 <code>end()</code> 关闭。</p><p>如果子进程被衍生时 <code>stdio[0]</code> 被设为任何不是 <code>&#39;pipe&#39;</code> 的值，则这会是 <code>null</code>。</p><p><code>subprocess.stdin</code> 是 <code>subprocess.stdio[0]</code> 的一个别名。 这两个属性指向相同的值。</p><p><a name=child_process_child_stdio></a></p><h3 id=subprocess-stdio>subprocess.stdio</h3><ul><li>{Array}</li></ul><p>一个到子进程的管道的稀疏数组，对应着传给 <a href=#child_process_child_process_spawn_command_args_options><code>child_process.spawn()</code></a> 的选项中值被设为 <code>&#39;pipe&#39;</code> 的 <a href=#child_process_options_stdio><code>stdio</code></a>。 注意，<code>subprocess.stdio[0]</code>、<code>subprocess.stdio[1]</code> 和 <code>subprocess.stdio[2]</code> 分别可用作 <code>subprocess.stdin</code>、 <code>subprocess.stdout</code> 和 <code>subprocess.stderr</code>。</p><p>在下面的例子中，只有子进程的 fd <code>1</code>（stdout）被配置为一个管道，所以只有父进程的 <code>subprocess.stdio[1]</code> 是一个流，数组中的其他值都是 <code>null</code>。</p><pre><code class=lang-js>const assert = require(&#39;assert&#39;);
+const fs = require(&#39;fs&#39;);
+const child_process = require(&#39;child_process&#39;);
+
+const subprocess = child_process.spawn(&#39;ls&#39;, {
+  stdio: [
+    0, // 使用父进程的 stdin 用于子进程
+    &#39;pipe&#39;, // 把子进程的 stdout 通过管道传到父进程 
+    fs.openSync(&#39;err.out&#39;, &#39;w&#39;) // 把子进程的 stderr 指向一个文件
+  ]
+});
+
+assert.strictEqual(subprocess.stdio[0], null);
+assert.strictEqual(subprocess.stdio[0], subprocess.stdin);
+
+assert(subprocess.stdout);
+assert.strictEqual(subprocess.stdio[1], subprocess.stdout);
+
+assert.strictEqual(subprocess.stdio[2], null);
+assert.strictEqual(subprocess.stdio[2], subprocess.stderr);
+</code></pre><p><a name=child_process_child_stdout></a></p><h3 id=subprocess-stdout>subprocess.stdout</h3><ul><li>{stream.Readable}</li></ul><p>一个代表子进程的 <code>stdout</code> 的可读流。</p><p>如果子进程被衍生时 <code>stdio[1]</code> 被设为任何不是 <code>&#39;pipe&#39;</code> 的值，则这会是 <code>null</code>。</p><p><code>subprocess.stdout</code> 是 <code>subprocess.stdio[1]</code> 的一个别名。 这两个属性指向相同的值。</p><h2 id=-maxbuffer-and-unicode><code>maxBuffer</code> and Unicode</h2><p><code>maxBuffer</code> 选项指定了 <code>stdout</code> 或 <code>stderr</code> 上允许的字节数的最大值。 如果超过这个值，则子进程会被终止。 这会影响包含多字节字符编码的输出，如 UTF-8 或 UTF-16。 例如，<code>console.log(&#39;中文测试&#39;)</code> 会发送 13 个 UTF-8 编码的字节到 <code>stdout</code>，尽管只有 4 个字符。</p><h2 id=shell-requirements>Shell Requirements</h2><p>The shell should understand the <code>-c</code> switch on UNIX or <code>/d /s /c</code> on Windows. On Windows, command line parsing should be compatible with <code>&#39;cmd.exe&#39;</code>.</p><h2 id=default-windows-shell>Default Windows Shell</h2><p>Although Microsoft specifies <code>%COMSPEC%</code> must contain the path to <code>&#39;cmd.exe&#39;</code> in the root environment, child processes are not always subject to the same requirement. Thus, in <code>child_process</code> functions where a shell can be spawned, <code>&#39;cmd.exe&#39;</code> is used as a fallback if <code>process.env.ComSpec</code> is unavailable.</p></div></div></div></body><script src=js/all.js></script></html>

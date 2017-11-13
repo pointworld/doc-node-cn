@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-zlib">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="zlib">
+            <div id="apicontent">
+                <h1 id="zlib">Zlib</h1>
+<blockquote>
+<p>Stability: 2 - Stable</p>
+</blockquote>
+<p><code>zlib</code>模块提供通过 Gzip 和 Deflate/Inflate 实现的压缩功能，可以通过这样使用它：</p>
+<pre><code class="lang-js">const zlib = require(&#39;zlib&#39;);
+</code></pre>
+<p>压缩或者解压数据流(例如一个文件)通过<code>zlib</code>流将源数据流传输到目标流中来完成。</p>
+<pre><code class="lang-js">const gzip = zlib.createGzip();
+const fs = require(&#39;fs&#39;);
+const inp = fs.createReadStream(&#39;input.txt&#39;);
+const out = fs.createWriteStream(&#39;input.txt.gz&#39;);
+
+inp.pipe(gzip).pipe(out);
+</code></pre>
+<p>数据的压缩或解压缩也可以只用一个步骤完成：</p>
+<pre><code class="lang-js">const input = &#39;.................................&#39;;
+zlib.deflate(input, (err, buffer) =&gt; {
+  if (!err) {
+    console.log(buffer.toString(&#39;base64&#39;));
+  } else {
+    // 错误处理
+  }
+});
+
+const buffer = Buffer.from(&#39;eJzT0yMAAGTvBe8=&#39;, &#39;base64&#39;);
+zlib.unzip(buffer, (err, buffer) =&gt; {
+  if (!err) {
+    console.log(buffer.toString());
+  } else {
+    // 错误处理
+  }
+});
+</code></pre>
+<h2 id="threadpool-usage">Threadpool Usage</h2>
+<p>Note that all zlib APIs except those that are explicitly synchronous use libuv&#39;s
+threadpool, which can have surprising and negative performance implications for
+some applications, see the [<code>UV_THREADPOOL_SIZE</code>][] documentation for more
+information.</p>
+<h2 id="compressing-http-requests-and-responses">Compressing HTTP requests and responses</h2>
+<p><code>zlib</code> 可以用来实现对 <a href="https://tools.ietf.org/html/rfc7230#section-4.2">HTTP</a> 中定义的 <code>gzip</code> 和 <code>deflate</code> 内容编码机制的支持。</p>
+<p>HTTP 的 <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3"><code>Accept-Encoding</code></a> 头字段用来标记客户端接受的压缩编码。
+。</p>
+<p><code>注意</code>: 下面给出的示例大幅简化，用以展示了基本的概念。使用 <code>zlib</code> 编码成本会很高, 结果应该被缓存。关于 <code>zlib</code> 使用中有关速度/内存/压缩互相权衡的信息，查阅 <a href="#zlib_memory_usage_tuning">Memory Usage Tuning</a>。</p>
+<pre><code class="lang-js">// 客户端请求示例
+const zlib = require(&#39;zlib&#39;);
+const http = require(&#39;http&#39;);
+const fs = require(&#39;fs&#39;);
+const request = http.get({ host: &#39;example.com&#39;,
+                           path: &#39;/&#39;,
+                           port: 80,
+                           headers: { &#39;Accept-Encoding&#39;: &#39;gzip,deflate&#39; } });
+request.on(&#39;response&#39;, (response) =&gt; {
+  const output = fs.createWriteStream(&#39;example.com_index.html&#39;);
+
+  switch (response.headers[&#39;content-encoding&#39;]) {
+    // 或者, 只是使用 zlib.createUnzip() 方法去处理这两种情况
+    case &#39;gzip&#39;:
+      response.pipe(zlib.createGunzip()).pipe(output);
+      break;
+    case &#39;deflate&#39;:
+      response.pipe(zlib.createInflate()).pipe(output);
+      break;
+    default:
+      response.pipe(output);
+      break;
+  }
+});
+</code></pre>
+<pre><code class="lang-js">// 服务端示例
+// 对每一个请求运行 gzip 操作的成本是十分高昂的.
+// 缓存压缩缓冲区是更加高效的方式.
+const zlib = require(&#39;zlib&#39;);
+const http = require(&#39;http&#39;);
+const fs = require(&#39;fs&#39;);
+http.createServer((request, response) =&gt; {
+  const raw = fs.createReadStream(&#39;index.html&#39;);
+  let acceptEncoding = request.headers[&#39;accept-encoding&#39;];
+  if (!acceptEncoding) {
+    acceptEncoding = &#39;&#39;;
+  }
+
+  // 注意：这不是一个合适的 accept-encoding 解析器.
+  // 查阅 http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3
+  if (/\bdeflate\b/.test(acceptEncoding)) {
+    response.writeHead(200, { &#39;Content-Encoding&#39;: &#39;deflate&#39; });
+    raw.pipe(zlib.createDeflate()).pipe(response);
+  } else if (/\bgzip\b/.test(acceptEncoding)) {
+    response.writeHead(200, { &#39;Content-Encoding&#39;: &#39;gzip&#39; });
+    raw.pipe(zlib.createGzip()).pipe(response);
+  } else {
+    response.writeHead(200, {});
+    raw.pipe(response);
+  }
+}).listen(1337);
+</code></pre>
+<p>默认情况下, 当解压不完整的数据时 <code>zlib</code> 方法会抛出一个错误. 然而, 如果它已经知道数据是不完整的, 或者仅仅是为了检查已压缩文件的开头, 可以通过改变用来解压最后一个的输入数据块的刷新方法来避免默认的错误处理.</p>
+<pre><code class="lang-js">// 这是一个上面例子中缓存区的不完整版本
+const buffer = Buffer.from(&#39;eJzT0yMA&#39;, &#39;base64&#39;);
+
+zlib.unzip(
+  buffer,
+  { finishFlush: zlib.constants.Z_SYNC_FLUSH },
+  (err, buffer) =&gt; {
+    if (!err) {
+      console.log(buffer.toString());
+    } else {
+      // 错误处理
+    }
+  });
+</code></pre>
+<p>这不会改变其他抛出错误情况下的行为, 例如, 当输入内容的格式无效时. 使用这个方法, 无法确定输入是否过早结束, 或者缺乏完整性检查, 因此有必要人工检查解压结果是否有效.</p>
+<h2 id="memory-usage-tuning">Memory Usage Tuning</h2>
+<!--type=misc-->
+<p>来自 <code>zlib/zconf.h</code>, 修改为 node.js 的用法:</p>
+<p>解压所需的内存是(字节为单位):</p>
+<!-- eslint-disable semi -->
+<pre><code class="lang-js">(1 &lt;&lt; (windowBits + 2)) + (1 &lt;&lt; (memLevel + 9))
+</code></pre>
+<p>就是: 当设置为 windowBits=15 和 memLevel = 8 时(默认值), 小的对象需要 128k 加上几千字节. </p>
+<p>例如, 为了将默认内存需求 256k 减少到 128k, 应该这样设置:</p>
+<pre><code class="lang-js">const options = { windowBits: 14, memLevel: 7 };
+</code></pre>
+<p>这能实现, 然而, 通常会降低压缩水平.</p>
+<p>压缩所需的内存是 <code>1 &lt;&lt; windowBits</code> (字节为单位). 既是, 设置为 windowBits=15(默认值)
+时, 小的对象需要 32k 加上几千字节.</p>
+<p>这是一个大小为 <code>chunkSize</code> 单个内部输出 slab 缓冲, 默认为 16k.</p>
+<p><code>level</code> 的设置是影响 <code>zlib</code> 压缩速度最大因素. 更高的等级设置会得到更高的压缩
+水平, 然而需要更长的时间完成. 较低的等级设置会导致较少的压缩, 但会大大加快速度.</p>
+<p>通常来说, 更大的内存使用选项意味着 Node.js 必须减少调用 <code>zlib</code>, 因为它的每个 <code>write</code> 操作
+能够处理更多的数据. 所以, 这是另外一个影响速度的因素, 代价是内存的占用.</p>
+<h2 id="flushing">Flushing</h2>
+<p>在压缩流上调用 <a href=""><code>.flush()</code></a> 方法将使 <code>zlib</code> 返回尽可能多的输出. 这可能是以压缩质量下降
+为代价的，但是当需要尽快提供数据时，这可能是有用的</p>
+<p>在以下的实例中,  <code>flush()</code> 方法用于将部分压缩过的 HTTP 响应返回给客户端:</p>
+<pre><code class="lang-js">const zlib = require(&#39;zlib&#39;);
+const http = require(&#39;http&#39;);
+
+http.createServer((request, response) =&gt; {
+  // 为了简单起见，省略了对 Accept-Encoding 的检测
+  response.writeHead(200, { &#39;content-encoding&#39;: &#39;gzip&#39; });
+  const output = zlib.createGzip();
+  output.pipe(response);
+
+  setInterval(() =&gt; {
+    output.write(`The current time is ${Date()}\n`, () =&gt; {
+      // 数据已经传递给了 zlib，但压缩算法看能已经决定缓存数据以便得到更高的压缩效率。
+      output.flush();
+    });
+  }, 1000);
+}).listen(1337);
+</code></pre>
+<h2 id="constants">Constants</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<!--type=misc-->
+<p>这些被定义在 <code>zlib.h</code> 的全部常量同时也被定义在 <code>require(&#39;zlib&#39;).constants</code> 常量上.
+不需要在正常的操作中使用这些常量. 记录他们为了使他们的存在并不奇怪. 这个章节几乎直接取自<a href="http://zlib.net/manual.html#Constants">zlib documentation</a>.
+参阅 <a href="http://zlib.net/mamual.html#Constants">http://zlib.net/mamual.html#Constants</a> 获取更多信息.</p>
+<p><em>注意</em>: 以前, 可以直接从 <code>require(&#39;zlib&#39;)</code> 中获取到这些常量, 例如 <code>zlib.Z_NO_FLUSH</code>. 
+目前仍然可以从模块中直接访问这些常量, 但是不推荐使用.</p>
+<p>可接受的 flush 值.</p>
+<ul>
+<li><code>zlib.constants.Z_NO_FLUSH</code></li>
+<li><code>zlib.constants.Z_PARTIAL_FLUSH</code></li>
+<li><code>zlib.constants.Z_SYNC_FLUSH</code></li>
+<li><code>zlib.constants.Z_FULL_FLUSH</code></li>
+<li><code>zlib.constants.Z_FINISH</code></li>
+<li><code>zlib.constants.Z_BLOCK</code></li>
+<li><code>zlib.constants.Z_TREES</code></li>
+</ul>
+<p>返回压缩/解压函数的返回值. 发送错误时为负值, 正值用于特殊但正常的事件.</p>
+<ul>
+<li><code>zlib.constants.Z_OK</code></li>
+<li><code>zlib.constants.Z_STREAM_END</code></li>
+<li><code>zlib.constants.Z_NEED_DICT</code></li>
+<li><code>zlib.constants.Z_ERRNO</code></li>
+<li><code>zlib.constants.Z_STREAM_ERROR</code></li>
+<li><code>zlib.constants.Z_DATA_ERROR</code></li>
+<li><code>zlib.constants.Z_MEM_ERROR</code></li>
+<li><code>zlib.constants.Z_BUF_ERROR</code></li>
+<li><code>zlib.constants.Z_VERSION_ERROR</code></li>
+</ul>
+<p>压缩等级.</p>
+<ul>
+<li><code>zlib.constants.Z_NO_COMPRESSION</code></li>
+<li><code>zlib.constants.Z_BEST_SPEED</code></li>
+<li><code>zlib.constants.Z_BEST_COMPRESSION</code></li>
+<li><code>zlib.constants.Z_DEFAULT_COMPRESSION</code></li>
+</ul>
+<p>压缩策略</p>
+<ul>
+<li><code>zlib.constants.Z_FILTERED</code></li>
+<li><code>zlib.constants.Z_HUFFMAN_ONLY</code></li>
+<li><code>zlib.constants.Z_RLE</code></li>
+<li><code>zlib.constants.Z_FIXED</code></li>
+<li><code>zlib.constants.Z_DEFAULT_STRATEGY</code></li>
+</ul>
+<h2 id="class-options">Class Options</h2>
+<!-- YAML
+added: v0.11.1
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `dictionary` option can be an Uint8Array now.
+  - version: v5.11.0
+    pr-url: https://github.com/nodejs/node/pull/6069
+    description: The `finishFlush` option is supported now.
+-->
+<!--type=misc-->
+<p>每一个类都有一个 <code>options</code> 对象. 所有的选项都是可选的.</p>
+<p>注意一些选项只与压缩相关, 会被解压类忽视.</p>
+<ul>
+<li><code>flush</code> {integer} (default: <code>zlib.constants.Z_NO_FLUSH</code>)</li>
+<li><code>finishFlush</code> {integer} (default: <code>zlib.constants.Z_FINISH</code>)</li>
+<li><code>chunkSize</code> {integer} (default: 16*1024)</li>
+<li><code>windowBits</code> {integer}</li>
+<li><code>level</code> {integer} (compression only)</li>
+<li><code>memLevel</code> {integer} (compression only)</li>
+<li><code>strategy</code> {integer} (compression only)</li>
+<li><code>dictionary</code> {Buffer|TypedArray|DataView} (deflate/inflate only, empty dictionary by
+default)</li>
+<li><code>info</code> {boolean} (If <code>true</code>, returns an object with <code>buffer</code> and <code>engine</code>)</li>
+</ul>
+<p>更多信息查阅在 <a href="http://zlib.net/manual.html#Advanced">http://zlib.net/manual.html#Advanced</a> 关于 <code>deflateInit2</code> 以及 <code>inflateInit2</code> 的描述， </p>
+<h2 id="class-zlib-deflate">Class: zlib.Deflate</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>使用 deflate 压缩数据。</p>
+<h2 id="class-zlib-deflateraw">Class: zlib.DeflateRaw</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>使用 deflate 压缩数据，并且不附加一个 <code>zlib</code> 头。</p>
+<h2 id="class-zlib-gunzip">Class: zlib.Gunzip</h2>
+<!-- YAML
+added: v0.5.8
+changes:
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/5883
+    description: Trailing garbage at the end of the input stream will now
+                 result in an `error` event.
+  - version: v5.9.0
+    pr-url: https://github.com/nodejs/node/pull/5120
+    description: Multiple concatenated gzip file members are supported now.
+  - version: v5.0.0
+    pr-url: https://github.com/nodejs/node/pull/2595
+    description: A truncated input stream will now result in an `error` event.
+-->
+<p>解压缩 gzip 流。</p>
+<h2 id="class-zlib-gzip">Class: zlib.Gzip</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>使用 gzip 压缩数据。</p>
+<h2 id="class-zlib-inflate">Class: zlib.Inflate</h2>
+<!-- YAML
+added: v0.5.8
+changes:
+  - version: v5.0.0
+    pr-url: https://github.com/nodejs/node/pull/2595
+    description: A truncated input stream will now result in an `error` event.
+-->
+<p>解压一个 deflate 流。</p>
+<h2 id="class-zlib-inflateraw">Class: zlib.InflateRaw</h2>
+<!-- YAML
+added: v0.5.8
+changes:
+  - version: v6.8.0
+    pr-url: https://github.com/nodejs/node/pull/8512
+    description: Custom dictionaries are now supported by `InflateRaw`.
+  - version: v5.0.0
+    pr-url: https://github.com/nodejs/node/pull/2595
+    description: A truncated input stream will now result in an `error` event.
+-->
+<p>解压一个 raw deflate 流。</p>
+<h2 id="class-zlib-unzip">Class: zlib.Unzip</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>通过自动检测头信息解压 Gzip 或者 Deflate 压缩的流.</p>
+<h2 id="class-zlib-zlib">Class: zlib.Zlib</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>没有被 <code>zlib</code> 模块导出. 它被记录于此因为它是 compressor/decompressor 类的基础类.</p>
+<h3 id="zlib-bytesread">zlib.bytesRead</h3>
+<!-- YAML
+added: REPLACEME
+-->
+<ul>
+<li>{number}</li>
+</ul>
+<p><code>zlib.bytesRead</code> 属性指的是压缩引擎处理之前读取的字节数 (压缩或者解压, 适用于派生类)。</p>
+<h3 id="zlib-flush-kind-callback-">zlib.flush([kind], callback)</h3>
+<!-- YAML
+added: v0.5.8
+-->
+<p><code>kind</code> 默认为 <code>zlib.constants.Z_FULL_FLUSH</code>.</p>
+<p>刷新挂起的数据. 不要轻易的调用这个方法, 过早的刷新会对压缩算法造成负面影响.</p>
+<p>执行这个操作只会从 <code>zlib</code> 内部状态刷新数据, 不会在流级别上执行任何类型的刷新. 相反, 它的表现
+类似正常的 <code>.write()</code> 调用. 即它将在队列中其他数据写入操作之后执行，并且只会在从流中读取数据之后
+才产生输出。</p>
+<h3 id="zlib-params-level-strategy-callback-">zlib.params(level, strategy, callback)</h3>
+<!-- YAML
+added: v0.11.4
+-->
+<p>动态更新压缩等级和压缩策略. 只对解压算法有效.</p>
+<h3 id="zlib-reset-">zlib.reset()</h3>
+<!-- YAML
+added: v0.7.0
+-->
+<p>重置 compressor/decompressor 为默认值。仅适用于 inflate 和 deflate 算法。</p>
+<h2 id="zlib-constants">zlib.constants</h2>
+<!-- YAML
+added: v7.0.0
+-->
+<p>提供一个列举出 Zlib 相关常数的对象。</p>
+<h2 id="zlib-createdeflate-options-">zlib.createDeflate(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>创建并返回一个带有给定 <a href="#zlib_class_options">options</a> 的新的 <a href="#zlib_class_zlib_deflate">Deflate</a> 对象。</p>
+<h2 id="zlib-createdeflateraw-options-">zlib.createDeflateRaw(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>创建并返回一个带有给定 <a href="#zlib_class_options">options</a> 的新的 <a href="#zlib_class_zlib_deflateraw">DeflateRaw</a> 对象.</p>
+<p><em>注意</em>: zlib 库拒绝 256-字节的 windows 的请求 (即 <code>{windowBits: 8}</code> in <code>options</code>).
+当创建具有这个特定 <code>windowBits</code> 值的 <a href="#zlib_class_zlib_deflateraw">DeflateRaw</a> 对象时, 会抛出一个 <code>Error</code></p>
+<h2 id="zlib-creategunzip-options-">zlib.createGunzip(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>创建并返回一个带有给定 options 的新的 <a href="#zlib_class_zlib_gunzip">Gunzip</a> 对象。</p>
+<h2 id="zlib-creategzip-options-">zlib.createGzip(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>创建并返回一个带有给定 options 的新的 <a href="#zlib_class_zlib_gzip">Gzip</a> 对象。</p>
+<h2 id="zlib-createinflate-options-">zlib.createInflate(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>Creates and returns a new <a href="#zlib_class_zlib_inflate">Inflate</a> object with the given <a href="#zlib_class_options">options</a>.</p>
+<h2 id="zlib-createinflateraw-options-">zlib.createInflateRaw(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>Creates and returns a new <a href="#zlib_class_zlib_inflateraw">InflateRaw</a> object with the given <a href="#zlib_class_options">options</a>.</p>
+<h2 id="zlib-createunzip-options-">zlib.createUnzip(<a href="#zlib_class_options">options</a>)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p>Creates and returns a new <a href="#zlib_class_zlib_unzip">Unzip</a> object with the given <a href="#zlib_class_options">options</a>.</p>
+<h2 id="convenience-methods">Convenience Methods</h2>
+<!--type=misc-->
+<p>所有这些方法都将 <a href="buffer.html#buffer_class_buffer"><code>Buffer</code></a>, [<code>TypeArray</code>][], <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView"><code>DataView</code></a>, 或者字符串作为第一个
+参数, 一个回调函数作为可选的第二个参数提供给 <code>zlib</code> 类, 会在 <code>callback(error, result)</code>
+中调用.</p>
+<p>每一个方法相对应的都有一个接受相同参数, 但是没有回调的 <code>*Sync</code> 版本. </p>
+<h3 id="zlib-deflate-buffer-options-callback-">zlib.deflate(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-deflatesync-buffer-options-">zlib.deflateSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Compress a chunk of data with <a href="#zlib_class_zlib_deflate">Deflate</a>.</p>
+<h3 id="zlib-deflateraw-buffer-options-callback-">zlib.deflateRaw(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-deflaterawsync-buffer-options-">zlib.deflateRawSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Compress a chunk of data with <a href="#zlib_class_zlib_deflateraw">DeflateRaw</a>.</p>
+<h3 id="zlib-gunzip-buffer-options-callback-">zlib.gunzip(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-gunzipsync-buffer-options-">zlib.gunzipSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>使用 <a href="#zlib_class_zlib_gunzip">Gunzip</a> 解压缩一个 [Buffer][] 或者字符串。</p>
+<h3 id="zlib-gzip-buffer-options-callback-">zlib.gzip(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-gzipsync-buffer-options-">zlib.gzipSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Compress a chunk of data with <a href="#zlib_class_zlib_gzip">Gzip</a>.</p>
+<h3 id="zlib-inflate-buffer-options-callback-">zlib.inflate(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-inflatesync-buffer-options-">zlib.inflateSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Decompress a chunk of data with <a href="#zlib_class_zlib_inflate">Inflate</a>.</p>
+<h3 id="zlib-inflateraw-buffer-options-callback-">zlib.inflateRaw(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-inflaterawsync-buffer-options-">zlib.inflateRawSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Decompress a chunk of data with <a href="#zlib_class_zlib_inflateraw">InflateRaw</a>.</p>
+<h3 id="zlib-unzip-buffer-options-callback-">zlib.unzip(buffer[, options], callback)</h3>
+<!-- YAML
+added: v0.6.0
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<h3 id="zlib-unzipsync-buffer-options-">zlib.unzipSync(buffer[, options])</h3>
+<!-- YAML
+added: v0.11.12
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12223
+    description: The `buffer` parameter can be any TypedArray or DataView now.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12001
+    description: The `buffer` parameter can be an Uint8Array now.
+-->
+<ul>
+<li><code>buffer</code> {Buffer|TypedArray|DataView|string}</li>
+</ul>
+<p>Decompress a chunk of data with <a href="#zlib_class_zlib_unzip">Unzip</a>.</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

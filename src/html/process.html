@@ -1,0 +1,1365 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-process">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="process">
+            <div id="apicontent">
+                <h1 id="process">Process</h1>
+<!-- type=global -->
+<p><code>process</code> 对象是一个 <code>global</code> （全局变量），提供有关信息，控制当前 Node.js 进程。作为一个对象，它对于 Node.js 应用程序始终是可用的，故无需使用 <code>require()</code>。</p>
+<h2 id="process-events">Process Events</h2>
+<p> <code>process</code> 对象是<a href="events.html#events_class_eventemitter"><code>EventEmitter</code></a>的实例.</p>
+<h3 id="event-beforeexit-">Event: &#39;beforeExit&#39;</h3>
+<!-- YAML
+added: v0.11.12
+-->
+<p>当Node.js的事件循环数组已经为空，并且没有额外的工作被添加进来，事件<code>&#39;beforeExit&#39;</code>会被触发。
+正常情况下，如果没有额外的工作被添加到事件循环数组，Node.js进程会结束。但是如果<code>&#39;beforeExit&#39;</code>事件绑定的监听器的回调函数中，含有一个可以进行异步调用的操作，那么Node.js进程会继续运行。</p>
+<p><a href="#process_process_exitcode"><code>process.exitCode</code></a> 作为唯一的参数值传递给<code>&#39;beforeExit&#39;</code>事件监听器的回调函数。</p>
+<p>如果进程由于显式的原因而将要终止，例如直接调用<a href="#process_process_exit_code"><code>process.exit()</code></a>或抛出未捕获的异常，<code>&#39;beforeExit&#39;</code>事件不会被触发。</p>
+<p>除非本意就是需要添加额外的工作(比如通过监听器进行异步调用)到事件循环数组，否则不应该用<code>&#39;beforeExit&#39;</code>事件替代<code>&#39;exit&#39;</code>事件。</p>
+<h3 id="event-disconnect-">Event: &#39;disconnect&#39;</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>如果Node.js进程是由IPC channel的方式创建的(see the <a href="child_process.html">Child Process</a>
+and <a href="cluster.html">Cluster</a> documentation)，当IPC channel关闭时，会触发<code>&#39;disconnect&#39;</code>事件。</p>
+<h3 id="event-exit-">Event: &#39;exit&#39;</h3>
+<!-- YAML
+added: v0.1.7
+-->
+<p>两种情况下<code>&#39;exit&#39;</code>事件会被触发：</p>
+<ul>
+<li>显式调用<code>process.exit()</code>方法，使得Node.js进程即将结束；</li>
+<li>Node.js事件循环数组中不再有额外的工作，使得Node.js进程即将结束。</li>
+</ul>
+<p>在上述两种情况下，没有任何方法可以阻止事件循环的结束,一旦所有与<code>&#39;exit&#39;</code>事件绑定的监听器执行完成，Node.js的进程会终止。</p>
+<p><code>&#39;exit&#39;</code>事件监听器的回调函数，只有一个入参，这个参数的值可以是<a href="#process_process_exitcode"><code>process.exitCode</code></a>的属性值，或者是调用<a href="#process_process_exit_code"><code>process.exit()</code></a>方法时传入的<code>exitCode</code>值。</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.on(&#39;exit&#39;, (code) =&gt; {
+  console.log(`About to exit with code: ${code}`);
+});
+</code></pre>
+<p><code>&#39;exit&#39;</code>事件监听器的回调函数，<strong>只允许</strong>包含<strong>同步</strong>操作。所有监听器的回调函数被调用后，任何在事件循环数组中排队的工作都会被强制丢弃，然后Nodje.js进程会立即结束。
+例如在下例中，timeout操作永远不会被执行(因为不是同步操作)。</p>
+<pre><code class="lang-js">process.on(&#39;exit&#39;, (code) =&gt; {
+  setTimeout(() =&gt; {
+    console.log(&#39;This will not run&#39;);
+  }, 0);
+});
+</code></pre>
+<h3 id="event-message-">Event: &#39;message&#39;</h3>
+<!-- YAML
+added: v0.5.10
+-->
+<p>如果Node.js进程是由IPC channel的方式创建的(see the <a href="child_process.html">Child Process</a>，
+and <a href="cluster.html">Cluster</a> documentation)，当子进程收到父进程的的消息时(消息通过<a href="child_process.html#child_process_child_send_message_sendhandle_options_callback"><code>childprocess.send()</code></a>发送），
+会触发<code>&#39;message&#39;</code>事件。</p>
+<p><code>&#39;message&#39;</code>事件监听器的回调函数中被传递的参数如下：</p>
+<ul>
+<li><code>message</code>{Object} 解析的JSON对象，或primitive值</li>
+<li><code>sendHandle</code> {Handle object} 一个<a href="net.html#net_class_net_socket"><code>net.Socket</code></a> 或 <a href="net.html#net_class_net_server"><code>net.Server</code></a>对象，或undefined。</li>
+</ul>
+<h3 id="event-rejectionhandled-">Event: &#39;rejectionHandled&#39;</h3>
+<!-- YAML
+added: v1.4.1
+-->
+<p>如果有Promise被rejected，并且此Promise在Nodje.js事件循环的下次轮询及之后期间，被绑定了一个错误处理器[<code>例如使用promise.catch()</code>][])，
+会触发<code>&#39;rejectionHandled&#39;</code>事件。</p>
+<p>此事件监听器的回调函数使用Rejected的<code>Promise</code>引用，作为唯一入参。</p>
+<p><code>Promise</code>对象应该已经在<code>&#39;unhandledRejection&#39;</code>事件触发时被处理，但是在被处理过程中获得了一个rejection处理器。</p>
+<p>对于<code>Promise</code> chain，没有概念表明在 Promise chain的哪个地方，所有的rejections总是会被处理。
+由于本来就是异步的，一个<code>Promise</code> rejection可以在将来的某个时间点被处理-可能要远远晚于<code>&#39;unhandledRejection&#39;</code>事件被触发及处理的时间。</p>
+<p>另一种表述的方式就是，与使用同步代码时会出现不断增长的未处理异常列表不同，使用Promises时，未处理异常列表可能会出现增长然后收缩的情况。</p>
+<p>在同步代码情况下，当未处理异常列表增长时，会触发<code>&#39;uncaughtException&#39;</code>事件。</p>
+<p>在异步代码情况下，当未处理异常列表增长时，会触发<code>&#39;uncaughtException&#39;</code>事件，当未处理列表收缩时，会触发<code>&#39;rejectionHandled&#39;</code>事件。</p>
+<p>例如:</p>
+<pre><code class="lang-js">const unhandledRejections = new Map();
+process.on(&#39;unhandledRejection&#39;, (reason, p) =&gt; {
+  unhandledRejections.set(p, reason);
+});
+process.on(&#39;rejectionHandled&#39;, (p) =&gt; {
+  unhandledRejections.delete(p);
+});
+</code></pre>
+<p>在上述例子中，<code>unhandledRejections</code> <code>Map</code>会随着时间增加和缩减，表明rejections开始是未被处理状态，然后变成已处理状态。
+可以定时(对于需长期运行的应用，这个可能是最好的方式)或当进程结束时(对脚本的应用可能是最方便的)，在错误日志中记录这些错误信息。</p>
+<h3 id="event-uncaughtexception-">Event: &#39;uncaughtException&#39;</h3>
+<!-- YAML
+added: v0.1.18
+-->
+<p>如果Javascript未捕获的异常，沿着代码调用路径反向传递回event loop，会触发<code>&#39;uncaughtException&#39;</code>事件。
+Node.js默认情况下会将这些异常堆栈打印到<code>stderr</code> 然后进程退出。
+为<code>&#39;uncaughtException&#39;</code>事件增加监听器会覆盖上述默认行为。</p>
+<p><code>&#39;uncaughtException&#39;</code>事件监听器的回调函数，使用<code>Error</code> object作为唯一参数值。</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.on(&#39;uncaughtException&#39;, (err) =&gt; {
+  fs.writeSync(1, `Caught exception: ${err}\n`);
+});
+
+setTimeout(() =&gt; {
+  console.log(&#39;This will still run.&#39;);
+}, 500);
+
+// 故意调用一个不存在的函数，应用会抛出未捕获的异常
+nonexistentFunc();
+console.log(&#39;This will not run.&#39;);
+</code></pre>
+<h4 id="warning-using-uncaughtexception-correctly">Warning: Using <code>&#39;uncaughtException&#39;</code> correctly</h4>
+<p>需要注意，如果打算使用<code>&#39;uncaughtException&#39;</code>事件作为异常处理的最后补救机制，这是非常粗糙的设计方式。
+此事件<em>不应该</em>当作<code>出了错误就恢复让它继续</code>的等价机制。
+未处理异常本身就意味着应用已经处于了未定义的状态。如果基于这种状态，尝试恢复应用正常进行，可能会造成未知或不可预测的问题。</p>
+<p>此事件的监听器回调函数中抛出的异常，不会被捕获。为了避免出现无限循环的情况，进程会以非零的状态码结束，并打印堆栈信息。</p>
+<p>如果在出现未捕获异常时，尝试去恢复应用，可能出现的结果与电脑升级时拔掉电源线出现的结果类似 -- 10次中有9次不会出现问题，但是第10次可能系统会出现错误。</p>
+<p>正确使用<code>&#39;uncaughtException&#39;</code>事件的方式，是用它在进程结束前执行一些已分配资源(比如文件描述符，句柄等等)的同步清理操作。
+<strong>触发<code>&#39;uncaughtException&#39;</code>事件后，用它来尝试恢复应用正常运行的操作是不安全的</strong></p>
+<p>想让一个已经崩溃的应用正常运行，更可靠的方式应该是启动另外一个进程来监测/探测应用是否出错，
+无论<code>uncaughtException</code>事件是否被触发，如果监测到应用出错，则恢复或重启应用。</p>
+<h3 id="event-unhandledrejection-">Event: &#39;unhandledRejection&#39;</h3>
+<!-- YAML
+added: v1.4.1
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/8217
+    description: Not handling Promise rejections has been deprecated.
+  - version: v6.6.0
+    pr-url: https://github.com/nodejs/node/pull/8223
+    description: Unhandled Promise rejections have been will now emit
+                 a process warning.
+-->
+<p>如果在事件循环的一次轮询中，一个<code>Promise</code>被rejected，并且此<code>Promise</code>没有绑定错误处理器，<code>&#39;unhandledRejection</code>事件会被触发。
+当使用Promises进行编程时，异常会以&quot;rejected promises&quot;的形式封装。Rejections可以被<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"><code>promise.catch()</code></a>捕获并处理，并且在<code>Promise</code> chain
+中传播。<code>&#39;unhandledRejection</code>事件在探测和跟踪promises被rejected，并且rejections未被处理的场景中是很有用的。</p>
+<p>此事件监听器的回调函数被传递如下参数:</p>
+<ul>
+<li><code>reason</code> {Error|any} 此对象包含了promise被rejected的相关信息
+(典型情况下，是一个 <a href="errors.html#errors_class_error"><code>Error</code></a> 对象).</li>
+<li><code>p</code> 被rejected的promise对象</li>
+</ul>
+<p>例如:</p>
+<pre><code class="lang-js">process.on(&#39;unhandledRejection&#39;, (reason, p) =&gt; {
+  console.log(&#39;Unhandled Rejection at:&#39;, p, &#39;reason:&#39;, reason);
+  // application specific logging, throwing an error, or other logic here
+});
+
+somePromise.then((res) =&gt; {
+  return reportToUser(JSON.pasre(res)); // note the typo (`pasre`)
+}); // no `.catch` or `.then`
+</code></pre>
+<p>如下代码也会触发<code>&#39;unhandledRejection&#39;</code>事件</p>
+<pre><code class="lang-js">function SomeResource() {
+  // Initially set the loaded status to a rejected promise
+  this.loaded = Promise.reject(new Error(&#39;Resource not yet loaded!&#39;));
+}
+
+const resource = new SomeResource();
+// no .catch or .then on resource.loaded for at least a turn
+</code></pre>
+<p>在例子中，可以像在其他<code>&#39;unhandledRejection&#39;</code>事件的典型场景中一样，跟踪开发者错误导致的rejection。
+为了解决这样的错误，<code>resource.loaded</code>中可以加一个不做任何操作的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"><code>.catch(() =&gt; { })</code></a>处理器，
+这样可以阻止<code>&#39;unhandledRejection&#39;</code>事件的触发。或者也可以使用<a href="#process_event_rejectionhandled"><code>&#39;rejectionHandled&#39;</code></a>事件来解决。</p>
+<h3 id="event-warning-">Event: &#39;warning&#39;</h3>
+<!-- YAML
+added: v6.0.0
+-->
+<p>任何时候Node.js发出进程告警，都会触发<code>&#39;warning&#39;</code>事件。</p>
+<p>进程告警与进程错误的相似之处，在于两者都描述了需要引起用户注意的异常条件。
+区别在于，告警不是Node.js和Javascript错误处理流程的正式组成部分。
+一旦探测到可能导致应用性能问题，缺陷或安全隐患相关的代码实践，Node.js就可发出告警。</p>
+<p><code>&#39;warning&#39;</code>事件监听器的回调函数，参数只有一个，其值为<code>Error</code> 对象。此对象有三个重要的属性用来描述告警：</p>
+<ul>
+<li><code>name</code> {string} 告警的名称(目前默认值是 <code>Warning</code>)。</li>
+<li><code>message</code> {string} 系统提供的对此告警的描述。</li>
+<li><code>stack</code> {string} 当告警触发时，包含代码位置的堆栈信息。</li>
+</ul>
+<pre><code class="lang-js">process.on(&#39;warning&#39;, (warning) =&gt; {
+  console.warn(warning.name);    // Print the warning name
+  console.warn(warning.message); // Print the warning message
+  console.warn(warning.stack);   // Print the stack trace
+});
+</code></pre>
+<p>默认Node.js会打印进程告警到<code>stderr</code>。使用<code>--no-warnings</code>的命令行选项可以阻止默认从console输出信息，
+但是<code>&#39;warning&#39;</code>事件仍然会被<code>process</code>对象发出。</p>
+<p>下面的例子展示了当一个事件绑定了太多的监听器时，输出到<code>stderr</code>的告警。</p>
+<pre><code class="lang-txt">$ node
+&gt; events.defaultMaxListeners = 1;
+&gt; process.on(&#39;foo&#39;, () =&gt; {});
+&gt; process.on(&#39;foo&#39;, () =&gt; {});
+&gt; (node:38638) MaxListenersExceededWarning: Possible EventEmitter memory leak
+detected. 2 foo listeners added. Use emitter.setMaxListeners() to increase limit
+</code></pre>
+<p>与上述相反，如下例子关闭了默认的告警输出，并且给<code>&#39;warning&#39;</code>事件添加了一个定制的处理器。</p>
+<pre><code class="lang-txt">$ node --no-warnings
+&gt; const p = process.on(&#39;warning&#39;, (warning) =&gt; console.warn(&#39;Do not do that!&#39;));
+&gt; events.defaultMaxListeners = 1;
+&gt; process.on(&#39;foo&#39;, () =&gt; {});
+&gt; process.on(&#39;foo&#39;, () =&gt; {});
+&gt; Do not do that!
+</code></pre>
+<p><code>--trace-warnings</code>命令行选项可以让默认的console输出告警信息时，包含告警的全部堆栈信息。</p>
+<p>使用<code>--throw-deprecation</code>命令行选项标志启动Node.js，会使得custom deprecation warning作为异常信息抛出来。</p>
+<p>使用<code>--trace-deprecation</code>命令行选项标志，会使得custom deprecation warning打印到<code>stderr</code>，包括其堆栈信息。</p>
+<p>使用<code>--trace-deprecation</code>命令行选项标志，会阻止报告所有的custom deprecation warning。</p>
+<p><code>*-deprecation</code> 命令行选项标志，只会影响使用名字为<code>DeprecationWarning</code>的告警。</p>
+<h3 id="signal-events">Signal Events</h3>
+<!--type=event-->
+<!--name=SIGINT, SIGHUP, etc.-->
+<p>当Node.js进程接收到一个信号时，会触发信号事件。 signal(7)列出了标准POSIX的信号名称列表，例如<code>SIGINT</code>, <code>SIGHUP</code>等等。</p>
+<p>每个事件名称，以信号名称的大写表示 (比如事件<code>&#39;SIGINT&#39;</code> 对应信号 <code>SIGINT</code>).</p>
+<p>例如:</p>
+<pre><code class="lang-js">// Begin reading from stdin so the process does not exit.
+process.stdin.resume();
+
+process.on(&#39;SIGINT&#39;, () =&gt; {
+  console.log(&#39;Received SIGINT.  Press Control-D to exit.&#39;);
+});
+</code></pre>
+<p><em>Note</em>：在大多数终端程序中发送<code>SIGINT</code>信号的简单方法是<code>&lt;Ctrl&gt;-C</code>。</p>
+<p>如下需要重点关注:</p>
+<ul>
+<li><p><code>SIGUSR1</code> 被Node.js保留用于启动调试器。可以为此事件绑定一个监听器，但是即使这样做也不会阻止调试器的启动。</p>
+</li>
+<li><p><code>SIGTERM</code> 和 <code>SIGINT</code> 在非windows平台绑定了默认的监听器，这样进程以代码<code>128 + signal number</code>结束之前，可以重置终端模式。
+如果这两个事件任意一个绑定了新的监听器，原有默认的行为会被移除(Node.js不会结束)。</p>
+</li>
+<li><p><code>SIGPIPE</code> 默认会被忽略。可以给其绑定监听器。</p>
+</li>
+<li><p><code>SIGHUP</code> 在Windows平台中当console窗口被关闭时会触发它，在非windows平台中多种相似的条件下也会触发，查看signal(7)。
+可以给其绑定监听器，但是Windows下Node.js会在它触发后10秒钟无条件关闭。
+非windows平台，<code>SIGHUP</code>默认的绑定行为是结束Node.js，但是一旦给它绑定了新的监听器，默认行为会被移除。</p>
+</li>
+<li><p><code>SIGTERM</code> 在Windows中不支持，可以给其绑定监听器。</p>
+</li>
+<li><p><code>SIGINT</code> 在终端运行时，可以被所有平台支持，通常可以通过<code>CTRL+C</code>触发(虽然这个不能配置)。
+当终端运行在raw模式，它不会被触发。</p>
+</li>
+<li><p><code>SIGBREAK</code> 在Windows中按下<code>&lt;Ctrl&gt;+&lt;Break&gt;</code>会被触发，非Windows平台中可以为其绑定监听器，但是没有方式触发或发送此事件。</p>
+</li>
+<li><p><code>SIGWINCH</code> 当console被resize时会触发。Windows中只有当光标移动并写入到console，或者以raw模式使用一个可读tty时，才会触发。</p>
+</li>
+<li><p><code>SIGKILL</code> 不能绑定监听器，所有平台中出现此事件，都会使得Node.js无条件终止。</p>
+</li>
+<li><p><code>SIGSTOP</code> 不能绑定监听器。</p>
+</li>
+<li><p><code>SIGBUS</code>, <code>SIGFPE</code>, <code>SIGSEGV</code> and <code>SIGILL</code>, 如果不是通过kill(2)产生，默认会使进程停留在某个状态，在此状态下尝试调用JS监听器是不安全的。
+ 如果尝试调用JS监听器可能会导致进程在无限循环中挂死，因为使用<code>process.on()</code>附加的监听器是以异步的方式被调用，因此不能纠正隐含的问题。</p>
+</li>
+</ul>
+<p><em>Note</em>: Windows不支持发送信号，但是Node.js通过<a href="#process_process_kill_pid_signal"><code>process.kill()</code></a>, 和 <a href="child_process.html#child_process_child_kill_signal"><code>ChildProcess.kill()</code></a>提供了某些模拟机制。
+发送信号<code>0</code> 可以测试进程是否存在。发送<code>SIGINT</code>, <code>SIGTERM</code>, and <code>SIGKILL</code> 使得目标进程无条件终止。</p>
+<h2 id="process-abort-">process.abort()</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<p><code>process.abort()</code>方法会使Node.js进程立即结束，并生成一个core文件。</p>
+<h2 id="process-arch">process.arch</h2>
+<!-- YAML
+added: v0.5.0
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>process.arch</code>属性返回一个标识Node.js在其上运行的处理器架构的字符串。例如
+<code>&#39;arm&#39;</code>, <code>&#39;ia32&#39;</code>, or <code>&#39;x64&#39;</code>.</p>
+<pre><code class="lang-js">console.log(`This processor architecture is ${process.arch}`);
+</code></pre>
+<h2 id="process-argv">process.argv</h2>
+<!-- YAML
+added: v0.1.27
+-->
+<ul>
+<li>{Array}</li>
+</ul>
+<p><code>process.argv</code> 属性返回一个数组，这个数组包含了启动Node.js进程时的命令行参数。第一个元素为<a href="#process_process_execpath"><code>process.execPath</code></a>。如果需要获取<code>argv[0]</code>的值请参见  <code>process.argv0</code>。第二个元素为当前执行的JavaScript文件路径。剩余的元素为其他命令行参数。</p>
+<p>例如，<code>process-args.js</code>文件有以下代码:</p>
+<pre><code class="lang-js">// print process.argv
+process.argv.forEach((val, index) =&gt; {
+  console.log(`${index}: ${val}`);
+});
+</code></pre>
+<p>运行以下命令，启动进程：</p>
+<pre><code class="lang-console">$ node process-args.js one two=three four
+</code></pre>
+<p>将输出：</p>
+<pre><code class="lang-text">0: /usr/local/bin/node
+1: /Users/mjr/work/node/process-args.js
+2: one
+3: two=three
+4: four
+</code></pre>
+<h2 id="process-argv0">process.argv0</h2>
+<!-- YAML
+added: 6.4.0
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>process.argv0</code>属性，保存Node.js启动时传入的<code>argv[0]</code>参数值的一份只读副本。</p>
+<pre><code class="lang-console">$ bash -c &#39;exec -a customArgv0 ./node&#39;
+&gt; process.argv[0]
+&#39;/Volumes/code/external/node/out/Release/node&#39;
+&gt; process.argv0
+&#39;customArgv0&#39;
+</code></pre>
+<h2 id="process-channel">process.channel</h2>
+<!-- YAML
+added: v7.1.0
+-->
+<p>如果Node.js进程是由IPC channel(see the <a href="child_process.html">Child Process</a> documentation) 方式创建的，<code>process.channel</code>属性保存IPC channel的引用。
+如果IPC channel不存在，此属性值为`undefined。</p>
+<h2 id="process-chdir-directory-">process.chdir(directory)</h2>
+<!-- YAML
+added: v0.1.17
+-->
+<ul>
+<li><code>directory</code> {string}</li>
+</ul>
+<p><code>process.chdir()</code>方法变更Node.js进程的当前工作目录，如果变更目录失败会抛出异常(例如，如果指定的目录不存在)。</p>
+<pre><code class="lang-js">console.log(`Starting directory: ${process.cwd()}`);
+try {
+  process.chdir(&#39;/tmp&#39;);
+  console.log(`New directory: ${process.cwd()}`);
+} catch (err) {
+  console.error(`chdir: ${err}`);
+}
+</code></pre>
+<h2 id="process-config">process.config</h2>
+<!-- YAML
+added: v0.7.7
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p><code>process.config</code> 属性返回一个Javascript对象。此对象描述了用于编译当前Node.js执行程序时涉及的配置项信息。
+这与执行<code>./configure</code>脚本生成的<code>config.gypi</code>文件结果是一样的。</p>
+<p>可能的输出样例:</p>
+<!-- eslint-skip -->
+<pre><code class="lang-js">{
+  target_defaults:
+   { cflags: [],
+     default_configuration: &#39;Release&#39;,
+     defines: [],
+     include_dirs: [],
+     libraries: [] },
+  variables:
+   {
+     host_arch: &#39;x64&#39;,
+     node_install_npm: &#39;true&#39;,
+     node_prefix: &#39;&#39;,
+     node_shared_cares: &#39;false&#39;,
+     node_shared_http_parser: &#39;false&#39;,
+     node_shared_libuv: &#39;false&#39;,
+     node_shared_zlib: &#39;false&#39;,
+     node_use_dtrace: &#39;false&#39;,
+     node_use_openssl: &#39;true&#39;,
+     node_shared_openssl: &#39;false&#39;,
+     strict_aliasing: &#39;true&#39;,
+     target_arch: &#39;x64&#39;,
+     v8_use_snapshot: &#39;true&#39;
+   }
+}
+</code></pre>
+<p><em>注意</em>： <code>process.config</code>属性值<strong>不是</strong>只读的，在Node.js生态系统中已经有模块扩展，修改或完全替换了<code>process.config</code>的值。</p>
+<h2 id="process-connected">process.connected</h2>
+<!-- YAML
+added: v0.7.2
+-->
+<ul>
+<li>{boolean}</li>
+</ul>
+<p>如果Node.js进程是由IPC channel方式创建的(see the <a href="child_process.html">Child Process</a> and <a href="cluster.html">Cluster</a> documentation)，
+只要IPC channel保持连接，<code>process.connected</code>属性就会返回<code>true</code>。
+<code>process.disconnect()</code>被调用后，此属性会返回<code>false</code>。</p>
+<p><code>process.connected</code>如果为<code>false</code>，则不能通过IPC channel使用<code>process.send()</code>发送信息。</p>
+<h2 id="process-cpuusage-previousvalue-">process.cpuUsage([previousValue])</h2>
+<!-- YAML
+added: v6.1.0
+-->
+<ul>
+<li><code>previousValue</code> {Object} 上一次调用此方法的返回值
+<code>process.cpuUsage()</code></li>
+<li>Returns: {Object}<ul>
+<li><code>user</code> {integer}</li>
+<li><code>system</code> {integer}</li>
+</ul>
+</li>
+</ul>
+<p><code>process.cpuUsage()</code>方法返回包含当前进程的用户CPU时间和系统CPU时间的对象。此对象包含<code>user</code>和<code>system</code>属性，属性值的单位都是微秒(百万分之一秒)。
+<code>user</code>和<code>system</code>属性值分别计算了执行用户程序和系统程序的时间，如果此进程在执行任务时是基于多核CPU，值可能比实际花费的时间要大。</p>
+<p>上一次调用<code>process.cpuUsage()</code>方法的结果，可以作为参数值传递给此方法，得到的结果是与上一次的差值。</p>
+<pre><code class="lang-js">const startUsage = process.cpuUsage();
+// { user: 38579, system: 6986 }
+
+// spin the CPU for 500 milliseconds
+const now = Date.now();
+while (Date.now() - now &lt; 500);
+
+console.log(process.cpuUsage(startUsage));
+// { user: 514883, system: 11226 }
+</code></pre>
+<h2 id="process-cwd-">process.cwd()</h2>
+<!-- YAML
+added: v0.1.8
+-->
+<ul>
+<li>返回: {string}</li>
+</ul>
+<p><code>process cwd()</code> 方法返回 Node.js 进程当前工作的目录。</p>
+<pre><code class="lang-js">console.log(&#39;Current directory: ${process.cwd()}&#39;);
+</code></pre>
+<h2 id="process-disconnect-">process.disconnect()</h2>
+<!-- YAML
+added: v0.1.8
+-->
+<ul>
+<li>返回: {string}</li>
+</ul>
+<p><code>process cwd()</code> 方法返回 Node.js 进程当前工作的目录。</p>
+<pre><code class="lang-js">console.log(&#39;Current directory: ${process.cwd()}&#39;);
+</code></pre>
+<h2 id="process-emitwarning-warning-options-">process.emitWarning(warning[, options])</h2>
+<!-- YAML
+added: 8.0.0
+-->
+<ul>
+<li><code>warning</code> {string|Error} 发出的警告。</li>
+<li><code>options</code> {Object}<ul>
+<li><code>type</code> {string} 如果 <code>warning</code> 是String, <code>type</code> 是警告类型的名字。 默认值: <code>Warning</code>。</li>
+<li><code>code</code> {string} 当前警告的唯一标识符。</li>
+<li><code>ctor</code> {Function} 如果<code>warning</code>是String，<code>ctor</code>是可选的function，用于限制生成的堆栈信息。默认<code>process.emitWarning</code></li>
+<li><code>detail</code> {string} error的附加信息。</li>
+</ul>
+</li>
+</ul>
+<p><code>process.emitWarning()</code>方法可用于发出定制的或应用特定的进程警告。
+可以通过给<a href="#process_event_warning"><code>process.on(&#39;warning&#39;)</code></a>事件增加处理器，监听这些警告。</p>
+<pre><code class="lang-js">// Emit a warning with a code and additional detail.
+process.emitWarning(&#39;Something happened!&#39;, {
+  code: &#39;MY_WARNING&#39;,
+  detail: &#39;This is some additional information&#39;
+});
+// Emits:
+// (node:56338) [MY_WARNING] Warning: Something happened!
+// This is some additional information
+</code></pre>
+<p>在上面例子中，<code>process.emitWarning()</code>内部生成了一个<code>Error</code>对象，并传递给<a href="#process_event_warning"><code>process.on(&#39;warning&#39;)</code></a>事件。</p>
+<pre><code class="lang-js">process.on(&#39;warning&#39;, (warning) =&gt; {
+  console.warn(warning.name);    // &#39;Warning&#39;
+  console.warn(warning.message); // &#39;Something happened!&#39;
+  console.warn(warning.code);    // &#39;MY_WARNING&#39;
+  console.warn(warning.stack);   // Stack trace
+  console.warn(warning.detail);  // &#39;This is some additional information&#39;
+});
+</code></pre>
+<p>如果<code>warning</code>参数值是一个<code>Error</code>对象，<code>options</code>参数项都会被忽略。</p>
+<h2 id="process-emitwarning-warning-type-code-ctor-">process.emitWarning(warning[, type[, code]][, ctor])</h2>
+<!-- YAML
+added: v6.0.0
+-->
+<ul>
+<li><code>warning</code> {string|Error} 发出的警告。</li>
+<li><code>type</code> {string} 如果 <code>warning</code> 是String, <code>type</code> 是警告类型的名字。 默认值: <code>Warning</code>。</li>
+<li><code>code</code> {string} 当前警告的唯一标识符。</li>
+<li><code>ctor</code> {Function} 如果<code>warning</code>是String，<code>ctor</code>是可选的function，用于限制生成的堆栈信息。默认<code>process.emitWarning</code></li>
+</ul>
+<p><code>process.emitWarning()</code>方法可用于发出定制的或应用特定的进程警告。
+可以通过给<a href="#process_event_warning"><code>process.on(&#39;warning&#39;)</code></a>事件增加处理器，监听这些警告。</p>
+<pre><code class="lang-js">// Emit a warning using a string.
+process.emitWarning(&#39;Something happened!&#39;);
+// Emits: (node: 56338) Warning: Something happened!
+</code></pre>
+<pre><code class="lang-js">// Emit a warning using a string and a type.
+process.emitWarning(&#39;Something Happened!&#39;, &#39;CustomWarning&#39;);
+// Emits: (node:56338) CustomWarning: Something Happened!
+</code></pre>
+<pre><code class="lang-js">process.emitWarning(&#39;Something happened!&#39;, &#39;CustomWarning&#39;, &#39;WARN001&#39;);
+// Emits: (node:56338) [WARN001] CustomWarning: Something happened!
+</code></pre>
+<p>在上面例子中，<code>process.emitWarning()</code>内部生成了一个<code>Error</code>对象，并传递给<a href="#process_event_warning"><code>process.on(&#39;warning&#39;)</code></a>事件。</p>
+<pre><code class="lang-js">process.on(&#39;warning&#39;, (warning) =&gt; {
+  console.warn(warning.name);
+  console.warn(warning.message);
+  console.warn(warning.code);
+  console.warn(warning.stack);
+});
+</code></pre>
+<p>如果<code>warning</code>参数值是一个<code>Error</code>对象，它会被透传给<code>process.on(&#39;warning&#39;)</code>的事件监听器(可选参数值<code>type</code>，<code>code</code> and <code>ctor</code>会被忽略)：</p>
+<pre><code class="lang-js">// Emit a warning using an Error object.
+const myWarning = new Error(&#39;Something happened!&#39;);
+// Use the Error name property to specify the type name
+myWarning.name = &#39;CustomWarning&#39;;
+myWarning.code = &#39;WARN001&#39;;
+
+process.emitWarning(myWarning);
+// Emits: (node:56338) [WARN001] CustomWarning: Something happened!
+</code></pre>
+<p>如果<code>warning</code>的参数值不是string或<code>Error</code>，会抛出 <code>TypeError</code>。</p>
+<p>需要注意的是，使用<code>Error</code>对象做为进程警告，<strong>并不是</strong>常用的错误处理机制的替代方式。</p>
+<p>如果警告<code>type</code>是<code>DeprecationWarning</code>，会涉及如下额外的处理：</p>
+<ul>
+<li><p>如果命令行标识包含<code>--throw-deprecation</code>，deprecation warning会作为异常抛出，而不是作为事件被发出。</p>
+</li>
+<li><p>如果命令行标识包含<code>--no-deprecation</code>，deprecation warning会被忽略。</p>
+</li>
+<li><p>如果命令行标识包含<code>--trace-deprecation</code>，deprecation warning及其全部堆栈信息会被打印到<code>stderr</code>。</p>
+</li>
+</ul>
+<h3 id="avoiding-duplicate-warnings">Avoiding duplicate warnings</h3>
+<p>作为最佳实践，警告应该在每个进程中最多发出一次。
+为了达到上述的要求，推荐在使用<code>emitWarning()</code>之前用一个简单的布尔值做判断，如下例所示：</p>
+<pre><code class="lang-js">function emitMyWarning() {
+  if (!emitMyWarning.warned) {
+    emitMyWarning.warned = true;
+    process.emitWarning(&#39;Only warn once!&#39;);
+  }
+}
+emitMyWarning();
+// Emits: (node: 56339) Warning: Only warn once!
+emitMyWarning();
+// Emits nothing
+</code></pre>
+<h2 id="process-env">process.env</h2>
+<!-- YAML
+added: v0.1.27
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p><code>process.env</code>属性返回一个包含用户环境信息的对象
+See environ(7).</p>
+<p>例如这样的对象:</p>
+<!-- eslint-skip -->
+<pre><code class="lang-js">{
+  TERM: &#39;xterm-256color&#39;,
+  SHELL: &#39;/usr/local/bin/bash&#39;,
+  USER: &#39;maciej&#39;,
+  PATH: &#39;~/.bin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin&#39;,
+  PWD: &#39;/Users/maciej&#39;,
+  EDITOR: &#39;vim&#39;,
+  SHLVL: &#39;1&#39;,
+  HOME: &#39;/Users/maciej&#39;,
+  LOGNAME: &#39;maciej&#39;,
+  _: &#39;/usr/local/bin/node&#39;
+}
+</code></pre>
+<p>可以修改这个对象，但是下面例子的做法是不会生效的：</p>
+<pre><code class="lang-命令行修改">$ node -e &#39;process.env.foo = &quot;bar&quot;&#39; &amp;&amp; echo $foo
+</code></pre>
+<p>下面的做法会生效：</p>
+<pre><code class="lang-js文件中修改">process.env.foo = &#39;bar&#39;;
+console.log(process.env.foo);
+</code></pre>
+<p>在<code>process.env</code>中新增一个属性，会将属性值转换成字符串</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.env.test = null;
+console.log(process.env.test);
+// =&gt; &#39;null&#39;
+process.env.test = undefined;
+console.log(process.env.test);
+// =&gt; &#39;undefined&#39;
+</code></pre>
+<p>用 <code>delete</code>从<code>process.env</code>中删除一个属性</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.env.TEST = 1;
+delete process.env.TEST;
+console.log(process.env.TEST);
+// =&gt; undefined
+</code></pre>
+<p>在Windows系统下，环境变量是不区分大小写的</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.env.TEST = 1;
+console.log(process.env.test);
+// =&gt; 1
+</code></pre>
+<h2 id="process-execargv">process.execArgv</h2>
+<!-- YAML
+added: v0.7.7
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p><code>process.execArgv</code> 属性返回当Node.js进程被启动时，Node.js特定的命令行选项。
+这些选项在<a href="#process_process_argv"><code>process.argv</code></a>属性返回的数组中不会出现，并且这些选项中不会包括Node.js的可执行脚本名称或者任何在脚本名称后面出现的选项。
+这些选项在创建子进程时是有用的，因为他们包含了与父进程一样的执行环境信息。</p>
+<p>例如:</p>
+<pre><code class="lang-console">$ node --harmony script.js --version
+</code></pre>
+<p><code>process.execArgv</code>的结果:</p>
+<!-- eslint-disable semi -->
+<pre><code class="lang-js">[&#39;--harmony&#39;]
+</code></pre>
+<p><code>process.argv</code>的结果:</p>
+<!-- eslint-disable semi -->
+<pre><code class="lang-js">[&#39;/usr/local/bin/node&#39;, &#39;script.js&#39;, &#39;--version&#39;]
+</code></pre>
+<h2 id="process-execpath">process.execPath</h2>
+<!-- YAML
+added: v0.1.100
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>process.execPath</code> 属性，返回启动Node.js进程的可执行文件所在的绝对路径。</p>
+<p>例如:</p>
+<!-- eslint-disable semi -->
+<pre><code class="lang-js">&#39;/usr/local/bin/node&#39;
+</code></pre>
+<h2 id="process-exit-code-">process.exit([code])</h2>
+<!-- YAML
+added: v0.1.13
+-->
+<ul>
+<li><code>code</code> {integer} 结束状态码。默认为<code>0</code>。</li>
+</ul>
+<p><code>process.exit()</code>方法以结束状态码<code>code</code>指令Node.js同步终止进程。
+如果<code>code</code>未提供，此exit方法要么使用&#39;success&#39; 状态码 <code>0</code>，要么使用<code>process.exitCode</code>属性值，前提是此属性已被设置。
+Node.js在所有<a href="#process_event_exit"><code>&#39;exit&#39;</code></a>事件监听器都被调用了以后，才会终止进程。</p>
+<p>使用一个&#39;failure&#39;状态码结束的例子:</p>
+<pre><code class="lang-js">process.exit(1);
+</code></pre>
+<p>执行Node.js的shell应该会得到结束状态码<code>1</code>。</p>
+<p>需要特别注意的是，调用<code>process.exit()</code>会强制进程尽快结束，<em>即使仍然有很多处于等待中的异步操作</em>没有全部执行完成，
+<em>包括</em>输出到<code>process.stdout</code>和<code>process.stderr</code>的I/O操作。</p>
+<p>在大多数情况下，显式调用<code>process.exit()</code>是没有必要的。如果在事件轮询队列中没有处于等待中的工作，Node.js进程会自行结束。
+当进程正常结束时，<code>process.exitCode</code>属性可以被设置，以便于告知进程使用哪个结束状态码。</p>
+<p>如下例子说明了一个 <em>错误使用</em> <code>process.exit()</code>方法的场景，会导致输出到stdout的数据清空或丢失：</p>
+<pre><code class="lang-js">// This is an example of what *not* to do:
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exit(1);
+}
+</code></pre>
+<p>这个例子中出现问题的原因在于，Node.js中写入到<code>process.stdout</code>的操作有时是异步的，并可能在Node.js事件轮询的多个ticks中出现。
+调用<code>process.exit()</code>会使得在写入<code>stdout</code>的额外操作执行<em>之前</em>，进程就被强制结束了。</p>
+<p>与直接调用<code>process.exit()</code>相比，代码<em>应该</em>设置<code>process.exitCode</code>并允许进程自然的结束，以免事件轮询队列中存在额外的工作：</p>
+<pre><code class="lang-js">// How to properly set the exit code while letting
+// the process exit gracefully.
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exitCode = 1;
+}
+</code></pre>
+<p>如果出现错误情况，而有必要结束Node.js进程，抛出一个<em>uncaught</em>错误并且允许进程正常结束的处理方式，要比调用<code>process.exit()</code>安全的多。</p>
+<h2 id="process-exitcode">process.exitCode</h2>
+<!-- YAML
+added: v0.1.13
+-->
+<ul>
+<li><code>code</code> {integer} 结束状态码。默认为<code>0</code>。</li>
+</ul>
+<p><code>process.exit()</code>方法以结束状态码<code>code</code>指令Node.js同步终止进程。
+如果<code>code</code>未提供，此exit方法要么使用&#39;success&#39; 状态码 <code>0</code>，要么使用<code>process.exitCode</code>属性值，前提是此属性已被设置。
+Node.js在所有<a href="#process_event_exit"><code>&#39;exit&#39;</code></a>事件监听器都被调用了以后，才会终止进程。</p>
+<p>使用一个&#39;failure&#39;状态码结束的例子:</p>
+<pre><code class="lang-js">process.exit(1);
+</code></pre>
+<p>执行Node.js的shell应该会得到结束状态码<code>1</code>。</p>
+<p>需要特别注意的是，调用<code>process.exit()</code>会强制进程尽快结束，<em>即使仍然有很多处于等待中的异步操作</em>没有全部执行完成，
+<em>包括</em>输出到<code>process.stdout</code>和<code>process.stderr</code>的I/O操作。</p>
+<p>在大多数情况下，显式调用<code>process.exit()</code>是没有必要的。如果在事件轮询队列中没有处于等待中的工作，Node.js进程会自行结束。
+当进程正常结束时，<code>process.exitCode</code>属性可以被设置，以便于告知进程使用哪个结束状态码。</p>
+<p>如下例子说明了一个 <em>错误使用</em> <code>process.exit()</code>方法的场景，会导致输出到stdout的数据清空或丢失：</p>
+<pre><code class="lang-js">// This is an example of what *not* to do:
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exit(1);
+}
+</code></pre>
+<p>这个例子中出现问题的原因在于，Node.js中写入到<code>process.stdout</code>的操作有时是异步的，并可能在Node.js事件轮询的多个ticks中出现。
+调用<code>process.exit()</code>会使得在写入<code>stdout</code>的额外操作执行<em>之前</em>，进程就被强制结束了。</p>
+<p>与直接调用<code>process.exit()</code>相比，代码<em>应该</em>设置<code>process.exitCode</code>并允许进程自然的结束，以免事件轮询队列中存在额外的工作：</p>
+<pre><code class="lang-js">// How to properly set the exit code while letting
+// the process exit gracefully.
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exitCode = 1;
+}
+</code></pre>
+<p>如果出现错误情况，而有必要结束Node.js进程，抛出一个<em>uncaught</em>错误并且允许进程正常结束的处理方式，要比调用<code>process.exit()</code>安全的多。</p>
+<h2 id="process-getegid-">process.getegid()</h2>
+<!-- YAML
+added: v0.1.13
+-->
+<ul>
+<li><code>code</code> {integer} 结束状态码。默认为<code>0</code>。</li>
+</ul>
+<p><code>process.exit()</code>方法以结束状态码<code>code</code>指令Node.js同步终止进程。
+如果<code>code</code>未提供，此exit方法要么使用&#39;success&#39; 状态码 <code>0</code>，要么使用<code>process.exitCode</code>属性值，前提是此属性已被设置。
+Node.js在所有<a href="#process_event_exit"><code>&#39;exit&#39;</code></a>事件监听器都被调用了以后，才会终止进程。</p>
+<p>使用一个&#39;failure&#39;状态码结束的例子:</p>
+<pre><code class="lang-js">process.exit(1);
+</code></pre>
+<p>执行Node.js的shell应该会得到结束状态码<code>1</code>。</p>
+<p>需要特别注意的是，调用<code>process.exit()</code>会强制进程尽快结束，<em>即使仍然有很多处于等待中的异步操作</em>没有全部执行完成，
+<em>包括</em>输出到<code>process.stdout</code>和<code>process.stderr</code>的I/O操作。</p>
+<p>在大多数情况下，显式调用<code>process.exit()</code>是没有必要的。如果在事件轮询队列中没有处于等待中的工作，Node.js进程会自行结束。
+当进程正常结束时，<code>process.exitCode</code>属性可以被设置，以便于告知进程使用哪个结束状态码。</p>
+<p>如下例子说明了一个 <em>错误使用</em> <code>process.exit()</code>方法的场景，会导致输出到stdout的数据清空或丢失：</p>
+<pre><code class="lang-js">// This is an example of what *not* to do:
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exit(1);
+}
+</code></pre>
+<p>这个例子中出现问题的原因在于，Node.js中写入到<code>process.stdout</code>的操作有时是异步的，并可能在Node.js事件轮询的多个ticks中出现。
+调用<code>process.exit()</code>会使得在写入<code>stdout</code>的额外操作执行<em>之前</em>，进程就被强制结束了。</p>
+<p>与直接调用<code>process.exit()</code>相比，代码<em>应该</em>设置<code>process.exitCode</code>并允许进程自然的结束，以免事件轮询队列中存在额外的工作：</p>
+<pre><code class="lang-js">// How to properly set the exit code while letting
+// the process exit gracefully.
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exitCode = 1;
+}
+</code></pre>
+<p>如果出现错误情况，而有必要结束Node.js进程，抛出一个<em>uncaught</em>错误并且允许进程正常结束的处理方式，要比调用<code>process.exit()</code>安全的多。</p>
+<h2 id="process-geteuid-">process.geteuid()</h2>
+<!-- YAML
+added: v0.1.13
+-->
+<ul>
+<li><code>code</code> {integer} 结束状态码。默认为<code>0</code>。</li>
+</ul>
+<p><code>process.exit()</code>方法以结束状态码<code>code</code>指令Node.js同步终止进程。
+如果<code>code</code>未提供，此exit方法要么使用&#39;success&#39; 状态码 <code>0</code>，要么使用<code>process.exitCode</code>属性值，前提是此属性已被设置。
+Node.js在所有<a href="#process_event_exit"><code>&#39;exit&#39;</code></a>事件监听器都被调用了以后，才会终止进程。</p>
+<p>使用一个&#39;failure&#39;状态码结束的例子:</p>
+<pre><code class="lang-js">process.exit(1);
+</code></pre>
+<p>执行Node.js的shell应该会得到结束状态码<code>1</code>。</p>
+<p>需要特别注意的是，调用<code>process.exit()</code>会强制进程尽快结束，<em>即使仍然有很多处于等待中的异步操作</em>没有全部执行完成，
+<em>包括</em>输出到<code>process.stdout</code>和<code>process.stderr</code>的I/O操作。</p>
+<p>在大多数情况下，显式调用<code>process.exit()</code>是没有必要的。如果在事件轮询队列中没有处于等待中的工作，Node.js进程会自行结束。
+当进程正常结束时，<code>process.exitCode</code>属性可以被设置，以便于告知进程使用哪个结束状态码。</p>
+<p>如下例子说明了一个 <em>错误使用</em> <code>process.exit()</code>方法的场景，会导致输出到stdout的数据清空或丢失：</p>
+<pre><code class="lang-js">// This is an example of what *not* to do:
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exit(1);
+}
+</code></pre>
+<p>这个例子中出现问题的原因在于，Node.js中写入到<code>process.stdout</code>的操作有时是异步的，并可能在Node.js事件轮询的多个ticks中出现。
+调用<code>process.exit()</code>会使得在写入<code>stdout</code>的额外操作执行<em>之前</em>，进程就被强制结束了。</p>
+<p>与直接调用<code>process.exit()</code>相比，代码<em>应该</em>设置<code>process.exitCode</code>并允许进程自然的结束，以免事件轮询队列中存在额外的工作：</p>
+<pre><code class="lang-js">// How to properly set the exit code while letting
+// the process exit gracefully.
+if (someConditionNotMet()) {
+  printUsageToStdout();
+  process.exitCode = 1;
+}
+</code></pre>
+<p>如果出现错误情况，而有必要结束Node.js进程，抛出一个<em>uncaught</em>错误并且允许进程正常结束的处理方式，要比调用<code>process.exit()</code>安全的多。</p>
+<h2 id="process-getgid-">process.getgid()</h2>
+<!-- YAML
+added: v0.1.31
+-->
+<ul>
+<li>Returns: {Object}</li>
+</ul>
+<p><code>process.getgid()</code>方法返回Node.js进程的数字标记的组身份(See getgid(2))。</p>
+<pre><code class="lang-js">if (process.getgid) {
+  console.log(`Current gid: ${process.getgid()}`);
+}
+</code></pre>
+<p><em>注意</em>：这个函数只在POSIX平台有效(在Windows或Android平台无效)。</p>
+<h2 id="process-getgroups-">process.getgroups()</h2>
+<!-- YAML
+added: v0.9.4
+-->
+<ul>
+<li>Returns: {Array}</li>
+</ul>
+<p><code>process.getgroups()</code>方法返回数组，其中包含了补充的组ID。
+POSIX leaves it unspecified if the effective group ID is included but
+Node.js ensures it always is.</p>
+<p><em>注意</em>：这个函数只在POSIX平台有效(在Windows或Android平台无效)。</p>
+<h2 id="process-getuid-">process.getuid()</h2>
+<!-- YAML
+added: v0.1.28
+-->
+<ul>
+<li>Returns: {integer}</li>
+</ul>
+<p><code>process.getuid()</code>方法返回Node.js进程的数字标记的用户身份(See getuid(2))。</p>
+<pre><code class="lang-js">if (process.getuid) {
+  console.log(`Current uid: ${process.getuid()}`);
+}
+</code></pre>
+<p><em>注意</em>：这个函数只在POSIX平台有效(在Windows或Android平台无效)。</p>
+<h2 id="process-hrtime-time-">process.hrtime([time])</h2>
+<!-- YAML
+added: v0.7.6
+-->
+<ul>
+<li><code>time</code> {Array} 上一次调用<code>process.hrtime()</code>的结果</li>
+<li>Returns: {Array}</li>
+</ul>
+<p><code>process.hrtime()</code>方法<code>返回当前时间以[seconds, nanoseconds]</code> tuple Array表示的高精度解析值，
+<code>nanoseconds</code>是当前时间无法使用秒的精度表示的剩余部分。</p>
+<p><code>time</code> 是可选参数，传入的值是上一次调用<code>process.hrtime()</code>返回的结果，用于与当次调用做差值计算。
+如果此参数传入的不是一个tuple Array，会抛出<code>TypeError</code>。
+给此参数传入一个用户定义的数组，而不是传入上次调用<code>process.hrtime()</code>的结果，会导致未定义的行为。</p>
+<p><code>process.hrtime()</code>返回的时间，都是相对于过去某一时刻的值，与一天中的时钟时间没有关系，因此不受制于时钟偏差。
+此方法最主要的作用是衡量间隔操作的性能：</p>
+<pre><code class="lang-js">const NS_PER_SEC = 1e9;
+const time = process.hrtime();
+// [ 1800216, 25 ]
+
+setTimeout(() =&gt; {
+  const diff = process.hrtime(time);
+  // [ 1, 552 ]
+
+  console.log(`Benchmark took ${diff[0] * NS_PER_SEC + diff[1]} nanoseconds`);
+  // benchmark took 1000000552 nanoseconds
+}, 1000);
+</code></pre>
+<h2 id="process-initgroups-user-extra_group-">process.initgroups(user, extra_group)</h2>
+<!-- YAML
+added: v0.7.6
+-->
+<ul>
+<li><code>time</code> {Array} 上一次调用<code>process.hrtime()</code>的结果</li>
+<li>Returns: {Array}</li>
+</ul>
+<p><code>process.hrtime()</code>方法<code>返回当前时间以[seconds, nanoseconds]</code> tuple Array表示的高精度解析值，
+<code>nanoseconds</code>是当前时间无法使用秒的精度表示的剩余部分。</p>
+<p><code>time</code> 是可选参数，传入的值是上一次调用<code>process.hrtime()</code>返回的结果，用于与当次调用做差值计算。
+如果此参数传入的不是一个tuple Array，会抛出<code>TypeError</code>。
+给此参数传入一个用户定义的数组，而不是传入上次调用<code>process.hrtime()</code>的结果，会导致未定义的行为。</p>
+<p><code>process.hrtime()</code>返回的时间，都是相对于过去某一时刻的值，与一天中的时钟时间没有关系，因此不受制于时钟偏差。
+此方法最主要的作用是衡量间隔操作的性能：</p>
+<pre><code class="lang-js">const NS_PER_SEC = 1e9;
+const time = process.hrtime();
+// [ 1800216, 25 ]
+
+setTimeout(() =&gt; {
+  const diff = process.hrtime(time);
+  // [ 1, 552 ]
+
+  console.log(`Benchmark took ${diff[0] * NS_PER_SEC + diff[1]} nanoseconds`);
+  // benchmark took 1000000552 nanoseconds
+}, 1000);
+</code></pre>
+<h2 id="process-kill-pid-signal-">process.kill(pid[, signal])</h2>
+<!-- YAML
+added: v0.0.6
+-->
+<ul>
+<li><code>pid</code> {number} 进程ID</li>
+<li><code>signal</code> {string|number} 将发送的信号，类型为string或number。默认为<code>&#39;SIGTERM&#39;</code>。</li>
+</ul>
+<p><code>process.kill()</code>方法将<code>signal</code>发送给<code>pid</code>标识的进程。</p>
+<p>信号名称是如<code>&#39;SIGINT&#39;</code> 或 <code>&#39;SIGHUP&#39;</code>的字符串。更多信息，查看<a href="#process_signal_events">Signal Events</a> 和 kill(2)。</p>
+<p>如果目标<code>pid</code>不存在，该方法会抛出错误。作为一个特殊例子，信号<code>0</code>可以用于测试进程是否存在。
+在Windows平台中，如果<code>pid</code>用于kill进程组，会抛出错误。</p>
+<p><em>注意</em>：即使这个函数的名称是<code>process.kill()</code>,它其实只是发送信号，这点与<code>kill</code>系统调用类似。
+发送的信号可能是做一些与kill目标进程无关的事情。</p>
+<p>例如:</p>
+<pre><code class="lang-js">process.on(&#39;SIGHUP&#39;, () =&gt; {
+  console.log(&#39;Got SIGHUP signal.&#39;);
+});
+
+setTimeout(() =&gt; {
+  console.log(&#39;Exiting.&#39;);
+  process.exit(0);
+}, 100);
+
+process.kill(process.pid, &#39;SIGHUP&#39;);
+</code></pre>
+<p><em>注意</em>: 当Node.js进程接收到了<code>SIGUSR1</code>，Node.js会启动debugger，查看<a href="#process_signal_events">Signal Events</a>。</p>
+<h2 id="process-mainmodule">process.mainModule</h2>
+<!-- YAML
+added: v0.1.17
+-->
+<p><code>process.mainModule</code>属性提供了一种获取<a href="modules.html#modules_accessing_the_main_module"><code>require.main</code></a>的替代方式。
+The difference is that if the main module changes at
+runtime, <a href="modules.html#modules_accessing_the_main_module"><code>require.main</code></a> may still refer to the original main module in modules
+that were required before the change occurred.
+一般来说，假定<a href="modules.html#modules_accessing_the_main_module"><code>require.main</code></a>和<code>process.mainModule</code>引用相同的模块是安全的。</p>
+<p>就像<a href="modules.html#modules_accessing_the_main_module"><code>require.main</code></a>一样，如果没有入口脚本，<code>process.mainModule</code>的值是<code>undefined</code>。</p>
+<h2 id="process-memoryusage-">process.memoryUsage()</h2>
+<!-- YAML
+added: v0.1.16
+changes:
+  - version: v7.2.0
+    pr-url: https://github.com/nodejs/node/pull/9587
+    description: Added `external` to the returned object.
+-->
+<ul>
+<li>返回: {Object}<ul>
+<li><code>rss</code> {integer}</li>
+<li><code>heapTotal</code> {integer}</li>
+<li><code>heapUsed</code> {integer}</li>
+<li><code>external</code> {integer}</li>
+</ul>
+</li>
+</ul>
+<p><code>process.memoryUsage()</code>方法返回Node.js进程的内存使用情况的对象，该对象每个属性值的单位为字节。</p>
+<p>例如:</p>
+<pre><code class="lang-js">console.log(process.memoryUsage());
+</code></pre>
+<p>会得到:</p>
+<!-- eslint-skip -->
+<pre><code class="lang-js">{
+  rss: 4935680,
+  heapTotal: 1826816,
+  heapUsed: 650472,
+  external: 49879
+}
+</code></pre>
+<p><code>heapTotal</code> 和 <code>heapUsed</code> 代表V8的内存使用情况。</p>
+<p><code>external</code>代表V8管理的，绑定到Javascript的C++对象的内存使用情况。</p>
+<h2 id="process-nexttick-callback-args-">process.nextTick(callback[, ...args])</h2>
+<!-- YAML
+added: v0.1.16
+changes:
+  - version: v7.2.0
+    pr-url: https://github.com/nodejs/node/pull/9587
+    description: Added `external` to the returned object.
+-->
+<ul>
+<li>返回: {Object}<ul>
+<li><code>rss</code> {integer}</li>
+<li><code>heapTotal</code> {integer}</li>
+<li><code>heapUsed</code> {integer}</li>
+<li><code>external</code> {integer}</li>
+</ul>
+</li>
+</ul>
+<p><code>process.memoryUsage()</code>方法返回Node.js进程的内存使用情况的对象，该对象每个属性值的单位为字节。</p>
+<p>例如:</p>
+<pre><code class="lang-js">console.log(process.memoryUsage());
+</code></pre>
+<p>会得到:</p>
+<!-- eslint-skip -->
+<pre><code class="lang-js">{
+  rss: 4935680,
+  heapTotal: 1826816,
+  heapUsed: 650472,
+  external: 49879
+}
+</code></pre>
+<p><code>heapTotal</code> 和 <code>heapUsed</code> 代表V8的内存使用情况。</p>
+<p><code>external</code>代表V8管理的，绑定到Javascript的C++对象的内存使用情况。</p>
+<h2 id="process-pid">process.pid</h2>
+<!-- YAML
+added: v0.1.15
+-->
+<ul>
+<li>{integer}</li>
+</ul>
+<p><code>process.pid</code>属性返回进程的PID。</p>
+<pre><code class="lang-js">console.log(`This process is pid ${process.pid}`);
+</code></pre>
+<h2 id="process-platform">process.platform</h2>
+<!-- YAML
+added: v0.1.16
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p><code>process.platform</code>属性返回字符串，标识Node.js进程运行其上的操作系统平台。
+例如<code>&#39;darwin&#39;</code>, <code>&#39;freebsd&#39;</code>, <code>&#39;linux&#39;</code>, <code>&#39;sunos&#39;</code> 或 <code>&#39;win32&#39;</code></p>
+<pre><code class="lang-js">console.log(`This platform is ${process.platform}`);
+</code></pre>
+<h2 id="process-release">process.release</h2>
+<!-- YAML
+added: v3.0.0
+changes:
+  - version: v4.2.0
+    pr-url: https://github.com/nodejs/node/pull/3212
+    description: The `lts` property is now supported.
+-->
+<p><code>process.release</code> 属性返回与当前发布相关的元数据对象，包括源代码和源代码头文件 tarball的URLs。</p>
+<p><code>process.release</code>包括如下属性：</p>
+<ul>
+<li><p><code>name</code> {string} 对于Node.js， 此值始终为<code>&#39;node&#39;</code>。对于传统io.js 发布包， 此值为<code>&#39;io.js&#39;</code>。</p>
+</li>
+<li><p><code>sourceUrl</code> {string} 指向一个<em><code>.tar.gz</code></em>文件的绝对URL，包括了当前发布的源代码。</p>
+</li>
+<li><p><code>headersUrl</code>{string} 指向一个<em><code>.tar.gz</code></em>文件的绝对URL，包括了当前发布的源代码的头文件信息。
+这个文件要比全部源代码文件明显小很多，可以用于编译Node.js原生插件。</p>
+</li>
+<li><p><code>libUrl</code> {string} 指向一个<em><code>node.lib</code></em>文件的绝对URL，匹配当前发布的结构和版本信息。此文件用于编译Node.js本地插件。
+_这个属性只在Windows版本中存在，在其他平台中无效。</p>
+</li>
+<li><p><code>lts</code> {string} 标识当前发布的<a href="https://github.com/nodejs/LTS/">LTS</a>标签的字符串。 如果Node.js发布不是一个LTS发布，此值为<code>undefined</code>。</p>
+</li>
+</ul>
+<p>例如：</p>
+<!-- eslint-skip -->
+<pre><code class="lang-js">{
+  name: &#39;node&#39;,
+  lts: &#39;Argon&#39;,
+  sourceUrl: &#39;https://nodejs.org/download/release/v4.4.5/node-v4.4.5.tar.gz&#39;,
+  headersUrl: &#39;https://nodejs.org/download/release/v4.4.5/node-v4.4.5-headers.tar.gz&#39;,
+  libUrl: &#39;https://nodejs.org/download/release/v4.4.5/win-x64/node.lib&#39;
+}
+</code></pre>
+<p>从源码树的非发布版本中构建的定制版本，可能只有<code>name</code>属性有效。其他的属性不一定会存在。</p>
+<h2 id="process-send-message-sendhandle-options-callback-">process.send(message[, sendHandle[, options]][, callback])</h2>
+<!-- YAML
+added: v0.5.9
+-->
+<ul>
+<li><code>message</code> {Object}</li>
+<li><code>sendHandle</code> {Handle object}</li>
+<li><code>options</code> {Object}</li>
+<li><code>callback</code> {Function}</li>
+<li>Returns: {boolean}</li>
+</ul>
+<p>If Node.js is spawned with an IPC channel, the <code>process.send()</code> method can be
+used to send messages to the parent process. Messages will be received as a
+<a href="child_process.html#child_process_event_message"><code>&#39;message&#39;</code></a> event on the parent&#39;s <a href="child_process.html#child_process_class_childprocess"><code>ChildProcess</code></a> object.</p>
+<p>If Node.js was not spawned with an IPC channel, <code>process.send()</code> will be
+<code>undefined</code>.</p>
+<p><em>Note</em>: This function uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify"><code>JSON.stringify()</code></a> internally to serialize the
+<code>message</code>.</p>
+<h2 id="process-setegid-id-">process.setegid(id)</h2>
+<!-- YAML
+added: v2.0.0
+-->
+<ul>
+<li><code>id</code> {string|number} A group name or ID</li>
+</ul>
+<p>The <code>process.setegid()</code> method sets the effective group identity of the process.
+(See setegid(2).) The <code>id</code> can be passed as either a numeric ID or a group
+name string. If a group name is specified, this method blocks while resolving
+the associated a numeric ID.</p>
+<pre><code class="lang-js">if (process.getegid &amp;&amp; process.setegid) {
+  console.log(`Current gid: ${process.getegid()}`);
+  try {
+    process.setegid(501);
+    console.log(`New gid: ${process.getegid()}`);
+  } catch (err) {
+    console.log(`Failed to set gid: ${err}`);
+  }
+}
+</code></pre>
+<p><em>Note</em>: This function is only available on POSIX platforms (i.e. not Windows
+or Android).</p>
+<h2 id="process-seteuid-id-">process.seteuid(id)</h2>
+<!-- YAML
+added: v2.0.0
+-->
+<ul>
+<li><code>id</code> {string|number} A user name or ID</li>
+</ul>
+<p>The <code>process.seteuid()</code> method sets the effective user identity of the process.
+(See seteuid(2).) The <code>id</code> can be passed as either a numeric ID or a username
+string.  If a username is specified, the method blocks while resolving the
+associated numeric ID.</p>
+<pre><code class="lang-js">if (process.geteuid &amp;&amp; process.seteuid) {
+  console.log(`Current uid: ${process.geteuid()}`);
+  try {
+    process.seteuid(501);
+    console.log(`New uid: ${process.geteuid()}`);
+  } catch (err) {
+    console.log(`Failed to set uid: ${err}`);
+  }
+}
+</code></pre>
+<p><em>Note</em>: This function is only available on POSIX platforms (i.e. not Windows
+or Android).</p>
+<h2 id="process-setgid-id-">process.setgid(id)</h2>
+<!-- YAML
+added: v0.1.31
+-->
+<ul>
+<li><code>id</code> {string|number} The group name or ID</li>
+</ul>
+<p>The <code>process.setgid()</code> method sets the group identity of the process. (See
+setgid(2).)  The <code>id</code> can be passed as either a numeric ID or a group name
+string. If a group name is specified, this method blocks while resolving the
+associated numeric ID.</p>
+<pre><code class="lang-js">if (process.getgid &amp;&amp; process.setgid) {
+  console.log(`Current gid: ${process.getgid()}`);
+  try {
+    process.setgid(501);
+    console.log(`New gid: ${process.getgid()}`);
+  } catch (err) {
+    console.log(`Failed to set gid: ${err}`);
+  }
+}
+</code></pre>
+<p><em>Note</em>: This function is only available on POSIX platforms (i.e. not Windows
+or Android).</p>
+<h2 id="process-setgroups-groups-">process.setgroups(groups)</h2>
+<!-- YAML
+added: v0.9.4
+-->
+<ul>
+<li><code>groups</code> {Array}</li>
+</ul>
+<p>The <code>process.setgroups()</code> method sets the supplementary group IDs for the
+Node.js process. This is a privileged operation that requires the Node.js process
+to have <code>root</code> or the <code>CAP_SETGID</code> capability.</p>
+<p>The <code>groups</code> array can contain numeric group IDs, group names or both.</p>
+<p><em>Note</em>: This function is only available on POSIX platforms (i.e. not Windows
+or Android).</p>
+<h2 id="process-setuid-id-">process.setuid(id)</h2>
+<!-- YAML
+added: v0.1.28
+-->
+<p>The <code>process.setuid(id)</code> method sets the user identity of the process. (See
+setuid(2).)  The <code>id</code> can be passed as either a numeric ID or a username string.
+If a username is specified, the method blocks while resolving the associated
+numeric ID.</p>
+<pre><code class="lang-js">if (process.getuid &amp;&amp; process.setuid) {
+  console.log(`Current uid: ${process.getuid()}`);
+  try {
+    process.setuid(501);
+    console.log(`New uid: ${process.getuid()}`);
+  } catch (err) {
+    console.log(`Failed to set uid: ${err}`);
+  }
+}
+</code></pre>
+<p><em>Note</em>: This function is only available on POSIX platforms (i.e. not Windows
+or Android).</p>
+<h2 id="process-stderr">process.stderr</h2>
+<ul>
+<li>{Stream}</li>
+</ul>
+<p><code>process.stderr</code> 属性返回连接到<code>stderr</code>(fd <code>2</code>)的流。 
+它是一个<a href="net.html#net_class_net_socket"><code>net.Socket</code></a>(它是一个<a href="stream.html#stream_duplex_and_transform_streams">Duplex</a>流)，除非 fd <code>2</code>指向一个文件，在这种情况下它是一个[可写][]流。</p>
+<p><em>注意</em>: <code>process.stderr</code> 与其他 Node.js 流有重要的区别，详见 <a href="process.html#process_a_note_on_process_i_o">note on process I/O</a>。</p>
+<h2 id="process-stdin">process.stdin</h2>
+<ul>
+<li>{Stream}</li>
+</ul>
+<p>The <code>process.stdin</code> property returns a stream connected to
+<code>stdin</code> (fd <code>0</code>). It is a <a href="net.html#net_class_net_socket"><code>net.Socket</code></a> (which is a <a href="stream.html#stream_duplex_and_transform_streams">Duplex</a>
+stream) unless fd <code>0</code> refers to a file, in which case it is
+a <a href="stream.html#stream_readable_streams">Readable</a> stream.</p>
+<p><code>process.stdin</code> 属性返回连接到<code>stdin</code>(fd <code>0</code>)的流。 
+它是一个<a href="net.html#net_class_net_socket"><code>net.Socket</code></a>(它是一个<a href="stream.html#stream_duplex_and_transform_streams">Duplex</a>流)，除非 fd <code>0</code>指向一个文件，在这种情况下它是一个[可读][]流。</p>
+<p>举个例子:</p>
+<pre><code class="lang-js">process.stdin.setEncoding(&#39;utf8&#39;);
+
+process.stdin.on(&#39;readable&#39;, () =&gt; {
+  const chunk = process.stdin.read();
+  if (chunk !== null) {
+    process.stdout.write(`data: ${chunk}`);
+  }
+});
+
+process.stdin.on(&#39;end&#39;, () =&gt; {
+  process.stdout.write(&#39;end&#39;);
+});
+</code></pre>
+<p><code>process.stdin</code> 返回的 <a href="stream.html#stream_duplex_and_transform_streams">Duplex</a> 流, 可以在<code>旧</code>模式下使用,兼容node v0.10。
+更多信息查看<a href="stream.html#stream_compatibility_with_older_node_js_versions">流的兼容性</a>。</p>
+<p><em>注意</em>: 在&quot;旧模式下&quot; <code>stdin</code>流 默认是暂停的.所以必须通过执行<code>.stdin.resume()</code>来恢复它.
+同时<code>process.stdin.resume()</code>会切换到<code>旧模式</code></p>
+<h2 id="process-stdout">process.stdout</h2>
+<ul>
+<li>{Stream}</li>
+</ul>
+<p><code>process.stdout</code> 属性返回连接到 <code>stdout</code> (fd <code>1</code>)的流。 
+它是一个<a href="net.html#net_class_net_socket"><code>net.Socket</code></a> (它是一个<a href="stream.html#stream_duplex_and_transform_streams">Duplex</a>流)， 除非 fd <code>1</code> 指向一个文件，在这种情况下它是一个[可写][]流。</p>
+<p>例1： 将输入流数据输出到输出流，即输出到终端。</p>
+<pre><code class="lang-js">process.stdin.pipe(process.stdout);
+</code></pre>
+<p>例2： 要求用户输入两个数值，然后把和输出到终端。</p>
+<pre><code class="lang-js">/*1:声明变量*/
+var num1, num2;
+/*2：向屏幕输出，提示信息，要求输入num1*/
+process.stdout.write(&#39;请输入num1的值：&#39;);
+/*3：监听用户的输入*/
+process.stdin.on(&#39;data&#39;, function (chunk) {
+    if (!num1) {
+        num1 = Number(chunk);
+        /*4：向屏幕输出，提示信息，要求输入num2*/
+        process.stdout.write(&#39;请输入num2的值&#39;);
+    } else {
+        num2 = Number(chunk);
+        process.stdout.write(&#39;结果是：&#39; + (num1 + num2));
+    }
+});
+</code></pre>
+<p>注意:  重要的是<code>process.stdout</code>不同于 Node.js 的其他流,
+详情可以参考<a href="process.html#process_a_note_on_process_i_o">note on process I/O</a> .</p>
+<h2 id="process-title">process.title</h2>
+<!-- YAML
+added: v0.1.104
+-->
+<ul>
+<li>{string}</li>
+</ul>
+<p>The <code>process.title</code> property returns the current process title (i.e. returns
+the current value of <code>ps</code>). Assigning a new value to <code>process.title</code> modifies
+the current value of <code>ps</code>.</p>
+<p><em>Note</em>: When a new value is assigned, different platforms will impose
+different maximum length restrictions on the title. Usually such restrictions
+are quite limited. For instance, on Linux and macOS, <code>process.title</code> is limited
+to the size of the binary name plus the length of the command line arguments
+because setting the <code>process.title</code> overwrites the <code>argv</code> memory of the
+process.  Node.js v0.8 allowed for longer process title strings by also
+overwriting the <code>environ</code> memory but that was potentially insecure and
+confusing in some (rather obscure) cases.</p>
+<h2 id="process-umask-mask-">process.umask([mask])</h2>
+<!-- YAML
+added: v0.1.19
+-->
+<ul>
+<li><code>mask</code> {number}</li>
+</ul>
+<p>The <code>process.umask()</code> method sets or returns the Node.js process&#39;s file mode
+creation mask. Child processes inherit the mask from the parent process. Invoked
+without an argument, the current mask is returned, otherwise the umask is set to
+the argument value and the previous mask is returned.</p>
+<pre><code class="lang-js">const newmask = 0o022;
+const oldmask = process.umask(newmask);
+console.log(
+  `Changed umask from ${oldmask.toString(8)} to ${newmask.toString(8)}`
+);
+</code></pre>
+<h2 id="process-uptime-">process.uptime()</h2>
+<!-- YAML
+added: v0.5.0
+-->
+<ul>
+<li>Returns: {number}</li>
+</ul>
+<p><code>process.uptime()</code> 方法返回当前 Node.js 进程运行时间秒长</p>
+<p><em>注意</em>: 该返回值包含秒的分数。 使用 <code>Math.floor()</code> 来得到整秒钟。</p>
+<h2 id="process-version">process.version</h2>
+<!-- YAML
+added: v0.5.0
+-->
+<ul>
+<li>Returns: {number}</li>
+</ul>
+<p><code>process.uptime()</code> 方法返回当前 Node.js 进程运行时间秒长</p>
+<p><em>注意</em>: 该返回值包含秒的分数。 使用 <code>Math.floor()</code> 来得到整秒钟。</p>
+<h2 id="process-versions">process.versions</h2>
+<!-- YAML
+added: v0.5.0
+-->
+<ul>
+<li>Returns: {number}</li>
+</ul>
+<p><code>process.uptime()</code> 方法返回当前 Node.js 进程运行时间秒长</p>
+<p><em>注意</em>: 该返回值包含秒的分数。 使用 <code>Math.floor()</code> 来得到整秒钟。</p>
+<h2 id="exit-codes">Exit Codes</h2>
+<p>Node.js will normally exit with a <code>0</code> status code when no more async
+operations are pending.  The following status codes are used in other
+cases:</p>
+<ul>
+<li><code>1</code> <strong>Uncaught Fatal Exception</strong> - There was an uncaught exception,
+and it was not handled by a domain or an <a href="#process_event_uncaughtexception"><code>&#39;uncaughtException&#39;</code></a> event
+handler.</li>
+<li><code>2</code> - Unused (reserved by Bash for builtin misuse)</li>
+<li><code>3</code> <strong>Internal JavaScript Parse Error</strong> - The JavaScript source code
+internal in Node.js&#39;s bootstrapping process caused a parse error.  This
+is extremely rare, and generally can only happen during development
+of Node.js itself.</li>
+<li><code>4</code> <strong>Internal JavaScript Evaluation Failure</strong> - The JavaScript
+source code internal in Node.js&#39;s bootstrapping process failed to
+return a function value when evaluated.  This is extremely rare, and
+generally can only happen during development of Node.js itself.</li>
+<li><code>5</code> <strong>Fatal Error</strong> - There was a fatal unrecoverable error in V8.
+Typically a message will be printed to stderr with the prefix <code>FATAL
+ERROR</code>.</li>
+<li><code>6</code> <strong>Non-function Internal Exception Handler</strong> - There was an
+uncaught exception, but the internal fatal exception handler
+function was somehow set to a non-function, and could not be called.</li>
+<li><code>7</code> <strong>Internal Exception Handler Run-Time Failure</strong> - There was an
+uncaught exception, and the internal fatal exception handler
+function itself threw an error while attempting to handle it.  This
+can happen, for example, if a <a href="#process_event_uncaughtexception"><code>&#39;uncaughtException&#39;</code></a> or
+<code>domain.on(&#39;error&#39;)</code> handler throws an error.</li>
+<li><code>8</code> - Unused.  In previous versions of Node.js, exit code 8 sometimes
+indicated an uncaught exception.</li>
+<li><code>9</code> - <strong>Invalid Argument</strong> - Either an unknown option was specified,
+or an option requiring a value was provided without a value.</li>
+<li><code>10</code> <strong>Internal JavaScript Run-Time Failure</strong> - The JavaScript
+source code internal in Node.js&#39;s bootstrapping process threw an error
+when the bootstrapping function was called.  This is extremely rare,
+and generally can only happen during development of Node.js itself.</li>
+<li><code>12</code> <strong>Invalid Debug Argument</strong> - The <code>--inspect</code> and/or <code>--inspect-brk</code>
+options were set, but the port number chosen was invalid or unavailable.</li>
+<li><code>&gt;128</code> <strong>Signal Exits</strong> - If Node.js receives a fatal signal such as
+<code>SIGKILL</code> or <code>SIGHUP</code>, then its exit code will be <code>128</code> plus the
+value of the signal code.  This is a standard Unix practice, since
+exit codes are defined to be 7-bit integers, and signal exits set
+the high-order bit, and then contain the value of the signal code.
+For example, signal <code>SIGABRT</code> has value <code>6</code>, so the expected exit
+code will be <code>128</code> + <code>6</code>, or <code>134</code>.</li>
+</ul>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

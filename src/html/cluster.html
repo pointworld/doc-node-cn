@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-cluster">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="cluster">
+            <div id="apicontent">
+                <h1 id="cluster">Cluster</h1>
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<p>一个单一的 Node.js 实例运行在一个单独的线程上。
+为了利用多核系统，用户有时会想启动一个 Node.js 进程的集群去处理负载。</p>
+<p><code>cluster</code> 模块可以轻松地创建一些共享服务器端口的子进程。</p>
+<pre><code class="lang-js">const cluster = require(&#39;cluster&#39;);
+const http = require(&#39;http&#39;);
+const numCPUs = require(&#39;os&#39;).cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`主进程 ${process.pid} 正在运行`);
+
+  // 衍生工作进程。
+  for (let i = 0; i &lt; numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on(&#39;exit&#39;, (worker, code, signal) =&gt; {
+    console.log(`工作进程 ${worker.process.pid} 已退出`);
+  });
+} else {
+  // 工作进程可以共享任何 TCP 连接。
+  // 在本例子中，共享的是一个 HTTP 服务器。
+  http.createServer((req, res) =&gt; {
+    res.writeHead(200);
+    res.end(&#39;你好世界\n&#39;);
+  }).listen(8000);
+
+  console.log(`工作进程 ${process.pid} 已启动`);
+}
+</code></pre>
+<p>运行 Node.js 则工作进程就会共享 8000 端口：</p>
+<pre><code class="lang-txt">$ node server.js
+主进程 3596 正在运行
+工作进程 4324 已启动
+工作进程 4520 已启动
+工作进程 6056 已启动
+工作进程 5644 已启动
+</code></pre>
+<p>注意，在 Windows 上还不能在一个工作进程中建立一个命名的管道服务器。</p>
+<h2 id="how-it-works">How It Works</h2>
+<!--type=misc-->
+<p>工作进程由<a href="child_process.html#child_process_child_process_fork_modulepath_args_options"><code>child_process.fork()</code></a>方法创建，因此它们可以使用IPC和父进程通信，从而使各进程交替处理连接服务。</p>
+<p>cluster模块支持两种连接分发模式（将新连接安排给某一工作进程处理）。</p>
+<p>第一种方法（也是除Windows外所有平台的默认方法），是循环法。由主进程负责监听端口，接收新连接后再将连接循环分发给工作进程。在分发中使用了一些内置技巧防止工作进程任务过载。</p>
+<p>第二种方法是，主进程创建监听socket后发送给感兴趣的工作进程，由工作进程负责直接接收连接。</p>
+<p>理论上第二种方法应该是效率最佳的，但在实际情况下，由于操作系统调度机制的难以捉摸，会使分发变得不稳定。我们遇到过这种情况：8个进程中的2个，分担了70%的负载。</p>
+<p>因为<code>server.listen()</code>将大部分工作交给主进程完成，因此导致普通Node.js进程与cluster作业进程差异的情况有三种：</p>
+<ol>
+<li><code>server.listen({fd: 7})</code>由于文件描述符“7”是传递给父进程的，这个文件被监听后，将文件句柄（handle）传递给工作进程，而不是文件描述符“7”本身。</li>
+<li><code>server.listen(handle)</code> 明确监听句柄，会导致工作进程直接使用该句柄，而不是和父进程通信。</li>
+<li><code>server.listen(0)</code> 正常情况下，这种调用会导致server在随机端口上监听。但在cluster模式中，所有工作进程每次调用<code>listen(0)</code>时会收到相同的“随机”端口。实质上，这种端口只在第一次分配时随机，之后就变得可预料。如果要使用独立端口的话，应该根据工作进程的ID来生成端口号。</li>
+</ol>
+<p><em>注意</em>：Node.js不支持路由逻辑。因此在设计应用时，不应该过分依赖内存数据对象（如sessions和login等）。</p>
+<p>由于各工作进程是独立的进程，它们可以根据需要随时关闭或重新生成，而不影响其他进程的正常运行。只要有存活的工作进程，服务器就可以继续处理连接。如果没有存活的工作进程，现有连接会丢失，新的连接也会被拒绝。Node.js不会自动管理工作进程的数量，而应该由具体的应用根据实际需要来管理进程池。</p>
+<h2 id="class-worker">Class: Worker</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<p>Workder对象包含了关于工作进程的所有public信息和方法。</p>
+<p>在一个主进程里，可以使用<code>cluster.workers</code>来获取Worker对象。</p>
+<p>在一个工作进程里，可以使用<code>cluster.worker</code>来获取Worker对象。</p>
+<h3 id="event-disconnect-">Event: &#39;disconnect&#39;</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>和<code>cluster.on(&#39;disconnect&#39;)</code>事件类似，不同之处在于特指这个工作进程。</p>
+<pre><code class="lang-js">cluster.fork().on(&#39;disconnect&#39;, () =&gt; {
+  // Worker has disconnected
+});
+</code></pre>
+<h3 id="event-error-">Event: &#39;error&#39;</h3>
+<!-- YAML
+added: v0.7.3
+-->
+<p>此事件和 <a href="child_process.html#child_process_child_process_fork_modulepath_args_options"><code>child_process.fork()</code></a>提供的error事件相同。</p>
+<p>在一个工作进程中，可以使用<code>process.on(&#39;error&#39;)</code></p>
+<h3 id="event-exit-">Event: &#39;exit&#39;</h3>
+<!-- YAML
+added: v0.11.2
+-->
+<ul>
+<li><code>code</code> {number} 若正常退出，表示退出代码.</li>
+<li><code>signal</code> {string} 引发进程被kill的信号名称（如<code>&#39;SIGHUP&#39;</code>）.</li>
+</ul>
+<p>和<code>cluster.on(&#39;exit&#39;)</code>事件类似，但针对特定的工作进程。</p>
+<pre><code class="lang-js">const worker = cluster.fork();
+worker.on(&#39;exit&#39;, (code, signal) =&gt; {
+  if (signal) {
+    console.log(`worker was killed by signal: ${signal}`);
+  } else if (code !== 0) {
+    console.log(`worker exited with error code: ${code}`);
+  } else {
+    console.log(&#39;worker success!&#39;);
+  }
+});
+</code></pre>
+<h3 id="event-listening-">Event: &#39;listening&#39;</h3>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li><code>address</code> {Object}</li>
+</ul>
+<p>和<code>cluster.on(&#39;listening&#39;)</code>事件类似，但针对特定的工作进程。</p>
+<pre><code class="lang-js">cluster.fork().on(&#39;listening&#39;, (address) =&gt; {
+  // Worker is listening
+});
+</code></pre>
+<p>本事件不会在工作进程内触发。</p>
+<h3 id="event-message-">Event: &#39;message&#39;</h3>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li><code>message</code> {Object}</li>
+<li><code>handle</code> {undefined|Object}</li>
+</ul>
+<p>和<code>cluster.on(&#39;message&#39;)</code>事件类似，但针对特定的工作进程。</p>
+<p>在工作进程内，可以使用<code>process.on(&#39;message&#39;)</code></p>
+<p>详见 <a href="process.html#process_event_message"><code>process</code> event: <code>&#39;message&#39;</code></a>.</p>
+<p>在下面这个例子中，我们使用message机制来实现主进程统计cluster中请求数量的功能。</p>
+<pre><code class="lang-js">const cluster = require(&#39;cluster&#39;);
+const http = require(&#39;http&#39;);
+
+if (cluster.isMaster) {
+
+  // 跟踪 http 请求
+  let numReqs = 0;
+  setInterval(() =&gt; {
+    console.log(`numReqs = ${numReqs}`);
+  }, 1000);
+
+  // 计算请求数目
+  function messageHandler(msg) {
+    if (msg.cmd &amp;&amp; msg.cmd === &#39;notifyRequest&#39;) {
+      numReqs += 1;
+    }
+  }
+
+  // 启动 worker 并监听包含 notifyRequest 的消息
+  const numCPUs = require(&#39;os&#39;).cpus().length;
+  for (let i = 0; i &lt; numCPUs; i++) {
+    cluster.fork();
+  }
+
+  for (const id in cluster.workers) {
+    cluster.workers[id].on(&#39;message&#39;, messageHandler);
+  }
+
+} else {
+
+  // Worker 进程有一个http服务器
+  http.Server((req, res) =&gt; {
+    res.writeHead(200);
+    res.end(&#39;hello world\n&#39;);
+
+    // 通知 master 进程接收到了请求
+    process.send({ cmd: &#39;notifyRequest&#39; });
+  }).listen(8000);
+}
+</code></pre>
+<h3 id="event-online-">Event: &#39;online&#39;</h3>
+<!-- YAML
+added: v0.7.0
+-->
+<p>和<code>cluster.on(&#39;online&#39;)</code>事件类似，但针对特定的工作进程。</p>
+<pre><code class="lang-js">cluster.fork().on(&#39;online&#39;, () =&gt; {
+  // Worker is online
+});
+</code></pre>
+<p>本事件不会在工作进程内部被触发。</p>
+<h3 id="worker-disconnect-">worker.disconnect()</h3>
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v7.3.0
+    pr-url: https://github.com/nodejs/node/pull/10019
+    description: This method now returns a reference to `worker`.
+-->
+<ul>
+<li>Returns: {Worker} 一个 <code>worker</code> 的引用。</li>
+</ul>
+<p>在一个工作进程内，调用此方法会关闭所有的server，并等待这些server的 <code>&#39;close&#39;</code>事件执行，然后关闭IPC管道。</p>
+<p>在主进程内，会给工作进程发送一个内部消息，导致工作进程自身调用<code>.disconnect()</code>。</p>
+<p>会设置<code>.exitedAfterDisconnect</code> 。</p>
+<p>需要注意的是，当一个server关闭后，它将不再接收新的连接，但新连接会被其他正在监听的工作进程接收。已建立的连接可以正常关闭。当所有连接都关闭后，通往该工作进程的IPC管道将会关闭，允许工作进程优雅地死掉，详见 <a href="net.html#net_event_close"><code>server.close()</code></a>。</p>
+<p>以上情况只针对服务端连接，工作进程不会自动关闭客户端连接，disconnect方法在退出前并不会等待客户端连接关闭。</p>
+<p>需要注意的是，我们这里的方法是<a href="child_process.html#child_process_child_disconnect"><code>disconnect</code></a>，同时还有一个不一样的方法<code>process.disconnect</code>，大家不要混淆了。</p>
+<p>由于长时间运行的服务端连接可能导致工作进程的disconnect方法阻塞，我们可以采用发送消息的方法，让应用采取相应的动作来关闭连接。也可以通过设置timeout，当<code>&#39;disconnect&#39;</code>事件在某段时间后仍没有触发时关闭工作进程。</p>
+<pre><code class="lang-js">if (cluster.isMaster) {
+  const worker = cluster.fork();
+  let timeout;
+
+  worker.on(&#39;listening&#39;, (address) =&gt; {
+    worker.send(&#39;shutdown&#39;);
+    worker.disconnect();
+    timeout = setTimeout(() =&gt; {
+      worker.kill();
+    }, 2000);
+  });
+
+  worker.on(&#39;disconnect&#39;, () =&gt; {
+    clearTimeout(timeout);
+  });
+
+} else if (cluster.isWorker) {
+  const net = require(&#39;net&#39;);
+  const server = net.createServer((socket) =&gt; {
+    // 连接永远不会结束
+  });
+
+  server.listen(8000);
+
+  process.on(&#39;message&#39;, (msg) =&gt; {
+    if (msg === &#39;shutdown&#39;) {
+      // 将所有与服务器的连接优雅关闭
+    }
+  });
+}
+</code></pre>
+<h3 id="worker-exitedafterdisconnect">worker.exitedAfterDisconnect</h3>
+<!-- YAML
+added: v6.0.0
+-->
+<ul>
+<li>{boolean}</li>
+</ul>
+<p>当调用 <code>.kill()</code> 或者 <code>.disconnect()</code>方法时被设置，在这之前都是 <code>undefined</code>。</p>
+<p><code>worker.exitedAfterDisconnect</code>可以用于区分自发退出还是被动退出，主进程可以根据这个值决定是否重新衍生新的工作进程。</p>
+<pre><code class="lang-js">cluster.on(&#39;exit&#39;, (worker, code, signal) =&gt; {
+  if (worker.exitedAfterDisconnect === true) {
+    console.log(&#39;Oh, it was just voluntary – no need to worry&#39;);
+  }
+});
+
+// 关闭 worker
+worker.kill();
+</code></pre>
+<h3 id="worker-id">worker.id</h3>
+<!-- YAML
+added: v0.8.0
+-->
+<ul>
+<li>{number}</li>
+</ul>
+<p>每一个新衍生的工作进程都会被赋予自己独一无二的编号，这个编号就是储存在<code>id</code>里面。</p>
+<p>当工作进程还存活时，<code>id</code>可以作为在cluster.workers中的索引。</p>
+<h3 id="worker-isconnected-">worker.isConnected()</h3>
+<!-- YAML
+added: v0.11.14
+-->
+<p>当工作进程通过IPC管道连接至主进程时，这个方法返回<code>true</code>，否则返回<code>false</code>。</p>
+<p>一个工作进程在创建后会自动连接到它的主进程，当<code>&#39;disconnect&#39;</code> 事件被触发时才会断开连接。</p>
+<h3 id="worker-isdead-">worker.isDead()</h3>
+<!-- YAML
+added: v0.11.14
+-->
+<p>当工作进程被终止时（包括自动退出或被发送信号），这个方法返回<code>true</code> ，否则返回<code>false</code>。</p>
+<h3 id="worker-kill-signal-sigterm-">worker.kill([signal=&#39;SIGTERM&#39;])</h3>
+<!-- YAML
+added: v0.9.12
+-->
+<ul>
+<li><code>signal</code> {string} 被发送kill信号的工作进程名称。</li>
+</ul>
+<p>这个方法将会kill工作进程。在主进程中，通过断开与<code>worker.process</code>的连接来实现，一旦断开连接后，通过<code>signal</code>来杀死工作进程。在工作进程中，通过断开IPC管道来实现，然后以代码<code>0</code>退出进程。</p>
+<p>将导致<code>.exitedAfterDisconnect</code>被设置。</p>
+<p>为向后兼容，这个方法与<code>worker.destroy()</code>等义。</p>
+<p>需要注意的是，在工作进程中有一个方法<code>process.kill()</code> ，这个方法本方法不同，本方法是<a href="process.html#process_process_kill_pid_signal"><code>kill</code></a>。</p>
+<h3 id="worker-process">worker.process</h3>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li>{ChildProcess}</li>
+</ul>
+<p>所有的工作进程都是通过<a href="child_process.html#child_process_child_process_fork_modulepath_args_options"><code>child_process.fork()</code></a>来创建的，这个方法返回的对象被存储为<code>.process</code>。在工作进程中， <code>process</code>属于全局对象。</p>
+<p>详见：<a href="child_process.html#child_process_child_process_fork_modulepath_args_options">Child Process module</a></p>
+<p>需要注意：当<code>process</code>上发生 <code>&#39;disconnect&#39;</code>事件，并且<code>.exitedAfterDisconnect</code>的值不是<code>true</code>时，工作进程会调用 <code>process.exit(0)</code>。这样就可以防止连接意外断开。</p>
+<h3 id="worker-send-message-sendhandle-callback-">worker.send(message[, sendHandle][, callback])</h3>
+<!-- YAML
+added: v0.7.0
+changes:
+  - version: v4.0.0
+    pr-url: https://github.com/nodejs/node/pull/2620
+    description: The `callback` parameter is supported now.
+-->
+<ul>
+<li><code>message</code> {Object}</li>
+<li><code>sendHandle</code> {Handle}</li>
+<li><code>callback</code> {Function}</li>
+<li>Returns: Boolean</li>
+</ul>
+<p>发送一个消息给工作进程或主进程，也可以附带发送一个handle。</p>
+<p>主进程调用这个方法会发送消息给具体的工作进程。还有一个等价的方法是<a href="child_process.html#child_process_child_send_message_sendhandle_options_callback"><code>ChildProcess.send()</code></a>。</p>
+<p>工作进程调用这个方法会发送消息给主进程。还有一个等价方法是<code>process.send()</code>。</p>
+<p>这个例子里面，工作进程将主进程发送的消息echo回去。</p>
+<pre><code class="lang-js">if (cluster.isMaster) {
+  const worker = cluster.fork();
+  worker.send(&#39;hi there&#39;);
+
+} else if (cluster.isWorker) {
+  process.on(&#39;message&#39;, (msg) =&gt; {
+    process.send(msg);
+  });
+}
+</code></pre>
+<h2 id="event-disconnect-">Event: &#39;disconnect&#39;</h2>
+<!-- YAML
+added: v0.7.9
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+</ul>
+<p>在工作进程的IPC管道被断开后触发本事件。可能导致事件触发的原因包括：工作进程优雅地退出、被kill或手动断开连接（如调用worker.disconnect()）。</p>
+<p><code>&#39;disconnect&#39;</code> 和 <code>&#39;exit&#39;</code>事件之间可能存在延迟。这些事件可以用来检测进程是否在清理过程中被卡住，或是否存在长时间运行的连接。</p>
+<pre><code class="lang-js">cluster.on(&#39;disconnect&#39;, (worker) =&gt; {
+  console.log(`The worker #${worker.id} has disconnected`);
+});
+</code></pre>
+<h2 id="event-exit-">Event: &#39;exit&#39;</h2>
+<!-- YAML
+added: v0.7.9
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+<li><code>code</code> {number} 正常退出情况下，是退出代码.</li>
+<li><code>signal</code> {string} 导致进程被kill的信号名称 (例如 <code>&#39;SIGHUP&#39;</code>)</li>
+</ul>
+<p>当任何一个工作进程关闭的时候，cluster模块都将触发<code>&#39;exit&#39;</code>事件。</p>
+<p>可以被用来重启工作进程（）通过调用<code>.fork()</code>）。</p>
+<pre><code class="lang-js">cluster.on(&#39;exit&#39;, (worker, code, signal) =&gt; {
+  console.log(&#39;worker %d died (%s). restarting...&#39;,
+              worker.process.pid, signal || code);
+  cluster.fork();
+});
+</code></pre>
+<p>详见： <a href="child_process.html#child_process_event_exit">child_process event: &#39;exit&#39;</a>。</p>
+<h2 id="event-fork-">Event: &#39;fork&#39;</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+</ul>
+<p>当新的工作进程被fork时，cluster模块将触发<code>&#39;fork&#39;</code>事件。
+可以被用来记录工作进程活动，产生一个自定义的timeout。</p>
+<pre><code class="lang-js">const timeouts = [];
+function errorMsg() {
+  console.error(&#39;Something must be wrong with the connection ...&#39;);
+}
+
+cluster.on(&#39;fork&#39;, (worker) =&gt; {
+  timeouts[worker.id] = setTimeout(errorMsg, 2000);
+});
+cluster.on(&#39;listening&#39;, (worker, address) =&gt; {
+  clearTimeout(timeouts[worker.id]);
+});
+cluster.on(&#39;exit&#39;, (worker, code, signal) =&gt; {
+  clearTimeout(timeouts[worker.id]);
+  errorMsg();
+});
+</code></pre>
+<h2 id="event-listening-">Event: &#39;listening&#39;</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+<li><code>address</code> {Object}</li>
+</ul>
+<p>当一个工作进程调用<code>listen()</code>后，工作进程上的server会触发<code>&#39;listening&#39;</code> 事件，同时主进程上的 <code>cluster</code> 也会被触发<code>&#39;listening&#39;</code>事件。</p>
+<p>事件处理器使用两个参数来执行，其中<code>worker</code>包含了工作进程对象，<code>address</code> 包含了以下连接属性： <code>address</code>、<code>port</code> 和 <code>addressType</code>。当工作进程同时监听多个地址时，这些参数非常有用。</p>
+<pre><code class="lang-js">cluster.on(&#39;listening&#39;, (worker, address) =&gt; {
+  console.log(
+    `A worker is now connected to ${address.address}:${address.port}`);
+});
+</code></pre>
+<p><code>addressType</code> 可选值包括:</p>
+<ul>
+<li><code>4</code> (TCPv4)</li>
+<li><code>6</code> (TCPv6)</li>
+<li><code>-1</code> (unix domain socket)</li>
+<li><code>&quot;udp4&quot;</code> or <code>&quot;udp6&quot;</code> (UDP v4 or v6)</li>
+</ul>
+<h2 id="event-message-">Event: &#39;message&#39;</h2>
+<!-- YAML
+added: v2.5.0
+changes:
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/5361
+    description: The `worker` parameter is passed now; see below for details.
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+<li><code>message</code> {Object}</li>
+<li><code>handle</code> {undefined|Object}</li>
+</ul>
+<p>当cluster主进程接收任意工作进程发送的消息后被触发。</p>
+<p>详见： <a href="child_process.html#child_process_event_message">child_process event: &#39;message&#39;</a>。</p>
+<p>和文档情况相反的是：在Node.js v6.0版本之前，这个事件仅仅接受两个参数：消息和handle，而没有工作进程对象。</p>
+<p>如果要兼容旧版本并且不需要工作进程对象的情况下，可以通过判断参数数量来实现兼容。</p>
+<pre><code class="lang-js">cluster.on(&#39;message&#39;, (worker, message, handle) =&gt; {
+  if (arguments.length === 2) {
+    handle = message;
+    message = worker;
+    worker = undefined;
+  }
+  // ...
+});
+</code></pre>
+<h2 id="event-online-">Event: &#39;online&#39;</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li><code>worker</code> {cluster.Worker}</li>
+</ul>
+<p>当新建一个工作进程后，工作进程应当响应一个online消息给主进程。当主进程收到online消息后触发这个事件。
+ <code>&#39;fork&#39;</code> 事件和 <code>&#39;online&#39;</code>事件的不同之处在于，前者是在主进程新建工作进程后触发，而后者是在工作进程运行的时候触发。</p>
+<pre><code class="lang-js">cluster.on(&#39;online&#39;, (worker) =&gt; {
+  console.log(&#39;Yay, the worker responded after it was forked&#39;);
+});
+</code></pre>
+<h2 id="event-setup-">Event: &#39;setup&#39;</h2>
+<!-- YAML
+added: v0.7.1
+-->
+<ul>
+<li><code>settings</code> {Object}</li>
+</ul>
+<p>Emitted every time <code>.setupMaster()</code> is called.</p>
+<p>每当 <code>.setupMaster()</code>  被调用的时候触发。</p>
+<p><code>settings</code> 对象是 <code>setupMaster()</code> 被调用时的 <code>cluster.settings</code> 对象，并且只能查询，因为在一个 tick 内 <code>.setupMaster()</code> 可以被调用多次。</p>
+<p>如果精确度十分重要，请使用 <code>cluster.settings</code>。</p>
+<h2 id="cluster-disconnect-callback-">cluster.disconnect([callback])</h2>
+<!-- YAML
+added: v0.7.7
+-->
+<ul>
+<li><code>callback</code> {Function} 当所有工作进程都断开连接并且所有handle关闭的时候调用。</li>
+</ul>
+<p>在<code>cluster.workers</code>的每个工作进程中调用 <code>.disconnect()</code>。</p>
+<p>当所有工作进程断开连接后，所有内部handle将会关闭，这个时候如果没有等待事件的话，运行主进程优雅地关闭。</p>
+<p>这个方法可以选择添加一个回调参数，当结束时会调用这个回调函数。</p>
+<p>这个方法只能由主进程调用。</p>
+<h2 id="cluster-fork-env-">cluster.fork([env])</h2>
+<!-- YAML
+added: v0.6.0
+-->
+<ul>
+<li><code>env</code> {Object} 增加进程环境变量，以Key/value对的形式。</li>
+<li>return {cluster.Worker}</li>
+</ul>
+<p>衍生出一个新的工作进程。</p>
+<p>只能通过主进程调用。</p>
+<h2 id="cluster-ismaster">cluster.isMaster</h2>
+<!-- YAML
+added: v0.8.1
+-->
+<ul>
+<li>{boolean}</li>
+</ul>
+<p>当该进程是主进程时，返回 true。这是由<code>process.env.NODE_UNIQUE_ID</code>决定的，当<code>process.env.NODE_UNIQUE_ID</code>为定义时，<code>isMaster</code>为<code>true</code>。</p>
+<h2 id="cluster-isworker">cluster.isWorker</h2>
+<!-- YAML
+added: v0.6.0
+-->
+<ul>
+<li>{boolean}</li>
+</ul>
+<p>当进程不是主进程时，返回 true。（和<code>cluster.isMaster</code>刚好相反）</p>
+<h2 id="cluster-schedulingpolicy">cluster.schedulingPolicy</h2>
+<!-- YAML
+added: v0.11.2
+-->
+<p>调度策略，包括循环计数的 <code>cluster.SCHED_RR</code>，以及由操作系统决定的<code>cluster.SCHED_NONE</code>。
+这是一个全局设置，当第一个工作进程被衍生或者调动<code>cluster.setupMaster()</code>时，都将第一时间生效。</p>
+<p>除Windows外的所有操作系统中，<code>SCHED_RR</code>都是默认设置。只要libuv可以有效地分发IOCP handle，而不会导致严重的性能冲击的话，Windows系统也会更改为<code>SCHED_RR</code>。</p>
+<p><code>cluster.schedulingPolicy</code> 可以通过设置<code>NODE_CLUSTER_SCHED_POLICY</code>环境变量来实现。这个环境变量的有效值包括<code>&quot;rr&quot;</code> 和 <code>&quot;none&quot;</code>。</p>
+<h2 id="cluster-settings">cluster.settings</h2>
+<!-- YAML
+added: v0.7.1
+changes:
+  - version: 8.2.0
+    pr-url: https://github.com/nodejs/node/pull/14140
+    description: The `inspectPort` option is supported now.
+  - version: v6.4.0
+    pr-url: https://github.com/nodejs/node/pull/7838
+    description: The `stdio` option is supported now.
+-->
+<ul>
+<li>{Object}<ul>
+<li><code>execArgv</code> {Array} 传递给Node.js可执行文件的参数列表。 (Default=<code>process.execArgv</code>)</li>
+<li><code>exec</code> {string} worker文件路径。 (Default=<code>process.argv[1]</code>)</li>
+<li><code>args</code> {Array} 传递给worker的参数。(Default=<code>process.argv.slice(2)</code>)</li>
+<li><code>silent</code> {boolean} 是否需要发送输出值父进程的stdio。(Default=<code>false</code>)</li>
+<li><code>stdio</code> {Array} 配置fork进程的stdio。  由于cluster模块运行依赖于IPC，这个配置必须包含<code>&#39;ipc&#39;</code>。当提供了这个选项后，将撤销<code>silent</code>。</li>
+<li><code>uid</code> {number} 设置进程的user标识符。 (见 setuid(2).)</li>
+<li><code>gid</code> {number} 设置进程的group标识符。 (见 setgid(2).)</li>
+<li><code>inspectPort</code> {number|function} Sets inspector port of worker.
+This can be a number, or a function that takes no arguments and returns a
+number. By default each worker gets its own port, incremented from the
+master&#39;s <code>process.debugPort</code>.</li>
+</ul>
+</li>
+</ul>
+<p>调用<code>.setupMaster()</code> (或 <code>.fork()</code>)后，这个settings对象将会包含这些设置项，包括默认值。</p>
+<p>这个对象不打算被修改或手动设置。</p>
+<h2 id="cluster-setupmaster-settings-">cluster.setupMaster([settings])</h2>
+<!-- YAML
+added: v0.7.1
+changes:
+  - version: v6.4.0
+    pr-url: https://github.com/nodejs/node/pull/7838
+    description: The `stdio` option is supported now.
+-->
+<ul>
+<li><code>settings</code> {Object} 详见 <a href="#clustersettings"><code>cluster.settings</code></a>。</li>
+</ul>
+<p>用于修改默认&#39;fork&#39; 行为。一旦调用，将会按照<code>cluster.settings</code>进行设置。</p>
+<p>注意:</p>
+<ul>
+<li>所有的设置只对后来的 <code>.fork()</code>调用有效，对之前的工作进程无影响。</li>
+<li>唯一无法通过 <code>.setupMaster()</code>设置的属性是传递给<code>.fork()</code>的<code>env</code>属性。</li>
+<li>上述的默认值只在第一次调用时有效，当后续调用时，将采用<code>cluster.setupMaster()</code>调用时的当前值。</li>
+</ul>
+<p>例子:</p>
+<pre><code class="lang-js">const cluster = require(&#39;cluster&#39;);
+cluster.setupMaster({
+  exec: &#39;worker.js&#39;,
+  args: [&#39;--use&#39;, &#39;https&#39;],
+  silent: true
+});
+cluster.fork(); // https worker
+cluster.setupMaster({
+  exec: &#39;worker.js&#39;,
+  args: [&#39;--use&#39;, &#39;http&#39;]
+});
+cluster.fork(); // http worker
+</code></pre>
+<p>只能由主进程调用。</p>
+<h2 id="cluster-worker">cluster.worker</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p>当前工作进程对象的引用，对于主进程则无效。</p>
+<pre><code class="lang-js">const cluster = require(&#39;cluster&#39;);
+
+if (cluster.isMaster) {
+  console.log(&#39;I am master&#39;);
+  cluster.fork();
+  cluster.fork();
+} else if (cluster.isWorker) {
+  console.log(`I am worker #${cluster.worker.id}`);
+}
+</code></pre>
+<h2 id="cluster-workers">cluster.workers</h2>
+<!-- YAML
+added: v0.7.0
+-->
+<ul>
+<li>{Object}</li>
+</ul>
+<p>这是一个哈希表，储存了活跃的工作进程对象，<code>id</code>作为key。有了它，可以方便地遍历所有工作进程。只能在主进程中调用。</p>
+<p>工作进程断开连接以及退出后，将会从cluster.workers里面移除。这两个事件的先后顺序并不能预先确定，但可以保证的是，
+cluster.workers的移除工作在<code>&#39;disconnect&#39;</code> 和 <code>&#39;exit&#39;</code>两个事件中的最后一个触发之前完成。</p>
+<pre><code class="lang-js">// Go through all workers
+function eachWorker(callback) {
+  for (const id in cluster.workers) {
+    callback(cluster.workers[id]);
+  }
+}
+eachWorker((worker) =&gt; {
+  worker.send(&#39;big announcement to all workers&#39;);
+});
+</code></pre>
+<p>使用工作进程的id来进行定位索引是最方便的！</p>
+<pre><code class="lang-js">socket.on(&#39;data&#39;, (id) =&gt; {
+  const worker = cluster.workers[id];
+});
+</code></pre>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

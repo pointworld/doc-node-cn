@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-url">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="url">
+            <div id="apicontent">
+                <h1 id="url">URL</h1>
+<!--introduced_in=v0.10.0-->
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<p><code>url</code> 模块提供了一些实用函数，用于 URL 处理与解析。
+可以通过以下方式使用：</p>
+<pre><code class="lang-js">const url = require(&#39;url&#39;);
+</code></pre>
+<h2 id="url-strings-and-url-objects">URL Strings and URL Objects</h2>
+<p>一个 URL 字符串是一个结构化的字符串，它包含多个有意义的组成部分。
+当被解析时，会返回一个 URL 对象，它包含每个组成部分作为属性。</p>
+<p><code>url</code>模块提供了两套API来处理URLs：一个是Node.js遗留的特有的API,另一个则是通常使用在web浏览器中
+实现了<a href="https://url.spec.whatwg.org/">WHATWG URL Standard</a>的API.</p>
+<!--The `url` module provides two APIs for working with URLs: a legacy API that is
+Node.js specific, and a newer API that implements the same
+[WHATWG URL Standard][] used by web browsers.-->
+<p><em>请注意</em>: 虽然Node.js遗留的特有的API并没有被弃用，但是保留的目的是用于向后兼容已有应用程序。因此新的应用程序请使用WHATWG API。
+<!--*Note*: While the Legacy API has not been deprecated, it is maintained solely
+for backwards compatibility with existing applications. New application code
+should use the WHATWG API.--></p>
+<p>WHATWG与Node.js遗留的特有的API的比较如下。网址<code>&#39;http://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash&#39;</code>上方是由遗留的<code>url.parse()</code>返回的对象属性。网址下方的则是由WHATWG <code>URL</code>对象的属性。
+<!--A comparison between the WHATWG and Legacy APIs is provided below. Above the URL
+`'http://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash'`, properties of
+an object returned by the legacy `url.parse()` are shown. Below it are
+properties of a WHATWG `URL` object.--></p>
+<p>WHATWG URL的组织属性包括<code>protocol</code>和<code>host</code>,但不包含<code>username</code>、<code>password</code>.
+<!--*Note*: WHATWG URL's `origin` property includes `protocol` and `host`, but not
+`username` or `password`.--></p>
+<pre><code class="lang-txt">┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                            href                                             │
+├──────────┬──┬─────────────────────┬─────────────────────┬───────────────────────────┬───────┤
+│ protocol │  │        auth         │        host         │           path            │ hash  │
+│          │  │                     ├──────────────┬──────┼──────────┬────────────────┤       │
+│          │  │                     │   hostname   │ port │ pathname │     search     │       │
+│          │  │                     │              │      │          ├─┬──────────────┤       │
+│          │  │                     │              │      │          │ │    query     │       │
+&quot;  https:   //    user   :   pass   @ sub.host.com : 8080   /p/a/t/h  ?  query=string   #hash &quot;
+│          │  │          │          │   hostname   │ port │          │                │       │
+│          │  │          │          ├──────────────┴──────┤          │                │       │
+│ protocol │  │ username │ password │        host         │          │                │       │
+├──────────┴──┼──────────┴──────────┼─────────────────────┤          │                │       │
+│   origin    │                     │       origin        │ pathname │     search     │ hash  │
+├─────────────┴─────────────────────┴─────────────────────┴──────────┴────────────────┴───────┤
+│                                            href                                             │
+└─────────────────────────────────────────────────────────────────────────────────────────────┘
+(请忽略字符串中的空格，它们只是为了格式化)
+</code></pre>
+<!--Parsing the URL string using the WHATWG API:-->
+<p>利用WHATWG API解析一个URL字符串:</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL =
+  new URL(&#39;https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash&#39;);
+</code></pre>
+<p>在浏览器中，WHATWG <code>URL</code>在全局总是可用的，而在Node.js中，任何情况下打开
+或使用一个链接都必须事先引用&#39;url&#39;模块：<code>require(&#39;url&#39;).URL</code></p>
+<!--*Note*: In Web Browsers, the WHATWG `URL` class is a global that is always
+ available. In Node.js, however, the `URL` class must be accessed via
+require('url').URL`.-->
+<!--Parsing the URL string using the Legacy API:-->
+<p>通过Node.js提供的API解析一个URL:</p>
+<pre><code class="lang-js">const url = require(&#39;url&#39;);
+const myURL =
+  url.parse(&#39;https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash&#39;);
+</code></pre>
+<h2 id="the-whatwg-url-api">The WHATWG URL API</h2>
+<!-- YAML
+added: v7.0.0
+-->
+<h3 id="class-url">Class: URL</h3>
+<p>浏览器兼容的 <code>URL</code> 类，根据 WHATWG URL 标准实现。[解析URL的示例][]可以在标准本身里边找到。</p>
+<p><em>注意</em>: 根据浏览器的约定，<code>URL</code> 对象的所有属性都是在类的原型上实现为getter和setter，而不是作为对象本身的数据属性。因此，与[遗留的urlObjects][]不同，在 <code>URL</code> 对象的任何属性(例如 <code>delete myURL.protocol</code>，<code>delete myURL.pathname</code>等)上使用 <code>delete</code> 关键字没有任何效果，但仍返回 <code>true</code>。</p>
+<h4 id="constructor-new-url-input-base-">Constructor: new URL(input[, base])</h4>
+<ul>
+<li><code>input</code> {string} 要解析的输入URL</li>
+<li><code>base</code> {string|URL} 如果“input”是相对URL，则为要解析的基本URL。</li>
+</ul>
+<p>通过将<code>input</code>解析到<code>base</code>上创建一个新的<code>URL</code>对象。如果<code>base</code>是一个字符串，则解析方法与<code>new URL(base)</code>相同。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;/foo&#39;, &#39;https://example.org/&#39;);
+  // https://example.org/foo
+</code></pre>
+<p>如果<code>input</code>或<code>base</code>是无效URLs，将会抛出<code>TypeError</code>。请注意给定值将被强制转换为字符串。例如：</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL({ toString: () =&gt; &#39;https://example.org/&#39; });
+  // https://example.org/
+</code></pre>
+<p>存在于<code>input</code>主机名中的Unicode字符将被使用<a href="https://tools.ietf.org/html/rfc5891#section-4.4">Punycode</a>算法自动转换为ASCII。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://你好你好&#39;);
+  // https://xn--6qqa088eba/
+</code></pre>
+<p><em>Note</em>: This feature is only available if the <code>node</code> executable was compiled
+with <a href="intl.html#intl_options_for_building_node_js">ICU</a> enabled. If not, the domain names are passed through unchanged.</p>
+<h4 id="url-hash">url.hash</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的分段(hash)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/foo#bar&#39;);
+console.log(myURL.hash);
+  // 输出 #bar
+
+myURL.hash = &#39;baz&#39;;
+console.log(myURL.href);
+  // 输出 https://example.org/foo#baz
+</code></pre>
+<p>包含在赋给<code>hash</code>属性的值中的无效URL字符是[百分比编码][]。请注意选择哪些字符进行百分比编码可能与[url.parse()][]和[url.format()][]方法产生的不同。</p>
+<h4 id="url-host">url.host</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的主机(host)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org:81/foo&#39;);
+console.log(myURL.host);
+  // 输出 example.org:81
+
+myURL.host = &#39;example.com:82&#39;;
+console.log(myURL.href);
+  // 输出 https://example.com:82/foo
+</code></pre>
+<p>如果给<code>host</code>属性设置的值是无效值，那么该值将被忽略。</p>
+<h4 id="url-hostname">url.hostname</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的主机名(hostname)部分。 <code>url.host</code>和<code>url.hostname</code>之间的区别是<code>url.hostname</code><em>不</em> 包含端口。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org:81/foo&#39;);
+console.log(myURL.hostname);
+  // 输出 example.org
+
+myURL.hostname = &#39;example.com:82&#39;;
+console.log(myURL.href);
+  // 输出 https://example.com:81/foo
+</code></pre>
+<p>如果给<code>hostname</code>属性设置的值是无效值，那么该值将被忽略。</p>
+<h4 id="url-href">url.href</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置序列化的URL。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/foo&#39;);
+console.log(myURL.href);
+  // 输出 https://example.org/foo
+
+myURL.href = &#39;https://example.com/bar&#39;;
+console.log(myURL.href);
+  // 输出 https://example.com/bar
+</code></pre>
+<p>获取<code>href</code>属性的值等同于调用<a href="#url_url_tostring"><code>url.toString()</code></a>。</p>
+<p>将此属性的值设置为新值等同于<a href="#url_constructor_new_url_input_base"><code>new URL(value)</code></a>使用创建新的<code>URL</code>对象。<code>URL</code>对象的每个属性都将被修改。</p>
+<p>如果给<code>href</code>属性设置的值是无效URL，将会抛出<code>TypeError</code>。</p>
+<h4 id="url-origin">url.origin</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取只读序列化的URL orgin部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/foo/bar?baz&#39;);
+console.log(myURL.origin);
+  // 输出 https://example.org
+</code></pre>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const idnURL = new URL(&#39;https://你好你好&#39;);
+console.log(idnURL.origin);
+  // 输出 https://xn--6qqa088eba
+
+console.log(idnURL.hostname);
+  // 输出 xn--6qqa088eba
+</code></pre>
+<h4 id="url-password">url.password</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的密码(password)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://abc:xyz@example.com&#39;);
+console.log(myURL.password);
+  // 输出 xyz
+
+myURL.password = &#39;123&#39;;
+console.log(myURL.href);
+  // 输出 https://abc:123@example.com
+</code></pre>
+<p>包含在赋给<code>password</code>属性的值中的无效URL字符是[百分比编码][]。请注意选择哪些字符进行百分比编码可能与<a href="#url_url_parse_urlstring_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>和<a href="#url_url_format_urlobject"><code>url.format()</code></a>方法产生的不同。</p>
+<h4 id="url-pathname">url.pathname</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的路径(path)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/abc/xyz?123&#39;);
+console.log(myURL.pathname);
+  // 输出 /abc/xyz
+
+myURL.pathname = &#39;/abcdef&#39;;
+console.log(myURL.href);
+  // 输出 https://example.org/abcdef?123
+</code></pre>
+<p>包含在赋给<code>pathname</code>属性的值中的无效URL字符是[百分比编码][]。请注意选择哪些字符进行百分比编码可能与<a href="#url_url_parse_urlstring_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>和<a href="#url_url_format_urlobject"><code>url.format()</code></a>方法产生的不同。</p>
+<h4 id="url-port">url.port</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的端口(port)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org:8888&#39;);
+console.log(myURL.port);
+  // 输出 8888
+
+// 默认端口将自动转换为空字符
+// (HTTPS协议默认端口是443)
+myURL.port = &#39;443&#39;;
+console.log(myURL.port);
+  // 输出空字符
+console.log(myURL.href);
+  // 输出 https://example.org/
+
+myURL.port = 1234;
+console.log(myURL.port);
+  // 输出 1234
+console.log(myURL.href);
+  // 输出 https://example.org:1234/
+
+// 完全无效的端口字符串将被忽略
+myURL.port = &#39;abcd&#39;;
+console.log(myURL.port);
+  // 输出 1234
+
+// 开头的数字将会被当做端口数
+myURL.port = &#39;5678abcd&#39;;
+console.log(myURL.port);
+  // 输出 5678
+
+// 非整形数字将会被截取部分
+myURL.port = 1234.5678;
+console.log(myURL.port);
+  // 输出 1234
+
+// 超出范围的数字将被忽略
+myURL.port = 1e10;
+console.log(myURL.port);
+  // 输出 1234
+</code></pre>
+<p>端口值可以被设置为数字或包含数字的字符串，数字范围<code>0</code>~<code>65535</code>(包括)。为给定<code>protocol</code>的<code>URL</code>对象设置端口值将会导致<code>port</code>值变成空字符(<code>&#39;&#39;</code>)。</p>
+<p>如果给<code>port</code>属性设置的值是无效字符串，但如果字符串以数字开头，那么开头部位的数字将会被赋值给<code>port</code>。否则，包括如果数字超出上述要求的数字，将被忽略。</p>
+<h4 id="url-protocol">url.protocol</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的协议(protocol)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org&#39;);
+console.log(myURL.protocol);
+  // 输出 https:
+
+myURL.protocol = &#39;ftp&#39;;
+console.log(myURL.href);
+  // 输出 ftp://example.org/
+</code></pre>
+<p>如果给<code>protocol</code>属性设置的值是无效值，那么该值将被忽略。</p>
+<h4 id="url-search">url.search</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的序列化查询(query)部分部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/abc?123&#39;);
+console.log(myURL.search);
+  // 输出 ?123
+
+myURL.search = &#39;abc=xyz&#39;;
+console.log(myURL.href);
+  // 输出 https://example.org/abc?abc=xyz
+</code></pre>
+<p>任何出现在赋给<code>search</code>属性值中的无效URL字符将被[百分比编码][]。请注意选择哪些字符进行百分比编码可能与<a href="#url_url_parse_urlstring_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>和<a href="#url_url_format_urlobject"><code>url.format()</code></a>方法产生的不同。</p>
+<h4 id="url-searchparams">url.searchParams</h4>
+<ul>
+<li>{URLSearchParams}</li>
+</ul>
+<p>获取表示URL查询参数的<a href="#url_class_urlsearchparams"><code>URLSearchParams</code></a>对象。该属性是只读的；使用<a href="#url_url_search"><code>url.search</code></a>设置来替换URL的整个查询参数。请打开<a href="#url_class_urlsearchparams"><code>URLSearchParams</code></a>文档来查看更多细节。</p>
+<h4 id="url-username">url.username</h4>
+<ul>
+<li>{string}</li>
+</ul>
+<p>获取及设置URL的用户名(username)部分。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://abc:xyz@example.com&#39;);
+console.log(myURL.username);
+  // 输出 abc
+
+myURL.username = &#39;123&#39;;
+console.log(myURL.href);
+  // 输出 https://123:xyz@example.com/
+</code></pre>
+<p>任何出现在赋给<code>username</code>属性值中的无效URL字符将被[百分比编码][]。请注意选择哪些字符进行百分比编码可能与<a href="#url_url_parse_urlstring_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>和<a href="#url_url_format_urlobject"><code>url.format()</code></a>方法产生的不同。</p>
+<h4 id="url-tostring-">url.toString()</h4>
+<ul>
+<li>返回: {string}</li>
+</ul>
+<p>在<code>URL</code>对象上调用<code>toString()</code>方法将返回序列化的URL。返回值与<a href="#url_url_href"><code>url.href</code></a>和<a href="#url_url_tojson"><code>url.toJSON()</code></a>的相同。</p>
+<p>由于需要符合标准，此方法不允许用户自定义URL的序列化过程。 如果需要更大灵活性，<a href="#url_url_format_url_options"><code>require(&#39;url&#39;).format()</code></a>可能更合适。</p>
+<h4 id="url-tojson-">url.toJSON()</h4>
+<ul>
+<li><p>Returns: {string}</p>
+</li>
+<li><p>返回: {string}</p>
+</li>
+</ul>
+<p>在<code>URL</code>对象上调用<code>toJSON()</code>方法将返回序列化的URL。返回值与<a href="#url_url_href"><code>url.href</code></a>和<a href="#url_url_tostring"><code>url.toString()</code></a>的相同。</p>
+<p>当<code>URL</code>对象使用<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify"><code>JSON.stringify()</code></a>序列化时将自动调用该方法。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURLs = [
+  new URL(&#39;https://www.example.com&#39;),
+  new URL(&#39;https://test.example.org&#39;)
+];
+console.log(JSON.stringify(myURLs));
+  // 输出 [&quot;https://www.example.com/&quot;,&quot;https://test.example.org/&quot;]
+</code></pre>
+<h3 id="class-urlsearchparams">Class: URLSearchParams</h3>
+<!-- YAML
+新增于: v7.5.0
+-->
+<p><code>URLSearchParams</code>API接口提供对<code>URL</code>query部分的读写权限。<code>URLSearchParams</code>类也能够与以下四个构造函数中的任意一个单独使用。</p>
+<p>WHATWG <code>URLSearchParams</code>接口和<a href="querystring.html"><code>querystring</code></a>模块有相似的目的，但是<a href="querystring.html"><code>querystring</code></a>模块的目的更加通用，因为它可以定制分隔符（<code>＆</code>和<code>=</code>）。但另一方面，这个API是专门为URL查询字符串而设计的。</p>
+<pre><code class="lang-js">const { URL, URLSearchParams } = require(&#39;url&#39;);
+
+const myURL = new URL(&#39;https://example.org/?abc=123&#39;);
+console.log(myURL.searchParams.get(&#39;abc&#39;));
+// 输出 123
+
+myURL.searchParams.append(&#39;abc&#39;, &#39;xyz&#39;);
+console.log(myURL.href);
+// 输出 https://example.org/?abc=123&amp;abc=xyz
+
+myURL.searchParams.delete(&#39;abc&#39;);
+myURL.searchParams.set(&#39;a&#39;, &#39;b&#39;);
+console.log(myURL.href);
+// 输出 https://example.org/?a=b
+
+const newSearchParams = new URLSearchParams(myURL.searchParams);
+// 上面的代码等同于
+// const newSearchParams = new URLSearchParams(myURL.search);
+
+newSearchParams.append(&#39;a&#39;, &#39;c&#39;);
+console.log(myURL.href);
+// 输出 https://example.org/?a=b
+console.log(newSearchParams.toString());
+// 输出 a=b&amp;a=c
+
+// newSearchParams.toString() 被隐式调用
+myURL.search = newSearchParams;
+console.log(myURL.href);
+// 输出 https://example.org/?a=b&amp;a=c
+newSearchParams.delete(&#39;a&#39;);
+console.log(myURL.href);
+// 输出 https://example.org/?a=b&amp;a=c
+</code></pre>
+<h4 id="constructor-new-urlsearchparams-">Constructor: new URLSearchParams()</h4>
+<p>实例化一个新的空的<code>URLSearchParams</code>对象。</p>
+<h4 id="constructor-new-urlsearchparams-string-">Constructor: new URLSearchParams(string)</h4>
+<ul>
+<li><code>string</code> {string} 一个查询字符串</li>
+</ul>
+<p>将<code>string</code>解析成一个查询字符串, 并且使用它来实例化一个新的<code>URLSearchParams</code>对象.  如果<code>string</code>以<code>&#39;?&#39;</code>打头,则<code>&#39;?&#39;</code>将会被忽略.</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+let params;
+
+params = new URLSearchParams(&#39;user=abc&amp;query=xyz&#39;);
+console.log(params.get(&#39;user&#39;));
+  // 输出 &#39;abc&#39;
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=xyz&#39;
+
+params = new URLSearchParams(&#39;?user=abc&amp;query=xyz&#39;);
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=xyz&#39;
+</code></pre>
+<h4 id="constructor-new-urlsearchparams-obj-">Constructor: new URLSearchParams(obj)</h4>
+<!-- YAML
+added: v7.10.0
+-->
+<ul>
+<li><code>obj</code> {Object} 一个表示键值对集合的对象</li>
+</ul>
+<p>通过使用查询哈希映射实例化一个新的<code>URLSearchParams</code>对象，<code>obj</code>的每一个属性的键和值将被强制转换为字符串。</p>
+<p><em>请注意</em>: 和 <a href="querystring.html"><code>querystring</code></a> 模块不同的是, 在数组的形式中，重复的键是不允许的。数组使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString"><code>array.toString()</code></a>进行字符串化时，只需用逗号连接所有的数组元素即可。</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+const params = new URLSearchParams({
+  user: &#39;abc&#39;,
+  query: [&#39;first&#39;, &#39;second&#39;]
+});
+console.log(params.getAll(&#39;query&#39;));
+  // 输出 [ &#39;first,second&#39; ]
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=first%2Csecond&#39;
+</code></pre>
+<h4 id="constructor-new-urlsearchparams-iterable-">Constructor: new URLSearchParams(iterable)</h4>
+<!-- YAML
+added: v7.10.0
+-->
+<ul>
+<li><code>iterable</code> {Iterable} 一个元素时键值对的迭代对象</li>
+</ul>
+<p>以一种类似于<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a>的构造函数的迭代映射方式实例化一个新的<code>URLSearchParams</code>对象。<code>iterable</code>可以是一个数组或者任何迭代对象。这就意味着<code>iterable</code>能够使另一个<code>URLSearchParams</code>，这种情况下，构造函数将简单地根据提供的<code>URLSearchParams</code>创建一个克隆<code>URLSearchParams</code>。<code>iterable</code>的元素是键值对，并且其本身也可以是任何迭代对象。</p>
+<p>允许重复的键。</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+let params;
+
+// Using an array
+params = new URLSearchParams([
+  [&#39;user&#39;, &#39;abc&#39;],
+  [&#39;query&#39;, &#39;first&#39;],
+  [&#39;query&#39;, &#39;second&#39;]
+]);
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=first&amp;query=second&#39;
+
+// 使用Map对象
+const map = new Map();
+map.set(&#39;user&#39;, &#39;abc&#39;);
+map.set(&#39;query&#39;, &#39;xyz&#39;);
+params = new URLSearchParams(map);
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=xyz&#39;
+
+// 使用generator函数
+function* getQueryPairs() {
+  yield [&#39;user&#39;, &#39;abc&#39;];
+  yield [&#39;query&#39;, &#39;first&#39;];
+  yield [&#39;query&#39;, &#39;second&#39;];
+}
+params = new URLSearchParams(getQueryPairs());
+console.log(params.toString());
+  // 输出 &#39;user=abc&amp;query=first&amp;query=second&#39;
+
+// 每个键值对必须有两个元素
+new URLSearchParams([
+  [&#39;user&#39;, &#39;abc&#39;, &#39;error&#39;]
+]);
+  // 抛出 TypeError [ERR_INVALID_TUPLE]:
+  //        每一个键值对必须是迭代的[键，值]元组
+</code></pre>
+<h4 id="urlsearchparams-append-name-value-">urlSearchParams.append(name, value)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+<li><code>value</code> {string}</li>
+</ul>
+<p>在查询字符串中附加一个新的键值对。</p>
+<h4 id="urlsearchparams-delete-name-">urlSearchParams.delete(name)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+</ul>
+<p>删除所有键为<code>name</code>的键值对。</p>
+<h4 id="urlsearchparams-entries-">urlSearchParams.entries()</h4>
+<ul>
+<li><p>Returns: {Iterator}</p>
+</li>
+<li><p>返回: {Iterator}
+在查询中的每个键值对上返回一个ES6迭代器。 迭代器的每一项都是一个JavaScript数组。 Array的第一个项是键<code>name</code>，Array的第二个项是值<code>value</code>。</p>
+</li>
+</ul>
+<p>别名为<a href="#url_urlsearchparams_iterator"><code>urlSearchParams[@@iterator]()</code></a>.</p>
+<h4 id="urlsearchparams-foreach-fn-thisarg-">urlSearchParams.forEach(fn[, thisArg])</h4>
+<ul>
+<li><code>fn</code> {Function} 在查询字符串中的每个键值对的调用函数。</li>
+<li><code>thisArg</code> {Object} 当<code>fn</code>调用时，被用作<code>this</code>值的对象</li>
+</ul>
+<p>在查询字符串中迭代每个键值对，并调用给定的函数。</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://example.org/?a=b&amp;c=d&#39;);
+myURL.searchParams.forEach((value, name, searchParams) =&gt; {
+  console.log(name, value, myURL.searchParams === searchParams);
+});
+  // 输出:
+  // a b true
+  // c d true
+</code></pre>
+<h4 id="urlsearchparams-get-name-">urlSearchParams.get(name)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+<li>返回: {string} ，如果没有键值对对应给定的<code>name</code>则返回<code>null</code>。</li>
+</ul>
+<p>返回键是<code>name</code>的第一个键值对的值。如果没有对应的键值对，则返回<code>null</code>。</p>
+<h4 id="urlsearchparams-getall-name-">urlSearchParams.getAll(name)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+<li>返回: {Array}</li>
+</ul>
+<p>返回键是<code>name</code>的所有键值对的值，如果没有满足条件的键值对，则返回一个空的数组。</p>
+<h4 id="urlsearchparams-has-name-">urlSearchParams.has(name)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+<li>返回: {boolean}</li>
+</ul>
+<p>如果存在至少一对键是name的键值对则返回 <code>true</code>。</p>
+<h4 id="urlsearchparams-keys-">urlSearchParams.keys()</h4>
+<ul>
+<li>返回: {Iterator}</li>
+</ul>
+<p>在每一个键值对上返回一个键的ES6迭代器。</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+const params = new URLSearchParams(&#39;foo=bar&amp;foo=baz&#39;);
+for (const name of params.keys()) {
+  console.log(name);
+}
+  // 输出:
+  // foo
+  // foo
+</code></pre>
+<h4 id="urlsearchparams-set-name-value-">urlSearchParams.set(name, value)</h4>
+<ul>
+<li><code>name</code> {string}</li>
+<li><code>value</code> {string}</li>
+</ul>
+<p>将<code>URLSearchParams</code>对象中与<code>name</code>相对应的值设置为<code>value</code>。如果已经存在键为<code>name</code>的键值对，将第一对的值设为<code>value</code>并且删除其他对。如果不存在，则将此键值对附加在查询字符串后。</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+
+const params = new URLSearchParams();
+params.append(&#39;foo&#39;, &#39;bar&#39;);
+params.append(&#39;foo&#39;, &#39;baz&#39;);
+params.append(&#39;abc&#39;, &#39;def&#39;);
+console.log(params.toString());
+  // 输出 foo=bar&amp;foo=baz&amp;abc=def
+
+params.set(&#39;foo&#39;, &#39;def&#39;);
+params.set(&#39;xyz&#39;, &#39;opq&#39;);
+console.log(params.toString());
+  // 输出 foo=def&amp;abc=def&amp;xyz=opq
+</code></pre>
+<h4 id="urlsearchparams-sort-">urlSearchParams.sort()</h4>
+<!-- YAML
+added: v7.7.0
+-->
+<p>按现有名称就地排列所有的名称-值对。使用[稳定排序算法][]完成排序，因此保留具有相同名称的名称-值对之间的相对顺序。</p>
+<p>特别地，该方法可以用来增加缓存命中。</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+const params = new URLSearchParams(&#39;query[]=abc&amp;type=search&amp;query[]=123&#39;);
+params.sort();
+console.log(params.toString());
+  // Prints query%5B%5D=abc&amp;query%5B%5D=123&amp;type=search
+</code></pre>
+<h4 id="urlsearchparams-tostring-">urlSearchParams.toString()</h4>
+<ul>
+<li>返回: {string}</li>
+</ul>
+<p>返回查询参数序列化后的字符串，必要时存在百分号编码字符。</p>
+<h4 id="urlsearchparams-values-">urlSearchParams.values()</h4>
+<ul>
+<li>Returns: {Iterator}</li>
+</ul>
+<p>在每一个键值对上返回一个值的ES6迭代器。</p>
+<h4 id="urlsearchparams-iterator-">urlSearchParams[@@iterator]()</h4>
+<ul>
+<li>返回: {Iterator}</li>
+</ul>
+<p>返回在查询字符串中每一个键值对的ES6迭代器。迭代器的每一个项都是一个JavaScript数组。数组中的第一个项是<code>name</code>，第二个项是<code>value</code>。</p>
+<p>别名：<a href="#url_urlsearchparams_entries"><code>urlSearchParams.entries()</code></a>.</p>
+<pre><code class="lang-js">const { URLSearchParams } = require(&#39;url&#39;);
+const params = new URLSearchParams(&#39;foo=bar&amp;xyz=baz&#39;);
+for (const [name, value] of params) {
+  console.log(name, value);
+}
+  // 输出:
+  // foo bar
+  // xyz baz
+</code></pre>
+<h3 id="url-domaintoascii-domain-">url.domainToASCII(domain)</h3>
+<!-- YAML
+added: v7.4.0
+-->
+<ul>
+<li><code>domain</code> {string}</li>
+<li>返回: {string}</li>
+</ul>
+<p>返回<a href="https://tools.ietf.org/html/rfc5891#section-4.4">Punycode</a> ASCII序列化的<code>domain</code>. 如果<code>domain</code>是无效域名，将返回空字符串。</p>
+<p>它执行的是<a href="#url_url_domaintounicode_domain"><code>url.domainToUnicode()</code></a>的逆运算。</p>
+<pre><code class="lang-js">const url = require(&#39;url&#39;);
+console.log(url.domainToASCII(&#39;español.com&#39;));
+  // 输出 xn--espaol-zwa.com
+console.log(url.domainToASCII(&#39;中文.com&#39;));
+  // 输出 xn--fiq228c.com
+console.log(url.domainToASCII(&#39;xn--iñvalid.com&#39;));
+  // 输出空字符串
+</code></pre>
+<h3 id="url-domaintounicode-domain-">url.domainToUnicode(domain)</h3>
+<!-- YAML
+added: v7.4.0
+-->
+<ul>
+<li><code>domain</code> {string}</li>
+<li>返回: {string}</li>
+</ul>
+<p>返回Unicode序列化的<code>domain</code>. 如果<code>domain</code>是无效域名，将返回空字符串。</p>
+<p>它执行的是<a href="#url_url_domaintoascii_domain"><code>url.domainToASCII()</code></a>的逆运算。</p>
+<pre><code class="lang-js">const url = require(&#39;url&#39;);
+console.log(url.domainToUnicode(&#39;xn--espaol-zwa.com&#39;));
+  // 输出 español.com
+console.log(url.domainToUnicode(&#39;xn--fiq228c.com&#39;));
+  // 输出 中文.com
+console.log(url.domainToUnicode(&#39;xn--iñvalid.com&#39;));
+  // 输出空字符串
+</code></pre>
+<h3 id="url-format-url-options-">url.format(URL[, options])</h3>
+<!-- YAML
+added: v7.6.0
+-->
+<ul>
+<li><code>URL</code> {URL} 一个<a href="#url_the_whatwg_url_api">WHATWG URL</a>对象</li>
+<li><code>options</code> {Object}<ul>
+<li><code>auth</code> {boolean} 如果序列化的URL字符串应该包含用户名和密码为<code>true</code>，否则为<code>false</code>。默认为<code>true</code>。</li>
+<li><code>fragment</code> {boolean} 如果序列化的URL字符串应该包含分段为<code>true</code>，否则为<code>false</code>。默认为<code>true</code>。</li>
+<li><code>search</code> {boolean} 如果序列化的URL字符串应该包含搜索查询为<code>true</code>，否则为<code>false</code>。默认为<code>true</code>。</li>
+<li><code>unicode</code> {boolean} <code>true</code> 如果出现在URL字符串主机元素里的Unicode字符应该被直接编码而不是使用Punycode编码为<code>true</code>，默认为<code>false</code>。</li>
+</ul>
+</li>
+</ul>
+<p>返回一个<a href="#url_the_whatwg_url_api">WHATWG URL</a>对象的可自定义序列化的URL字符串表达。</p>
+<p>虽然URL对象的<code>toString()</code>方法和<code>href</code>属性都可以返回URL的序列化的字符串。然而，两者都不可以被自定义。而<code>url.format(URL[, options])</code>方法允许输出的基本自定义。</p>
+<p>例如：</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://a:b@你好你好?abc#foo&#39;);
+
+console.log(myURL.href);
+  // 输出 https://a:b@xn--6qqa088eba/?abc#foo
+
+console.log(myURL.toString());
+  // 输出 https://a:b@xn--6qqa088eba/?abc#foo
+
+console.log(url.format(myURL, { fragment: false, unicode: true, auth: false }));
+  // 输出 &#39;https://你好你好/?abc&#39;
+</code></pre>
+<h2 id="legacy-url-api">Legacy URL API</h2>
+<p>在遗留的API中，空格(<code>&#39; &#39;</code>)及以下字符将自动转义为URL对象的属性：</p>
+<pre><code class="lang-txt">&lt; &gt; &quot; ` \r \n \t { } | \ ^ &#39;
+</code></pre>
+<p>例如，ASCII空格字符(<code>&#39; &#39;</code>)被编码为<code>%20</code>.ASCII斜杠(<code>/</code>)字符被编码为<code>%3C</code>。</p>
+<h3 id="legacy-urlobject">Legacy urlObject</h3>
+<p>遗留的urlObject (<code>require(&#39;url&#39;).Url</code>)由<code>url.parse()</code>函数创建并返回。</p>
+<h4 id="urlobject-auth">urlObject.auth</h4>
+<p><code>auth</code> 属性是 URL 的用户名与密码部分。
+该字符串跟在 <code>protocol</code> 和双斜杠（如果有）的后面，排在 <code>host</code> 部分的前面且被一个 ASCII 的 at 符号（<code>@</code>）分隔。
+该字符的格式为 <code>{username}[:{password}]</code>，<code>[:{password}]</code> 部分是可选的。</p>
+<p>例如：<code>&#39;user:pass&#39;</code></p>
+<h4 id="urlobject-hash">urlObject.hash</h4>
+<p><code>hash</code> 属性包含 URL 的碎片部分，包括开头的 ASCII 哈希字符（<code>#</code>）。</p>
+<p>例如：<code>&#39;#hash&#39;</code></p>
+<h4 id="urlobject-host">urlObject.host</h4>
+<p><code>host</code> 属性是 URL 的完整的小写的主机部分，包括 <code>port</code>（如果有）。</p>
+<p>例如：<code>&#39;sub.host.com:8080&#39;</code></p>
+<h4 id="urlobject-hostname">urlObject.hostname</h4>
+<p><code>hostname</code> 属性是 <code>host</code> 组成部分排除 <code>port</code> 之后的小写的主机名部分。</p>
+<p>例如：<code>&#39;sub.host.com&#39;</code></p>
+<h4 id="urlobject-href">urlObject.href</h4>
+<p><code>href</code> 属性是解析后的完整的 URL 字符串，<code>protocol</code> 和 <code>host</code> 都会被转换为小写的。</p>
+<p>例如：<code>&#39;http://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash&#39;</code></p>
+<h4 id="urlobject-path">urlObject.path</h4>
+<p><code>path</code> 属性是一个 <code>pathname</code> 与 <code>search</code> 组成部分的串接。</p>
+<p>例如：<code>&#39;/p/a/t/h?query=string&#39;</code></p>
+<p>不会对 <code>path</code> 执行解码。</p>
+<h4 id="urlobject-pathname">urlObject.pathname</h4>
+<p><code>pathname</code> 属性包含 URL 的整个路径部分。
+它跟在 <code>host</code> （包括 <code>port</code>）后面，排在 <code>query</code> 或 <code>hash</code> 组成部分的前面且被 ASCII 问号（<code>?</code>）或哈希字符（<code>#</code>）分隔。</p>
+<p>例如：<code>&#39;/p/a/t/h&#39;</code></p>
+<p>不会对路径字符串执行解码。</p>
+<h4 id="urlobject-port">urlObject.port</h4>
+<p><code>port</code> 属性是 <code>host</code> 组成部分中的数值型的端口部分。</p>
+<p>例如：<code>&#39;8080&#39;</code></p>
+<h4 id="urlobject-protocol">urlObject.protocol</h4>
+<p><code>protocol</code> 属性表明 URL 的小写的协议体制。</p>
+<p>例如：<code>&#39;http:&#39;</code></p>
+<h4 id="urlobject-query">urlObject.query</h4>
+<p><code>query</code> 属性是不含开头 ASCII 问号（<code>?</code>）的查询字符串，或一个被 <a href="querystring.html"><code>querystring</code></a> 模块的 <code>parse()</code> 方法返回的对象。
+<code>query</code> 属性是一个字符串还是一个对象是由传入 <code>url.parse()</code> 的 <code>parseQueryString</code> 参数决定的。</p>
+<p>例如：<code>&#39;query=string&#39;</code> or <code>{&#39;query&#39;: &#39;string&#39;}</code></p>
+<p>如果返回一个字符串，则不会对查询字符串执行解码。
+如果返回一个对象，则键和值都会被解码。</p>
+<h4 id="urlobject-search">urlObject.search</h4>
+<p><code>search</code> 属性包含 URL 的整个查询字符串部分，包括开头的 ASCII 问号字符（<code>?</code>）。</p>
+<p>例如：<code>&#39;?query=string&#39;</code></p>
+<p>不会对查询字符串执行解码。</p>
+<h4 id="urlobject-slashes">urlObject.slashes</h4>
+<p><code>slashes</code> 属性是一个 <code>boolean</code>，如果 <code>protocol</code> 中的冒号后面跟着两个 ASCII 斜杠字符（<code>/</code>），则值为 <code>true</code>。</p>
+<h3 id="url-format-urlobject-">url.format(urlObject)</h3>
+<!-- YAML
+added: v0.1.25
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/7234
+    description: URLs with a `file:` scheme will now always use the correct
+                 number of slashes regardless of `slashes` option. A false-y
+                 `slashes` option with no protocol is now also respected at all
+                 times.
+-->
+<ul>
+<li><code>urlObject</code> {Object|string} 一个 URL 对象（就像 <code>url.parse()</code> 返回的）。
+如果是一个字符串，则通过 <code>url.parse()</code> 转换为一个对象。</li>
+</ul>
+<p><code>url.format()</code> 方法返回一个从 <code>urlObject</code> 格式化后的 URL 字符串。</p>
+<p>如果 <code>urlObject</code> 不是一个对象或字符串，则 <code>url.parse()</code> 抛出 <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a>。</p>
+<p>格式化过程如下：</p>
+<ul>
+<li>创建一个新的空字符串 <code>result</code>。</li>
+<li>如果 <code>urlObject.protocol</code> 是一个字符串，则它会被原样添加到 <code>result</code>。</li>
+<li>否则，如果 <code>urlObject.protocol</code> 不是 <code>undefined</code> 也不是一个字符串，则抛出 <a href="errors.html#errors_class_error"><code>Error</code></a>。</li>
+<li>对于不是以 <code>:</code> 结束的 <code>urlObject.protocol</code>，<code>:</code> 会被添加到 <code>result</code>。</li>
+<li>如果以下条件之一为真，则 <code>//</code> 会被添加到 <code>result</code>：<ul>
+<li><code>urlObject.slashes</code> 属性为真；</li>
+<li><code>urlObject.protocol</code> 以 <code>http</code>、<code>https</code>、<code>ftp</code>、<code>gopher</code> 或 <code>file</code> 开头；</li>
+</ul>
+</li>
+<li>如果 <code>urlObject.auth</code> 属性的值为真，且 <code>urlObject.host</code> 或 <code>urlObject.hostname</code> 不为 <code>undefined</code>，则 <code>urlObject.auth</code> 会被添加到 <code>result</code>，且后面带上 <code>@</code>。</li>
+<li>如果 <code>urlObject.host</code> 属性为 <code>undefined</code>，则：<ul>
+<li>如果 <code>urlObject.hostname</code> 是一个字符串，则它会被添加到 <code>result</code>。</li>
+<li>否则，如果 <code>urlObject.hostname</code> 不是 <code>undefined</code> 也不是一个字符串，则抛出 <a href="errors.html#errors_class_error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.port</code> 属性的值为真，且 <code>urlObject.hostname</code> 不为 <code>undefined</code>：<ul>
+<li><code>:</code> 会被添加到 <code>result</code>。</li>
+<li><code>urlObject.port</code> 的值会被添加到 <code>result</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.host</code> 属性的值为真，则 <code>urlObject.host</code> 的值会被添加到 <code>result</code>。</li>
+<li>如果 <code>urlObject.pathname</code> 属性是一个字符串且不是一个空字符串：<ul>
+<li>如果 <code>urlObject.pathname</code> 不是以 <code>/</code> 开头，则 <code>/</code> 会被添加到 <code>result</code>。</li>
+<li><code>urlObject.pathname</code> 的值会被添加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.pathname</code> 不是 <code>undefined</code> 也不是一个字符串，则抛出 <a href="errors.html#errors_class_error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.search</code> 属性为 <code>undefined</code> 且 <code>urlObject.query</code> 属性是一个 <code>Object</code>，则 <code>?</code> 会被添加到 <code>result</code>，后面跟上把 <code>urlObject.query</code> 的值传入 <a href="querystring.html"><code>querystring</code></a> 模块的 <code>stringify()</code> 方法的调用结果。</li>
+<li>否则，如果 <code>urlObject.search</code> 是一个字符串：<ul>
+<li>如果 <code>urlObject.search</code> 的值不是以 <code>?</code> 开头，则 <code>?</code> 会被添加到 <code>result</code>。</li>
+<li><code>urlObject.search</code> 的值会被添加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.search</code> 不是 <code>undefined</code> 也不是一个字符串，则抛出 <a href="errors.html#errors_class_error"><code>Error</code></a>。</li>
+<li>如果 <code>urlObject.hash</code> 属性是一个字符串：<ul>
+<li>如果 <code>urlObject.hash</code> 的值不是以 <code>#</code> 开头，则 <code>#</code> 会被添加到 <code>result</code>。</li>
+<li><code>urlObject.hash</code> 的值会被添加到 <code>result</code>。</li>
+</ul>
+</li>
+<li>否则，如果 <code>urlObject.hash</code> 属性不是 <code>undefined</code> 也不是一个字符串，则抛出 <a href="errors.html#errors_class_error"><code>Error</code></a>。</li>
+<li>返回 <code>result</code>。</li>
+</ul>
+<h3 id="url-parse-urlstring-parsequerystring-slashesdenotehost-">url.parse(urlString[, parseQueryString[, slashesDenoteHost]])</h3>
+<!-- YAML
+added: v0.1.25
+-->
+<ul>
+<li><code>urlString</code> {string} 要解析的 URL 字符串。</li>
+<li><code>parseQueryString</code> {boolean} 如果为 <code>true</code>，则 <code>query</code> 属性总会通过 <a href="querystring.html"><code>querystring</code></a> 模块的 <code>parse()</code> 方法生成一个对象。
+如果为 <code>false</code>，则返回的 URL 对象上的 <code>query</code> 属性会是一个未解析、未解码的字符串。
+默认为 <code>false</code>。</li>
+<li><code>slashesDenoteHost</code> {boolean} 如果为 <code>true</code>，则 <code>//</code> 之后至下一个 <code>/</code> 之前的字符串会被解析作为 <code>host</code>。
+例如，<code>//foo/bar</code> 会被解析为 <code>{host: &#39;foo&#39;, pathname: &#39;/bar&#39;}</code> 而不是 <code>{pathname: &#39;//foo/bar&#39;}</code>。
+默认为 <code>false</code>。</li>
+</ul>
+<p><code>url.parse()</code> 方法会解析一个 URL 字符串并返回一个 URL 对象。</p>
+<p>如果<code>urlString</code>不是字符串将会抛出<code>TypeError</code>。</p>
+<p>如果<code>auth</code>属性存在但无法编码则抛出<code>URIError</code>。</p>
+<h3 id="url-resolve-from-to-">url.resolve(from, to)</h3>
+<!-- YAML
+added: v0.1.25
+changes:
+  - version: v6.6.0
+    pr-url: https://github.com/nodejs/node/pull/8215
+    description: The `auth` fields are now kept intact when `from` and `to`
+                 refer to the same host.
+  - version: v6.5.0, v4.6.2
+    pr-url: https://github.com/nodejs/node/pull/8214
+    description: The `port` field is copied correctly now.
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/1480
+    description: The `auth` fields is cleared now the `to` parameter
+                 contains a hostname.
+-->
+<ul>
+<li><code>from</code> {string} 解析时相对的基本 URL。</li>
+<li><code>to</code> {string} 要解析的超链接 URL。</li>
+</ul>
+<p><code>url.resolve()</code> 方法会以一种 Web 浏览器解析超链接的方式把一个目标 URL 解析成相对于一个基础 URL。</p>
+<p>例子：</p>
+<pre><code class="lang-js">const url = require(&#39;url&#39;);
+url.resolve(&#39;/one/two/three&#39;, &#39;four&#39;);         // &#39;/one/two/four&#39;
+url.resolve(&#39;http://example.com/&#39;, &#39;/one&#39;);    // &#39;http://example.com/one&#39;
+url.resolve(&#39;http://example.com/one&#39;, &#39;/two&#39;); // &#39;http://example.com/two&#39;
+</code></pre>
+<p><a id="whatwg-percent-encoding"></a></p>
+<h2 id="percent-encoding-in-urls">Percent-Encoding in URLs</h2>
+<p>允许URL只包含一定范围的字符。 任何超出该范围的字符都必须进行编码。 如何对这些字符进行编码，以及哪些字符要编码完全取决于字符在URL结构内的位置。</p>
+<h3 id="legacy-api">Legacy API</h3>
+<p>在遗留的API中，空格(<code>&#39; &#39;</code>)及以下字符将自动转义为URL对象的属性：</p>
+<pre><code class="lang-txt">&lt; &gt; &quot; ` \r \n \t { } | \ ^ &#39;
+</code></pre>
+<p>例如，ASCII空格字符(<code>&#39; &#39;</code>)被编码为<code>%20</code>.ASCII斜杠(<code>/</code>)字符被编码为<code>%3C</code>。</p>
+<h3 id="whatwg-api">WHATWG API</h3>
+<p><a href="https://url.spec.whatwg.org/">WHATWG URL Standard</a>使用比遗留的API更具选择性和更精细的方法来选择使用的编码字符。</p>
+<p>WHATWG算法定义了三个“百分比编码集”，它们描述了必须进行百分编码的字符范围：</p>
+<ul>
+<li><p><em>C0 control percent-encode set(C0控制百分比编码集)</em> 包括范围在U+0000 ~ U+001F（含）的代码点及大于U+007E的所有代码点。</p>
+</li>
+<li><p><em>path percent-encode set(路径百分比编码集)</em> 包括 <em>C0 control percent-encode set(C0控制百分比编码集)</em> 的代码点 及 U+0020, U+0022, U+0023, U+003C, U+003E, U+003F, U+0060, U+007B, 和 U+007D 的代码点。</p>
+</li>
+<li><p><em>userinfo encode set(用户信息编码集)</em> 包括 <em>path percent-encode set(路径百分比编码集)</em> 的代码点 及 U+002F, U+003A, U+003B, U+003D, U+0040, U+005B, U+005C, U+005D, U+005E, 和 U+007C 的代码点。</p>
+</li>
+</ul>
+<p><em>userinfo percent-encode set(用户信息百分比编码集)</em> 专门用于用户名和密码部分的编码。<em>path percent-encode set(路径百分比编码集)</em> 用于大多数URL的路径部分编码。<em>C0 control percent-encode set(C0控制百分比编码集)</em> 则用于所有其他情况的编码，特别地包括URL的分段部分，特殊条件下也包括主机及路径部分。</p>
+<p>当主机名中出现非ASCII字符时，主机名将使用<a href="https://tools.ietf.org/html/rfc5891#section-4.4">Punycode</a>算法进行编码。然而，请注意，主机名<em>可能同时</em> 包含Punycode编码和百分比编码的字符。例如：</p>
+<pre><code class="lang-js">const { URL } = require(&#39;url&#39;);
+const myURL = new URL(&#39;https://%CF%80.com/foo&#39;);
+console.log(myURL.href);
+  // 输出 https://xn--1xa.com/foo
+console.log(myURL.origin);
+  // 输出 https://π.com
+</code></pre>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

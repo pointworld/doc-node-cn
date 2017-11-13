@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-debugger">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="debugger">
+            <div id="apicontent">
+                <h1 id="debugger">Debugger</h1>
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<!-- type=misc -->
+<p>Node.js 包含一个进程外的调试工具，可以通过一个基于 TCP 协议且内置的调试客户端访问。
+要使用它，需要以 <code>inspect</code> 参数启动 Node.js，并带上需要调试的脚本的路径；然后会出现一个提示，表明已成功启动调试器：</p>
+<pre><code class="lang-txt">$ node inspect myscript.js
+&lt; Debugger listening on ws://127.0.0.1:9229/80e7a814-7cd3-49fb-921a-2e02228cd5ba
+&lt; For help see https://nodejs.org/en/docs/inspector
+&lt; Debugger attached.
+Break on start in myscript.js:1
+&gt; 1 (function (exports, require, module, __filename, __dirname) { global.x = 5;
+  2 setTimeout(() =&gt; {
+  3   console.log(&#39;world&#39;);
+debug&gt;
+</code></pre>
+<p>Node.js 的调试器客户端还未支持全部特性，但可以做些简单的步骤和检测。</p>
+<p>在脚本的源代码中插入 <code>debugger;</code> 语句，则会在代码的那个位置启用一个断点：</p>
+<!-- eslint-disable no-debugger -->
+<pre><code class="lang-js">// myscript.js
+global.x = 5;
+setTimeout(() =&gt; {
+  debugger;
+  console.log(&#39;世界&#39;);
+}, 1000);
+console.log(&#39;你好&#39;);
+</code></pre>
+<p>一旦运行调试器，则在第 3 行会出现一个断点：</p>
+<pre><code>$ node inspect myscript.js
+&lt; Debugger listening on ws://127.0.0.1:9229/80e7a814-7cd3-49fb-921a-2e02228cd5ba
+&lt; For help see https://nodejs.org/en/docs/inspector
+&lt; Debugger attached.
+Break on start in myscript.js:1
+&gt; 1 (function (exports, require, module, __filename, __dirname) { global.x = 5;
+  2 setTimeout(() =&gt; {
+  3   debugger;
+debug&gt; cont
+&lt; 你好
+break in myscript.js:3
+  1 (function (exports, require, module, __filename, __dirname) { global.x = 5;
+  2 setTimeout(() =&gt; {
+&gt; 3   debugger;
+  4   console.log(&#39;世界&#39;);
+  5 }, 1000);
+debug&gt; next
+break in myscript.js:4
+  2 setTimeout(() =&gt; {
+  3   debugger;
+&gt; 4   console.log(&#39;世界&#39;);
+  5 }, 1000);
+  6 console.log(&#39;你好&#39;);
+debug&gt; repl
+Press Ctrl + C to leave debug repl
+&gt; x
+5
+&gt; 2+2
+4
+debug&gt; next
+&lt; 世界
+break in myscript.js:5
+  3   debugger;
+  4   console.log(&#39;世界&#39;);
+&gt; 5 }, 1000);
+  6 console.log(&#39;你好&#39;);
+  7
+debug&gt; .exit
+</code></pre><p><code>repl</code> 命令用于运行代码。
+<code>next</code> 命令用于步入下一行。
+输入 <code>help</code> 可查看其他可用的命令。</p>
+<p>按下 <code>enter</code> 键且不输入命令，则可重复上一个调试命令。</p>
+<h2 id="watchers">Watchers</h2>
+<p>可以在调试时监视表达式和变量的值。
+在每个断点上，监视器列表中的每个表达式都会在当前上下文中被执行，并在断点的源代码列表之前立即显示。</p>
+<p>输入 <code>watch(&#39;my_expression&#39;)</code> 开始监视一个表达式。
+<code>watchers</code> 命令会打印已激活的监视器。
+输入 <code>unwatch(&#39;my_expression&#39;)</code> 来移除一个监视器。</p>
+<h2 id="command-reference">Command reference</h2>
+<h3 id="stepping">Stepping</h3>
+<ul>
+<li><code>cont</code>, <code>c</code> - 继续执行</li>
+<li><code>next</code>, <code>n</code> - 下一步</li>
+<li><code>step</code>, <code>s</code> - 跳进函数</li>
+<li><code>out</code>, <code>o</code> - 跳出函数</li>
+<li><code>pause</code> - 暂停运行代码（类似开发者工具中的暂停按钮）</li>
+</ul>
+<h3 id="breakpoints">Breakpoints</h3>
+<ul>
+<li><code>setBreakpoint()</code>, <code>sb()</code> - 在当前行设置断点</li>
+<li><code>setBreakpoint(line)</code>, <code>sb(line)</code> - 在指定行设置断点</li>
+<li><code>setBreakpoint(&#39;fn()&#39;)</code>, <code>sb(...)</code> - 在函数体的第一条语句设置断点</li>
+<li><code>setBreakpoint(&#39;script.js&#39;, 1)</code>, <code>sb(...)</code> - 在 script.js 的第 1 行设置断点</li>
+<li><code>clearBreakpoint(&#39;script.js&#39;, 1)</code>, <code>cb(...)</code> - 清除 script.js 第 1 行的断点</li>
+</ul>
+<p>也可以在一个还未被加载的文件（模块）中设置断点：</p>
+<pre><code class="lang-txt">$ node inspect test/fixtures/break-in-module/main.js
+&lt; Debugger listening on ws://127.0.0.1:9229/4e3db158-9791-4274-8909-914f7facf3bd
+&lt; For help see https://nodejs.org/en/docs/inspector
+&lt; Debugger attached.
+Break on start in test/fixtures/break-in-module/main.js:1
+&gt; 1 (function (exports, require, module, __filename, __dirname) { const mod = require(&#39;./mod.js&#39;);
+  2 mod.hello();
+  3 mod.hello();
+debug&gt; setBreakpoint(&#39;mod.js&#39;, 22)
+Warning: script &#39;mod.js&#39; was not loaded yet.
+debug&gt; c
+break in test/fixtures/break-in-module/mod.js:22
+ 20 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 21
+&gt;22 exports.hello = function() {
+ 23   return &#39;hello from module&#39;;
+ 24 };
+debug&gt;
+</code></pre>
+<h3 id="information">Information</h3>
+<ul>
+<li><code>backtrace</code>, <code>bt</code> - 打印当前执行框架的回溯</li>
+<li><code>list(5)</code> - 列出脚本源代码的 5 行上下文（前后各 5 行）</li>
+<li><code>watch(expr)</code> - 添加表达式到监视列表</li>
+<li><code>unwatch(expr)</code> - 从监视列表移除表达式</li>
+<li><code>watchers</code> - 列出所有监视器和它们的值（每个断点会自动列出）</li>
+<li><code>repl</code> - 打开调试器的 repl，用于在所调试的脚本的上下文中进行执行</li>
+<li><code>exec expr</code> - 在所调试的脚本的上下文中执行一个表达式</li>
+</ul>
+<h3 id="execution-control">Execution control</h3>
+<ul>
+<li><code>run</code> - 运行脚本（调试器开始时自动运行）</li>
+<li><code>restart</code> - 重新启动脚本</li>
+<li><code>kill</code> - 终止脚本</li>
+</ul>
+<h3 id="various">Various</h3>
+<ul>
+<li><code>scripts</code> - 列出所有已加载的脚本</li>
+<li><code>version</code> - 显示 V8 引擎的版本号</li>
+</ul>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="v8-inspector-integration-for-node-js">V8 Inspector Integration for Node.js</h3>
+<p>V8 的检查器集成可以附加 Chrome 的开发者工具到 Node.js 实例以用于调试和性能分析。
+It uses the <a href="https://chromedevtools.github.io/debugger-protocol-viewer/">Chrome Debugging Protocol</a>.</p>
+<p>当启动一个 Node.js 应用时，V8 检查器可以通过传入 <code>--inspect</code> 标志启用。
+也可以通过该标志提供一个自定义的端口，如 <code>--inspect=9222</code> 会在 9222 端口接受开发者工具连接。</p>
+<p>要想在应用代码的第一行断开，可以传入 <code>--inspect-brk</code> 标志而不是 <code>--inspect</code>。</p>
+<pre><code class="lang-txt">$ node --inspect index.js
+Debugger listening on 127.0.0.1:9229.
+To start debugging, open the following URL in Chrome:
+    chrome-devtools://devtools/bundled/inspector.html?experiments=true&amp;v8only=true&amp;ws=127.0.0.1:9229/dc9010dd-f8b8-4ac5-a510-c1a114ec7d29
+</code></pre>
+<p>(In the example above, the UUID dc9010dd-f8b8-4ac5-a510-c1a114ec7d29
+at the end of the URL is generated on the fly, it varies in different
+debugging sessions.)</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>

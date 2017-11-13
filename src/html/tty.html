@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html id="maincontent">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/api.css">
+</head>
+<body class="alt apidoc" id="api-section-tty">
+    <div id="content" class="clearfix">
+        <div id="column2" class="interior">
+    <div id="intro" class="interior">
+        <a href="http://nodejs.cn/">
+            Node.js 中文网
+        </a>
+        <div>
+            <input placeholder="API 快速搜索" id="search_input">
+        </div>
+    </div>
+
+    <ul>
+        <li><a class="nav-assert" href="assert.html">assert - 断言</a></li>
+        <li><a class="nav-buffer" href="buffer.html">Buffer - 缓冲器</a></li>
+        <li><a class="nav-child_process" href="child_process.html">child_process - 子进程</a></li>
+        <li><a class="nav-cluster" href="cluster.html">cluster - 集群</a></li>
+        <li><a class="nav-console" href="console.html">console - 控制台</a></li>
+        <li><a class="nav-crypto" href="crypto.html">crypto - 加密</a></li>
+        <li><a class="nav-dgram" href="dgram.html">dgram - 数据报</a></li>
+        <li><a class="nav-dns" href="dns.html">dns - 域名服务器</a></li>
+        <li><a class="nav-errors" href="errors.html">Error - 异常</a></li>
+        <li><a class="nav-events" href="events.html">events - 事件</a></li>
+        <li><a class="nav-fs" href="fs.html">fs - 文件系统</a></li>
+        <li><a class="nav-globals" href="globals.html">global - 全局变量</a></li>
+        <li><a class="nav-http" href="http.html">http - HTTP</a></li>
+        <li><a class="nav-https" href="https.html">https - HTTPS</a></li>
+        <li><a class="nav-modules" href="modules.html">module - 模块</a></li>
+        <li><a class="nav-net" href="net.html">net - 网络</a></li>
+        <li><a class="nav-os" href="os.html">os - 操作系统</a></li>
+        <li><a class="nav-path" href="path.html">path - 路径</a></li>
+        <li><a class="nav-process" href="process.html">process - 进程</a></li>
+        <li><a class="nav-querystring" href="querystring.html">querystring - 查询字符串</a></li>
+        <li><a class="nav-readline" href="readline.html">readline - 逐行读取</a></li>
+        <li><a class="nav-repl" href="repl.html">repl - 交互式解释器</a></li>
+        <li><a class="nav-stream" href="stream.html">stream - 流</a></li>
+        <li><a class="nav-string_decoder" href="string_decoder.html">string_decoder - 字符串解码器</a></li>
+        <li><a class="nav-timers" href="timers.html">timer - 定时器</a></li>
+        <li><a class="nav-tls" href="tls.html">tls - 安全传输层</a></li>
+        <li><a class="nav-tty" href="tty.html">tty - 终端</a></li>
+        <li><a class="nav-url" href="url.html">url - 网址</a></li>
+        <li><a class="nav-util" href="util.html">util - 实用工具</a></li>
+        <li><a class="nav-v8" href="v8.html">v8 - V8引擎</a></li>
+        <li><a class="nav-vm" href="vm.html">vm - 虚拟机</a></li>
+        <li><a class="nav-zlib" href="zlib.html">zlib - 压缩</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav--api-documentation-documentation_stability_index" href="documentation.html">试验的API</a></li>
+        <li><a class="nav-async_hooks" href="async_hooks.html">async_hooks</a></li>
+        <li><a class="nav-http2" href="http2.html">http2</a></li>
+        <li><a class="nav-inspector" href="inspector.html">inspector</a></li>
+        <li><a class="nav-n-api" href="n-api.html">napi</a></li>
+    </ul>
+    <div class="line"></div>
+    <ul>
+        <li><a class="nav-documentation" href="documentation.html">关于本文档</a></li>
+        <li><a class="nav-synopsis" href="synopsis.html">用法与例子</a></li>
+        <li><a class="nav-addons" href="addons.html">C++插件</a></li>
+        <li><a class="nav-cli" href="cli.html">命令行选项</a></li>
+        <li><a class="nav-debugger" href="debugger.html">debugger调试器</a></li>
+        <li><a class="nav-intl" href="intl.html">国际化</a></li>
+        <li><a class="nav-tracing" href="tracing.html">事件跟踪</a></li>
+    </ul>
+</div>
+
+        <div id="column1" class='vs interior' data-id="tty">
+            <div id="apicontent">
+                <h1 id="tty">TTY</h1>
+<blockquote>
+<p>稳定性: 2 - 稳定的</p>
+</blockquote>
+<p><code>tty</code> 模块提供了 <code>tty.ReadStream</code> 类和 <code>tty.WriteStream</code> 类。
+使用以下方法引入：</p>
+<pre><code class="lang-js">const tty = require(&#39;tty&#39;);
+</code></pre>
+<p>当 Node.js 检测到正运行在一个文本终端（TTY）的上下文中时，则 <code>process.stdin</code> 默认会被初始化为一个 <code>tty.ReadStream</code> 实例，且 <code>process.stdout</code> 和 <code>process.stderr</code> 默认会被初始化为一个 <code>tty.WriteStream</code> 实例。
+判断 Node.js 是否运行在一个 TTY 上下文的首选方法是检查 <code>process.stdout.isTTY</code> 属性的值是否为 <code>true</code>：</p>
+<pre><code class="lang-sh">$ node -p -e &quot;Boolean(process.stdout.isTTY)&quot;
+true
+$ node -p -e &quot;Boolean(process.stdout.isTTY)&quot; | cat
+false
+</code></pre>
+<p>大多数情况下，应用程序无需创建 <code>tty.ReadStream</code> 类和 <code>tty.WriteStream</code> 类的实例。</p>
+<h2 id="class-tty-readstream">Class: tty.ReadStream</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p><code>tty.ReadStream</code> 类是 <code>net.Socket</code> 的一个子类，表示 TTY 的可读部分。
+正常情况下，<code>process.stdin</code> 是 Node.js 进程中唯一的 <code>tty.ReadStream</code> 实例，无需创建更多的实例。</p>
+<h3 id="readstream-israw">readStream.isRaw</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>返回 <code>boolean</code> 值。
+如果 TTY 被配置成原始模式，则返回 <code>true</code>。
+默认为 <code>false</code>。</p>
+<h3 id="readstream-setrawmode-mode-">readStream.setRawMode(mode)</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>把 <code>tty.ReadStream</code> 配置成原始模式。</p>
+<p>在原始模式中，输入按字符逐个生效，但不包括修饰符。
+终端对字符的所有特殊处理会被禁用，包括应答输入的字符。
+该模式中 <code>CTRL</code>+<code>C</code> 不再产生 <code>SIGINT</code>。</p>
+<ul>
+<li><code>mode</code> {boolean} 如果为 <code>true</code>，则把 <code>tty.ReadStream</code> 配置成原始模式。
+如果为 <code>false</code>，则把 <code>tty.ReadStream</code> 配置成默认模式。
+<code>readStream.isRaw</code> 属性会被设为对应的值。</li>
+</ul>
+<h2 id="class-tty-writestream">Class: tty.WriteStream</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<p><code>tty.WriteStream</code> 类是 <code>net.Socket</code> 的一个子类，表示 TTY 的可写部分。
+正常情况下，<code>process.stdout</code> 和 <code>process.stderr</code> 是 Node.js 进程中唯一的 <code>tty.WriteStream</code> 实例，无需创建更多的实例。</p>
+<h3 id="event-resize-">Event: &#39;resize&#39;</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>当 <code>writeStream.columns</code> 属性或 <code>writeStream.rows</code> 属性发生变化时触发 <code>&#39;resize&#39;</code> 事件。
+监听器回调函数没有参数。</p>
+<pre><code class="lang-js">process.stdout.on(&#39;resize&#39;, () =&gt; {
+  console.log(&#39;窗口大小发生变化！&#39;);
+  console.log(`${process.stdout.columns}x${process.stdout.rows}`);
+});
+</code></pre>
+<h3 id="writestream-columns">writeStream.columns</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>返回 <code>number</code> 值，表示 TTY 当前具有的列数。
+每当 <code>&#39;resize&#39;</code> 事件被触发时，该属性会被更新。</p>
+<h3 id="writestream-rows">writeStream.rows</h3>
+<!-- YAML
+added: v0.7.7
+-->
+<p>返回 <code>number</code> 值，表示 TTY 当前具有的行数。
+每当 <code>&#39;resize&#39;</code> 事件被触发时，该属性会被更新。</p>
+<h2 id="tty-isatty-fd-">tty.isatty(fd)</h2>
+<!-- YAML
+added: v0.5.8
+-->
+<ul>
+<li><code>fd</code> {number} 数值类型的文件描述符。</li>
+</ul>
+<p>如果给定的 <code>fd</code> 有关联 TTY，则返回 <code>true</code>，否则返回 <code>false</code>。</p>
+
+            </div>
+        </div>
+    </div>    
+</body>
+<script src="js/all.js"></script>
+</html>
